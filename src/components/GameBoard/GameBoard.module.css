@@ -1,0 +1,26 @@
+.gameboard {
+  border: 1px solid black;
+  display: grid;
+  gap: 4px;
+  grid-template-columns: repeat(30, 36px);
+}
+
+.square {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  border: none;
+  outline: none;
+  background: none;
+  aspect-ratio: 1;
+  font-size: 8px;
+  padding: 2px;
+  color: white;
+  cursor: pointer;
+
+  &:hover {
+    -webkit-box-shadow: inset 0 0 4px #ffffff;
+    -moz-box-shadow: inset 0 0 4x #ffffff;
+    box-shadow: inset 0 0 4px #ffffff;
+  }
+}
