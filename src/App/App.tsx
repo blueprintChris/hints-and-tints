@@ -8,8 +8,11 @@ const App = () => {
       <div className={styles.header}>
         <span className={styles.text}>Hues & Cues</span>
       </div>
-      <div className={styles.boardContainer}>
-        <GameBoard />
+      <div className={styles.content}>
+        <div className={styles.boardContainer}>
+          <GameBoard />
+        </div>
+        <div className={styles.piecesContainer}></div>
       </div>
     </div>
   );

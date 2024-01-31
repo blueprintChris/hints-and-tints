@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Honk&display=swap');
+
 .app {
   min-height: 100vh;
   display: flex;
@@ -9,25 +11,43 @@
 
 .header {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   height: 40px;
+  margin-bottom: 20px;
+  padding: 0 10px;
+  box-sizing: border-box;
   width: 100%;
   background-color: #15171c;
+  box-shadow: 0px 1px 6px black;
 }
 
 .text {
+  font-family: 'Honk', 'open-sans';
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
   color: white;
-  font-size: 20px;
+  font-size: 28px;
+}
+
+.content {
+  display: flex;
+  width: 100%;
+  padding: 20px 40px;
+  box-sizing: border-box;
 }
 
 .boardContainer {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  flex: 1;
-  padding: 20px;
-  border: 1px solid black;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-right: 40px;
   box-sizing: border-box;
+}
+
+.piecesContainer {
+  flex: 1;
+  border-radius: 4px;
+  box-shadow: 0 1px 6px #15171c;
 }
