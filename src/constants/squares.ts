@@ -539,7 +539,7 @@ const squares: Array<Array<Square>> = [
     },
     {
       ref: 'E12',
-      hex: '#F38F8F',
+      hex: '#F37781',
     },
     {
       ref: 'E13',
@@ -1381,579 +1381,579 @@ const squares: Array<Array<Square>> = [
     },
     {
       ref: 'L9',
-      hex: '',
+      hex: '#B1D66D',
     },
     {
       ref: 'L10',
-      hex: '',
+      hex: '#A8D377',
     },
     {
       ref: 'L11',
-      hex: '',
+      hex: '#9FD07E',
     },
     {
       ref: 'L12',
-      hex: '',
+      hex: '#98D089',
     },
     {
       ref: 'L13',
-      hex: '',
+      hex: '#92CE98',
     },
     {
       ref: 'L14',
-      hex: '',
+      hex: '#8DCD9B',
     },
     {
       ref: 'L15',
-      hex: '',
+      hex: '#8ECFA7',
     },
     {
       ref: 'L16',
-      hex: '',
+      hex: '#8DCFB3',
     },
     {
       ref: 'L17',
-      hex: '',
+      hex: '#8ED1C0',
     },
     {
       ref: 'L18',
-      hex: '',
+      hex: '#8BD1C6',
     },
     {
       ref: 'L19',
-      hex: '',
+      hex: '#84CFCB',
     },
     {
       ref: 'L20',
-      hex: '',
+      hex: '#7ACDD5',
     },
     {
       ref: 'L21',
-      hex: '',
+      hex: '#69CADA',
     },
     {
       ref: 'L22',
-      hex: '',
+      hex: '#56C8E0',
     },
     {
       ref: 'L23',
-      hex: '',
+      hex: '#3BC6EF',
     },
     {
       ref: 'L24',
-      hex: '',
+      hex: '#38BAEC',
     },
     {
       ref: 'L25',
-      hex: '',
+      hex: '#3CA9E1',
     },
     {
       ref: 'L26',
-      hex: '',
+      hex: '#3B9AD4',
     },
     {
       ref: 'L27',
-      hex: '',
+      hex: '#4188C8',
     },
     {
       ref: 'L28',
-      hex: '',
+      hex: '#3879BD',
     },
     {
       ref: 'L29',
-      hex: '',
+      hex: '#3B6FB8',
     },
     {
       ref: 'L30',
-      hex: '',
+      hex: '#3465B1',
     },
   ],
   [
     {
       ref: 'M1',
-      hex: '',
+      hex: '#E0E320',
     },
     {
       ref: 'M2',
-      hex: '',
+      hex: '#DBE127',
     },
     {
       ref: 'M3',
-      hex: '',
+      hex: '#D6E12F',
     },
     {
       ref: 'M4',
-      hex: '',
+      hex: '#CFDF37',
     },
     {
       ref: 'M5',
-      hex: '',
+      hex: '#C8DB43',
     },
     {
       ref: 'M6',
-      hex: '',
+      hex: '#BAD645',
     },
     {
       ref: 'M7',
-      hex: '',
+      hex: '#AED24C',
     },
     {
       ref: 'M8',
-      hex: '',
+      hex: '#9FCD51',
     },
     {
       ref: 'M9',
-      hex: '',
+      hex: '#90C958',
     },
     {
       ref: 'M10',
-      hex: '',
+      hex: '#85C65E',
     },
     {
       ref: 'M11',
-      hex: '',
+      hex: '#79C469',
     },
     {
       ref: 'M12',
-      hex: '',
+      hex: '#71C371',
     },
     {
       ref: 'M13',
-      hex: '',
+      hex: '#70C27A',
     },
     {
       ref: 'M14',
-      hex: '',
+      hex: '#6DC183',
     },
     {
       ref: 'M15',
-      hex: '',
+      hex: '#6DC183',
     },
     {
       ref: 'M16',
-      hex: '',
+      hex: '#70C493',
     },
     {
       ref: 'M17',
-      hex: '',
+      hex: '#70C59C',
     },
     {
       ref: 'M18',
-      hex: '',
+      hex: '#73C7A6',
     },
     {
       ref: 'M19',
-      hex: '',
+      hex: '#75C8AC',
     },
     {
       ref: 'M20',
-      hex: '',
+      hex: '#6BC6B4',
     },
     {
       ref: 'M21',
-      hex: '',
+      hex: '#60C6BB',
     },
     {
       ref: 'M22',
-      hex: '',
+      hex: '#54C4C5',
     },
     {
       ref: 'M23',
-      hex: '',
+      hex: '#47C3CF',
     },
     {
       ref: 'M24',
-      hex: '',
+      hex: '#30C2DB',
     },
     {
       ref: 'M25',
-      hex: '',
+      hex: '#1BBAE4',
     },
     {
       ref: 'M26',
-      hex: '',
+      hex: '#21AAE1',
     },
     {
       ref: 'M27',
-      hex: '',
+      hex: '#289CD7',
     },
     {
       ref: 'M28',
-      hex: '',
+      hex: '#378CCC',
     },
     {
       ref: 'M29',
-      hex: '',
+      hex: '#317FC1',
     },
     {
       ref: 'M30',
-      hex: '',
+      hex: '#2C72B8',
     },
   ],
   [
     {
       ref: 'N1',
-      hex: '',
+      hex: '#C2D82D',
     },
     {
       ref: 'N2',
-      hex: '',
+      hex: '#BDD630',
     },
     {
       ref: 'N3',
-      hex: '',
+      hex: '#B5D333',
     },
     {
       ref: 'N4',
-      hex: '',
+      hex: '#ABCF39',
     },
     {
       ref: 'N5',
-      hex: '',
+      hex: '#A0CC39',
     },
     {
       ref: 'N6',
-      hex: '',
+      hex: '#94C93D',
     },
     {
       ref: 'N7',
-      hex: '',
+      hex: '#81C240',
     },
     {
       ref: 'N8',
-      hex: '',
+      hex: '#79C143',
     },
     {
       ref: 'N9',
-      hex: '',
+      hex: '#6DBC45',
     },
     {
       ref: 'N10',
-      hex: '',
+      hex: '#5DB545',
     },
     {
       ref: 'N11',
-      hex: '',
+      hex: '#54B34B',
     },
     {
       ref: 'N12',
-      hex: '',
+      hex: '#4DB254',
     },
     {
       ref: 'N13',
-      hex: '',
+      hex: '#46B859',
     },
     {
       ref: 'N14',
-      hex: '',
+      hex: '#49B869',
     },
     {
       ref: 'N15',
-      hex: '',
+      hex: '#50BB73',
     },
     {
       ref: 'N16',
-      hex: '',
+      hex: '#57BD7B',
     },
     {
       ref: 'N17',
-      hex: '',
+      hex: '#59BD7D',
     },
     {
       ref: 'N18',
-      hex: '',
+      hex: '#5CBF88',
     },
     {
       ref: 'N19',
-      hex: '',
+      hex: '#5FC08B',
     },
     {
       ref: 'N20',
-      hex: '',
+      hex: '#60C092',
     },
     {
       ref: 'N21',
-      hex: '',
+      hex: '#5BC09E',
     },
     {
       ref: 'N22',
-      hex: '',
+      hex: '#50C2AB',
     },
     {
       ref: 'N23',
-      hex: '',
+      hex: '#46C0B3',
     },
     {
       ref: 'N24',
-      hex: '',
+      hex: '#38BFC3',
     },
     {
       ref: 'N25',
-      hex: '',
+      hex: '#27BFCD',
     },
     {
       ref: 'N26',
-      hex: '',
+      hex: '#16B9D8',
     },
     {
       ref: 'N27',
-      hex: '',
+      hex: '#10AEDE',
     },
     {
       ref: 'N28',
-      hex: '',
+      hex: '#16A5DD',
     },
     {
       ref: 'N29',
-      hex: '',
+      hex: '#2395D3',
     },
     {
       ref: 'N30',
-      hex: '',
+      hex: '#2884C7',
     },
   ],
   [
     {
       ref: 'O1',
-      hex: '',
+      hex: '#9EC439',
     },
     {
       ref: 'O2',
-      hex: '',
+      hex: '#9AC43C',
     },
     {
       ref: 'O3',
-      hex: '',
+      hex: '#94C23C',
     },
     {
       ref: 'O4',
-      hex: '',
+      hex: '#88BF40',
     },
     {
       ref: 'O5',
-      hex: '',
+      hex: '#7EBB42',
     },
     {
       ref: 'O6',
-      hex: '',
+      hex: '#6DB343',
     },
     {
       ref: 'O7',
-      hex: '',
+      hex: '#63B144',
     },
     {
       ref: 'O8',
-      hex: '',
+      hex: '#54A846',
     },
     {
       ref: 'O9',
-      hex: '',
+      hex: '#4FA647',
     },
     {
       ref: 'O10',
-      hex: '',
+      hex: '#409E46',
     },
     {
       ref: 'O11',
-      hex: '',
+      hex: '#359D48',
     },
     {
       ref: 'O12',
-      hex: '',
+      hex: '#30A348',
     },
     {
       ref: 'O13',
-      hex: '',
+      hex: '#2AAA4B',
     },
     {
       ref: 'O14',
-      hex: '',
+      hex: '#2AB14B',
     },
     {
       ref: 'O15',
-      hex: '',
+      hex: '#31B454',
     },
     {
       ref: 'O16',
-      hex: '',
+      hex: '#37B65D',
     },
     {
       ref: 'O17',
-      hex: '',
+      hex: '#42B864',
     },
     {
       ref: 'O18',
-      hex: '',
+      hex: '#48B86E',
     },
     {
       ref: 'O19',
-      hex: '',
+      hex: '#48BA72',
     },
     {
       ref: 'O20',
-      hex: '',
+      hex: '#51BC76',
     },
     {
       ref: 'O21',
-      hex: '',
+      hex: '#52BD85',
     },
     {
       ref: 'O22',
-      hex: '',
+      hex: '#49BD90',
     },
     {
       ref: 'O23',
-      hex: '',
+      hex: '#45BE9F',
     },
     {
       ref: 'O24',
-      hex: '',
+      hex: '#39BEA9',
     },
     {
       ref: 'O25',
-      hex: '',
+      hex: '#2EBDB7',
     },
     {
       ref: 'O26',
-      hex: '',
+      hex: '#28BFC6',
     },
     {
       ref: 'O27',
-      hex: '',
+      hex: '#1BBDD2',
     },
     {
       ref: 'O28',
-      hex: '',
+      hex: '#0EB3D3',
     },
     {
       ref: 'O29',
-      hex: '',
+      hex: '#0EA8DA',
     },
     {
       ref: 'O30',
-      hex: '',
+      hex: '#179FDB',
     },
   ],
   [
     {
       ref: 'P1',
-      hex: '',
+      hex: '#7BA541',
     },
     {
       ref: 'P2',
-      hex: '',
+      hex: '#76A940',
     },
     {
       ref: 'P3',
-      hex: '',
+      hex: '#6FA744',
     },
     {
       ref: 'P4',
-      hex: '',
+      hex: '#65A243',
     },
     {
       ref: 'P5',
-      hex: '',
+      hex: '#59A445',
     },
     {
       ref: 'P6',
-      hex: '',
+      hex: '#4C9F45',
     },
     {
       ref: 'P7',
-      hex: '',
+      hex: '#439845',
     },
     {
       ref: 'P8',
-      hex: '',
+      hex: '#399645',
     },
     {
       ref: 'P9',
-      hex: '',
+      hex: '#299144',
     },
     {
       ref: 'P10',
-      hex: '',
+      hex: '#1E8943',
     },
     {
       ref: 'P11',
-      hex: '',
+      hex: '#198B43',
     },
     {
       ref: 'P12',
-      hex: '',
+      hex: '#149145',
     },
     {
       ref: 'P13',
-      hex: '',
+      hex: '#159A47',
     },
     {
       ref: 'P14',
-      hex: '',
+      hex: '#18A149',
     },
     {
       ref: 'P15',
-      hex: '',
+      hex: '#1BAB4A',
     },
     {
       ref: 'P16',
-      hex: '',
+      hex: '#22B04C',
     },
     {
       ref: 'P17',
-      hex: '',
+      hex: '#2CB34C',
     },
     {
       ref: 'P18',
-      hex: '',
+      hex: '#33B555',
     },
     {
       ref: 'P19',
-      hex: '',
+      hex: '#3AB65E',
     },
     {
       ref: 'P20',
-      hex: '',
+      hex: '#3EB865',
     },
     {
       ref: 'P21',
-      hex: '',
+      hex: '#3FB970',
     },
     {
       ref: 'P22',
-      hex: '',
+      hex: '#39B97C',
     },
     {
       ref: 'P23',
-      hex: '',
+      hex: '#32BA8A',
     },
     {
       ref: 'P24',
-      hex: '',
+      hex: '#2CB996',
     },
     {
       ref: 'P25',
-      hex: '',
+      hex: '#21BBA1',
     },
     {
       ref: 'P26',
-      hex: '',
+      hex: '#1CBAAC',
     },
     {
       ref: 'P27',
-      hex: '',
+      hex: '#18BCBD',
     },
     {
       ref: 'P28',
-      hex: '',
+      hex: '#14BCC7',
     },
     {
       ref: 'P29',
-      hex: '',
+      hex: '#10B7D7',
     },
     {
       ref: 'P30',
-      hex: '',
+      hex: '#0FB1E2',
     },
   ],
 ];
