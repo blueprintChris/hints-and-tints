@@ -251,1133 +251,1133 @@ const squares: Array<Array<Square>> = [
   [
     {
       ref: 'C1',
-      hex: '',
+      hex: '#A66128',
     },
     {
       ref: 'C2',
-      hex: '',
+      hex: '#AC5B26',
     },
     {
       ref: 'C3',
-      hex: '',
+      hex: '#BA5A27',
     },
     {
       ref: 'C4',
-      hex: '',
+      hex: '#C24E27',
     },
     {
       ref: 'C5',
-      hex: '',
+      hex: '#CD4827',
     },
     {
       ref: 'C6',
-      hex: '',
+      hex: '#D64027',
     },
     {
       ref: 'C7',
-      hex: '',
+      hex: '#E23926',
     },
     {
       ref: 'C8',
-      hex: '',
+      hex: '#E83024',
     },
     {
       ref: 'C9',
-      hex: '',
+      hex: '#EE362C',
     },
     {
       ref: 'C10',
-      hex: '',
+      hex: '#EF3C40',
     },
     {
       ref: 'C11',
-      hex: '',
+      hex: '#EF3F4C',
     },
     {
       ref: 'C12',
-      hex: '',
+      hex: '#EE3B51',
     },
     {
       ref: 'C13',
-      hex: '',
+      hex: '#EE3A5D',
     },
     {
       ref: 'C14',
-      hex: '',
+      hex: '#EE3167',
     },
     {
       ref: 'C15',
-      hex: '',
+      hex: '#EE3078',
     },
     {
       ref: 'C16',
-      hex: '',
+      hex: '#EE2B87',
     },
     {
       ref: 'C17',
-      hex: '',
+      hex: '#EB3196',
     },
     {
       ref: 'C18',
-      hex: '',
+      hex: '#DB4398',
     },
     {
       ref: 'C19',
-      hex: '',
+      hex: '#CA499B',
     },
     {
       ref: 'C20',
-      hex: '',
+      hex: '#BB4B9D',
     },
     {
       ref: 'C21',
-      hex: '',
+      hex: '#B4499B',
     },
     {
       ref: 'C22',
-      hex: '',
+      hex: '#A64799',
     },
     {
       ref: 'C23',
-      hex: '',
+      hex: '#9E4599',
     },
     {
       ref: 'C24',
-      hex: '',
+      hex: '#954398',
     },
     {
       ref: 'C25',
-      hex: '',
+      hex: '#8C4299',
     },
     {
       ref: 'C26',
-      hex: '',
+      hex: '#843E97',
     },
     {
       ref: 'C27',
-      hex: '',
+      hex: '#793D97',
     },
     {
       ref: 'C28',
-      hex: '',
+      hex: '#733C97',
     },
     {
       ref: 'C29',
-      hex: '',
+      hex: '#663996',
     },
     {
       ref: 'C30',
-      hex: '',
+      hex: '#5A3191',
     },
   ],
   [
     {
       ref: 'D1',
-      hex: '',
+      hex: '#C9822A',
     },
     {
       ref: 'D2',
-      hex: '',
+      hex: '#D78228',
     },
     {
       ref: 'D3',
-      hex: '',
+      hex: '#DD7627',
     },
     {
       ref: 'D4',
-      hex: '',
+      hex: '#E87824',
     },
     {
       ref: 'D5',
-      hex: '',
+      hex: '#E66926',
     },
     {
       ref: 'D6',
-      hex: '',
+      hex: '#EA5D25',
     },
     {
       ref: 'D7',
-      hex: '',
+      hex: '#F1602B',
     },
     {
       ref: 'D8',
-      hex: '',
+      hex: '#EF5533',
     },
     {
       ref: 'D9',
-      hex: '',
+      hex: '#F04F3D',
     },
     {
       ref: 'D10',
-      hex: '',
+      hex: '#EF5651',
     },
     {
       ref: 'D11',
-      hex: '',
+      hex: '#F05D65',
     },
     {
       ref: 'D12',
-      hex: '',
+      hex: '#F05E6B',
     },
     {
       ref: 'D13',
-      hex: '',
+      hex: '#EE5871',
     },
     {
       ref: 'D14',
-      hex: '',
+      hex: '#F0537E',
     },
     {
       ref: 'D15',
-      hex: '',
+      hex: '#EF4F8B',
     },
     {
       ref: 'D16',
-      hex: '',
+      hex: '#F04F9D',
     },
     {
       ref: 'D17',
-      hex: '',
+      hex: '#DF55A0',
     },
     {
       ref: 'D18',
-      hex: '',
+      hex: '#CD57A1',
     },
     {
       ref: 'D19',
-      hex: '',
+      hex: '#BE5EA5',
     },
     {
       ref: 'D20',
-      hex: '',
+      hex: '#B658A2',
     },
     {
       ref: 'D21',
-      hex: '',
+      hex: '#A554A1',
     },
     {
       ref: 'D22',
-      hex: '',
+      hex: '#9B4E9E',
     },
     {
       ref: 'D23',
-      hex: '',
+      hex: '#944C9E',
     },
     {
       ref: 'D24',
-      hex: '',
+      hex: '#8D499E',
     },
     {
       ref: 'D25',
-      hex: '',
+      hex: '#82449A',
     },
     {
       ref: 'D26',
-      hex: '',
+      hex: '#7B4198',
     },
     {
       ref: 'D27',
-      hex: '',
+      hex: '#6F3E99',
     },
     {
       ref: 'D28',
-      hex: '',
+      hex: '#663795',
     },
     {
       ref: 'D29',
-      hex: '',
+      hex: '#583393',
     },
     {
       ref: 'D30',
-      hex: '',
+      hex: '#472E8A',
     },
   ],
   [
     {
       ref: 'E1',
-      hex: '',
+      hex: '#E69C23',
     },
     {
       ref: 'E2',
-      hex: '',
+      hex: '#F1991E',
     },
     {
       ref: 'E3',
-      hex: '',
+      hex: '#F7921C',
     },
     {
       ref: 'E4',
-      hex: '',
+      hex: '#F68C1E',
     },
     {
       ref: 'E5',
-      hex: '',
+      hex: '#F68525',
     },
     {
       ref: 'E6',
-      hex: '',
+      hex: '#F4782E',
     },
     {
       ref: 'E7',
-      hex: '',
+      hex: '#F4773D',
     },
     {
       ref: 'E8',
-      hex: '',
+      hex: '#F36E45',
     },
     {
       ref: 'E9',
-      hex: '',
+      hex: '#F37052',
     },
     {
       ref: 'E10',
-      hex: '',
+      hex: '#F27767',
     },
     {
       ref: 'E11',
-      hex: '',
+      hex: '#F37674',
     },
     {
       ref: 'E12',
-      hex: '',
+      hex: '#F38F8F',
     },
     {
       ref: 'E13',
-      hex: '',
+      hex: '#F27789',
     },
     {
       ref: 'E14',
-      hex: '',
+      hex: '#F27094',
     },
     {
       ref: 'E15',
-      hex: '',
+      hex: '#F069A4',
     },
     {
       ref: 'E16',
-      hex: '',
+      hex: '#E76FAC',
     },
     {
       ref: 'E17',
-      hex: '',
+      hex: '#D371AC',
     },
     {
       ref: 'E18',
-      hex: '',
+      hex: '#C771AE',
     },
     {
       ref: 'E19',
-      hex: '',
+      hex: '#BB71AE',
     },
     {
       ref: 'E20',
-      hex: '',
+      hex: '#AC67AA',
     },
     {
       ref: 'E21',
-      hex: '',
+      hex: '#9E5FA6',
     },
     {
       ref: 'E22',
-      hex: '',
+      hex: '#9359A5',
     },
     {
       ref: 'E23',
-      hex: '',
+      hex: '#8D54A3',
     },
     {
       ref: 'E24',
-      hex: '',
+      hex: '#8451A0',
     },
     {
       ref: 'E25',
-      hex: '',
+      hex: '#7A489D',
     },
     {
       ref: 'E26',
-      hex: '',
+      hex: '#6F459B',
     },
     {
       ref: 'E27',
-      hex: '',
+      hex: '#623E98',
     },
     {
       ref: 'E28',
-      hex: '',
+      hex: '#583393',
     },
     {
       ref: 'E29',
-      hex: '',
+      hex: '#492E8F',
     },
     {
       ref: 'E30',
-      hex: '',
+      hex: '#342B84',
     },
   ],
   [
     {
       ref: 'F1',
-      hex: '',
+      hex: '#FEB415',
     },
     {
       ref: 'F2',
-      hex: '',
+      hex: '#FCB122',
     },
     {
       ref: 'F3',
-      hex: '',
+      hex: '#FAAB2C',
     },
     {
       ref: 'F4',
-      hex: '',
+      hex: '#FBAB3A',
     },
     {
       ref: 'F5',
-      hex: '',
+      hex: '#FAA741',
     },
     {
       ref: 'F6',
-      hex: '',
+      hex: '#F9A34C',
     },
     {
       ref: 'F7',
-      hex: '',
+      hex: '#F69755',
     },
     {
       ref: 'F8',
-      hex: '',
+      hex: '#F58F5E',
     },
     {
       ref: 'F9',
-      hex: '',
+      hex: '#F48864',
     },
     {
       ref: 'F10',
-      hex: '',
+      hex: '#F58873',
     },
     {
       ref: 'F11',
-      hex: '',
+      hex: '#F58F83',
     },
     {
       ref: 'F12',
-      hex: '',
+      hex: '#F38F8F',
     },
     {
       ref: 'F13',
-      hex: '',
+      hex: '#F48E99',
     },
     {
       ref: 'F14',
-      hex: '',
+      hex: '#F48CA3',
     },
     {
       ref: 'F15',
-      hex: '',
+      hex: '#F287B5',
     },
     {
       ref: 'F16',
-      hex: '',
+      hex: '#E08DBB',
     },
     {
       ref: 'F17',
-      hex: '',
+      hex: '#D18BBD',
     },
     {
       ref: 'F18',
-      hex: '',
+      hex: '#C68CBE',
     },
     {
       ref: 'F19',
-      hex: '',
+      hex: '#B982B9',
     },
     {
       ref: 'F20',
-      hex: '',
+      hex: '#AA7AB6',
     },
     {
       ref: 'F21',
-      hex: '',
+      hex: '#9C74B3',
     },
     {
       ref: 'F22',
-      hex: '',
+      hex: '#9067AB',
     },
     {
       ref: 'F23',
-      hex: '',
+      hex: '#865EA7',
     },
     {
       ref: 'F24',
-      hex: '',
+      hex: '#7B59A6',
     },
     {
       ref: 'F25',
-      hex: '',
+      hex: '#7251A2',
     },
     {
       ref: 'F26',
-      hex: '',
+      hex: '#634A9E',
     },
     {
       ref: 'F27',
-      hex: '',
+      hex: '#5A429A',
     },
     {
       ref: 'F28',
-      hex: '',
+      hex: '#4C3293',
     },
     {
       ref: 'F29',
-      hex: '',
+      hex: '#392F8F',
     },
     {
       ref: 'F30',
-      hex: '',
+      hex: '#2C2978',
     },
   ],
   [
     {
       ref: 'G1',
-      hex: '',
+      hex: '#FDC113',
     },
     {
       ref: 'G2',
-      hex: '',
+      hex: '#FDC029',
     },
     {
       ref: 'G3',
-      hex: '',
+      hex: '#FCB72C',
     },
     {
       ref: 'G4',
-      hex: '',
+      hex: '#FCB43B',
     },
     {
       ref: 'G5',
-      hex: '',
+      hex: '#FCB95E',
     },
     {
       ref: 'G6',
-      hex: '',
+      hex: '#F8AC56',
     },
     {
       ref: 'G7',
-      hex: '',
+      hex: '#FAAA63',
     },
     {
       ref: 'G8',
-      hex: '',
+      hex: '#F9A26D',
     },
     {
       ref: 'G9',
-      hex: '',
+      hex: '#F7A279',
     },
     {
       ref: 'G10',
-      hex: '',
+      hex: '#F7A085',
     },
     {
       ref: 'G11',
-      hex: '',
+      hex: '#F69E94',
     },
     {
       ref: 'G12',
-      hex: '',
+      hex: '#F69D99',
     },
     {
       ref: 'G13',
-      hex: '',
+      hex: '#F59EA6',
     },
     {
       ref: 'G14',
-      hex: '',
+      hex: '#F69BAA',
     },
     {
       ref: 'G15',
-      hex: '',
+      hex: '#F39DC2',
     },
     {
       ref: 'G16',
-      hex: '',
+      hex: '#E1A5CB',
     },
     {
       ref: 'G17',
-      hex: '',
+      hex: '#D0A6CC',
     },
     {
       ref: 'G18',
-      hex: '',
+      hex: '#CDADD2',
     },
     {
       ref: 'G19',
-      hex: '',
+      hex: '#B898C7',
     },
     {
       ref: 'G20',
-      hex: '',
+      hex: '#A88BC1',
     },
     {
       ref: 'G21',
-      hex: '',
+      hex: '#9A82BC',
     },
     {
       ref: 'G22',
-      hex: '',
+      hex: '#9A82BC',
     },
     {
       ref: 'G23',
-      hex: '',
+      hex: '#7F6EB2',
     },
     {
       ref: 'G24',
-      hex: '',
+      hex: '#7265AD',
     },
     {
       ref: 'G25',
-      hex: '',
+      hex: '#675CA8',
     },
     {
       ref: 'G26',
-      hex: '',
+      hex: '#5954A4',
     },
     {
       ref: 'G27',
-      hex: '',
+      hex: '#4F4BA0',
     },
     {
       ref: 'G28',
-      hex: '',
+      hex: '#44419A',
     },
     {
       ref: 'G29',
-      hex: '',
+      hex: '#313694',
     },
     {
       ref: 'G30',
-      hex: '',
+      hex: '#2B2F86',
     },
   ],
   [
     {
       ref: 'H1',
-      hex: '',
+      hex: '#FCD017',
     },
     {
       ref: 'H2',
-      hex: '',
+      hex: '#FECD2A',
     },
     {
       ref: 'H3',
-      hex: '',
+      hex: '#FFC82F',
     },
     {
       ref: 'H4',
-      hex: '',
+      hex: '#FDC740',
     },
     {
       ref: 'H5',
-      hex: '',
+      hex: '#FEC64B',
     },
     {
       ref: 'H6',
-      hex: '',
+      hex: '#FDBF58',
     },
     {
       ref: 'H7',
-      hex: '',
+      hex: '#FDBC60',
     },
     {
       ref: 'H8',
-      hex: '',
+      hex: '#FCB96B',
     },
     {
       ref: 'H9',
-      hex: '',
+      hex: '#FBB379',
     },
     {
       ref: 'H10',
-      hex: '',
+      hex: '#FAB083',
     },
     {
       ref: 'H11',
-      hex: '',
+      hex: '#F9AE8E',
     },
     {
       ref: 'H12',
-      hex: '',
+      hex: '#F9B29E',
     },
     {
       ref: 'H13',
-      hex: '',
+      hex: '#F5B6AD',
     },
     {
       ref: 'H14',
-      hex: '',
+      hex: '#F3B6B5',
     },
     {
       ref: 'H15',
-      hex: '',
+      hex: '#ECB5C8',
     },
     {
       ref: 'H16',
-      hex: '',
+      hex: '#D8B7D6',
     },
     {
       ref: 'H17',
-      hex: '',
+      hex: '#CDB8D9',
     },
     {
       ref: 'H18',
-      hex: '',
+      hex: '#CCBDDC',
     },
     {
       ref: 'H19',
-      hex: '',
+      hex: '#B4A9D3',
     },
     {
       ref: 'H20',
-      hex: '',
+      hex: '#A79FCE',
     },
     {
       ref: 'H21',
-      hex: '',
+      hex: '#9794C9',
     },
     {
       ref: 'H22',
-      hex: '',
+      hex: '#8388C2',
     },
     {
       ref: 'H23',
-      hex: '',
+      hex: '#757DBC',
     },
     {
       ref: 'H24',
-      hex: '',
+      hex: '#6A75B7',
     },
     {
       ref: 'H25',
-      hex: '',
+      hex: '#5C6AB1',
     },
     {
       ref: 'H26',
-      hex: '',
+      hex: '#5161AE',
     },
     {
       ref: 'H27',
-      hex: '',
+      hex: '#4859A7',
     },
     {
       ref: 'H28',
-      hex: '',
+      hex: '#3E4FA1',
     },
     {
       ref: 'H29',
-      hex: '',
+      hex: '#2F449D',
     },
     {
       ref: 'H30',
-      hex: '',
+      hex: '#253A97',
     },
   ],
   [
     {
       ref: 'I1',
-      hex: '',
+      hex: '#FCE118',
     },
     {
       ref: 'I2',
-      hex: '',
+      hex: '#FCDC27',
     },
     {
       ref: 'I3',
-      hex: '',
+      hex: '#FCD933',
     },
     {
       ref: 'I4',
-      hex: '',
+      hex: '#FCD842',
     },
     {
       ref: 'I5',
-      hex: '',
+      hex: '#FCDE4C',
     },
     {
       ref: 'I6',
-      hex: '',
+      hex: '#FED859',
     },
     {
       ref: 'I7',
-      hex: '',
+      hex: '#FDDB60',
     },
     {
       ref: 'I8',
-      hex: '',
+      hex: '#FBD66B',
     },
     {
       ref: 'I9',
-      hex: '',
+      hex: '#F5DB7C',
     },
     {
       ref: 'I10',
-      hex: '',
+      hex: '#F1E092',
     },
     {
       ref: 'I11',
-      hex: '',
+      hex: '#ECDC9E',
     },
     {
       ref: 'I12',
-      hex: '',
+      hex: '#E8E1B3',
     },
     {
       ref: 'I13',
-      hex: '',
+      hex: '#E1E0C2',
     },
     {
       ref: 'I14',
-      hex: '',
+      hex: '#DCE1CB',
     },
     {
       ref: 'I15',
-      hex: '',
+      hex: '#D2E0D3',
     },
     {
       ref: 'I16',
-      hex: '',
+      hex: '#C6DDE3',
     },
     {
       ref: 'I17',
-      hex: '',
+      hex: '#C1D9F1',
     },
     {
       ref: 'I18',
-      hex: '',
+      hex: '#C0D8F0',
     },
     {
       ref: 'I19',
-      hex: '',
+      hex: '#A7C8E9',
     },
     {
       ref: 'I20',
-      hex: '',
+      hex: '#99B9E0',
     },
     {
       ref: 'I21',
-      hex: '',
+      hex: '#8AAAD9',
     },
     {
       ref: 'I22',
-      hex: '',
+      hex: '#7AA2D6',
     },
     {
       ref: 'I23',
-      hex: '',
+      hex: '#7093CB',
     },
     {
       ref: 'I24',
-      hex: '',
+      hex: '#6686C3',
     },
     {
       ref: 'I25',
-      hex: '',
+      hex: '#5679BB',
     },
     {
       ref: 'I26',
-      hex: '',
+      hex: '#4C6CB5',
     },
     {
       ref: 'I27',
-      hex: '',
+      hex: '#4262AD',
     },
     {
       ref: 'I28',
-      hex: '',
+      hex: '#3B5BA8',
     },
     {
       ref: 'I29',
-      hex: '',
+      hex: '#334FA2',
     },
     {
       ref: 'I30',
-      hex: '',
+      hex: '#27459D',
     },
   ],
   [
     {
       ref: 'J1',
-      hex: '',
+      hex: '#F9EC24',
     },
     {
       ref: 'J2',
-      hex: '',
+      hex: '#F9EB2A',
     },
     {
       ref: 'J3',
-      hex: '',
+      hex: '#FAEB36',
     },
     {
       ref: 'J4',
-      hex: '',
+      hex: '#F9EE46',
     },
     {
       ref: 'J5',
-      hex: '',
+      hex: '#F9F04D',
     },
     {
       ref: 'J6',
-      hex: '',
+      hex: '#F9F25C',
     },
     {
       ref: 'J7',
-      hex: '',
+      hex: '#F7F06B',
     },
     {
       ref: 'J8',
-      hex: '',
+      hex: '#EFEE82',
     },
     {
       ref: 'J9',
-      hex: '',
+      hex: '#E7EB8C',
     },
     {
       ref: 'J10',
-      hex: '',
+      hex: '#DEE99D',
     },
     {
       ref: 'J11',
-      hex: '',
+      hex: '#D8E7AC',
     },
     {
       ref: 'J12',
-      hex: '',
+      hex: '#D3E8BF',
     },
     {
       ref: 'J13',
-      hex: '',
+      hex: '#D1E8CB',
     },
     {
       ref: 'J14',
-      hex: '',
+      hex: '#CDE9D3',
     },
     {
       ref: 'J15',
-      hex: '',
+      hex: '#C7E6D6',
     },
     {
       ref: 'J16',
-      hex: '',
+      hex: '#BBE5E4',
     },
     {
       ref: 'J17',
-      hex: '',
+      hex: '#B3E2F2',
     },
     {
       ref: 'J18',
-      hex: '',
+      hex: '#B2E2F6',
     },
     {
       ref: 'J19',
-      hex: '',
+      hex: '#9EDCF5',
     },
     {
       ref: 'J20',
-      hex: '',
+      hex: '#87D6F7',
     },
     {
       ref: 'J21',
-      hex: '',
+      hex: '#7DC7EE',
     },
     {
       ref: 'J22',
-      hex: '',
+      hex: '#71B5E4',
     },
     {
       ref: 'J23',
-      hex: '',
+      hex: '#65A8DC',
     },
     {
       ref: 'J24',
-      hex: '',
+      hex: '#5C97D1',
     },
     {
       ref: 'J25',
-      hex: '',
+      hex: '#518BCA',
     },
     {
       ref: 'J26',
-      hex: '',
+      hex: '#4B7CBF',
     },
     {
       ref: 'J27',
-      hex: '',
+      hex: '#3F6EB6',
     },
     {
       ref: 'J28',
-      hex: '',
+      hex: '#3765B0',
     },
     {
       ref: 'J29',
-      hex: '',
+      hex: '#365BAB',
     },
     {
       ref: 'J30',
-      hex: '',
+      hex: '#3050A3',
     },
   ],
   [
     {
       ref: 'K1',
-      hex: '',
+      hex: '#F6EF3C',
     },
     {
       ref: 'K2',
-      hex: '',
+      hex: '#F6EF3F',
     },
     {
       ref: 'K3',
-      hex: '',
+      hex: '#F5EE46',
     },
     {
       ref: 'K4',
-      hex: '',
+      hex: '#F4EF4D',
     },
     {
       ref: 'K5',
-      hex: '',
+      hex: '#F1EC5A',
     },
     {
       ref: 'K6',
-      hex: '',
+      hex: '#ECEC68',
     },
     {
       ref: 'K7',
-      hex: '',
+      hex: '#E6E87A',
     },
     {
       ref: 'K8',
-      hex: '',
+      hex: '#DFE784',
     },
     {
       ref: 'K9',
-      hex: '',
+      hex: '#D6E485',
     },
     {
       ref: 'K10',
-      hex: '',
+      hex: '#C8DF8D',
     },
     {
       ref: 'K11',
-      hex: '',
+      hex: '#BEDD97',
     },
     {
       ref: 'K12',
-      hex: '',
+      hex: '#B5DBA2',
     },
     {
       ref: 'K13',
-      hex: '',
+      hex: '#B4DBAF',
     },
     {
       ref: 'K14',
-      hex: '',
+      hex: '#B0DAB6',
     },
     {
       ref: 'K15',
-      hex: '',
+      hex: '#ADDBC1',
     },
     {
       ref: 'K16',
-      hex: '',
+      hex: '#AEDDD7',
     },
     {
       ref: 'K17',
-      hex: '',
+      hex: '#AADDDE',
     },
     {
       ref: 'K18',
-      hex: '',
+      hex: '#A8DDE3',
     },
     {
       ref: 'K19',
-      hex: '',
+      hex: '#99D8E7',
     },
     {
       ref: 'K20',
-      hex: '',
+      hex: '#89D7EE',
     },
     {
       ref: 'K21',
-      hex: '',
+      hex: '#73D1F5',
     },
     {
       ref: 'K22',
-      hex: '',
+      hex: '#64CBF4',
     },
     {
       ref: 'K23',
-      hex: '',
+      hex: '#5AAADD',
     },
     {
       ref: 'K24',
-      hex: '',
+      hex: '#549DD4',
     },
     {
       ref: 'K25',
-      hex: '',
+      hex: '#4889C9',
     },
     {
       ref: 'K26',
-      hex: '',
+      hex: '#4889C9',
     },
     {
       ref: 'K27',
-      hex: '',
+      hex: '#3E7DC0',
     },
     {
       ref: 'K28',
-      hex: '',
+      hex: '#3B6FB8',
     },
     {
       ref: 'K29',
-      hex: '',
+      hex: '#3664AF',
     },
     {
       ref: 'K30',
-      hex: '',
+      hex: '#335CAB',
     },
   ],
   [
     {
       ref: 'L1',
-      hex: '',
+      hex: '#F1EC21',
     },
     {
       ref: 'L2',
-      hex: '',
+      hex: '#F0EB2D',
     },
     {
       ref: 'L3',
-      hex: '',
+      hex: '#EBE932',
     },
     {
       ref: 'L4',
-      hex: '',
+      hex: '#E9E838',
     },
     {
       ref: 'L5',
-      hex: '',
+      hex: '#E5E643',
     },
     {
       ref: 'L6',
-      hex: '',
+      hex: '#DCE453',
     },
     {
       ref: 'L7',
-      hex: '',
+      hex: '#D0DF60',
     },
     {
       ref: 'L8',
-      hex: '',
+      hex: '#BFDA67',
     },
     {
       ref: 'L9',
