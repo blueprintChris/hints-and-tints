@@ -1,24 +1,18 @@
 import { Square, grid } from '../../constants/board';
 import styles from './GameBoard.module.css';
+import GameSquare from './GameSquare/GameSquare';
 
 const GameBoard = () => {
   const handleSquareClick = (square: Square) => {
-    alert(square.ref);
+    alert(`id: ${square.ref}\nhex: ${square.hex}`);
   };
 
   return (
     <div className={styles.gameboard}>
-      {grid.map(row => (
-        <div className={styles.row} data-content={row.row}>
+      {grid.map((row, idx) => (
+        <div className={styles.row} data-content={row.row} key={idx}>
           {row.squares.map(square => (
-            <button
-              className={styles.square}
-              style={{ backgroundColor: square.hex }}
-              data-content={square.col}
-              onClick={() => handleSquareClick(square)}
-            >
-              {square.ref}
-            </button>
+            <GameSquare square={square} onClick={handleSquareClick} />
           ))}
         </div>
       ))}

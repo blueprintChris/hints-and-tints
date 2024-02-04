@@ -6,52 +6,6 @@
   display: flex;
   background-color: #282c34;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
-}
-
-.header {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  height: 40px;
-  padding: 0 10px;
-  box-sizing: border-box;
-  width: 100%;
-  background-color: #15171c;
-  box-shadow: 0px 1px 6px black;
-  z-index: 1;
-}
-
-.text {
-  font-family: 'Honk', 'open-sans';
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-  color: white;
-  font-size: 28px;
-}
-
-.content {
-  display: flex;
-  height: calc(100vh - 40px);
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.boardContainer {
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  padding: 40px 20px 40px 40px;
-  box-sizing: border-box;
-  border-right: 1px solid #1a1a1a;
-}
-
-.sidePanelContainer {
-  flex: 1;
-  padding: 40px 20px;
-  min-width: 287px;
-  max-width: 300px;
-  max-height: 796px;
 }

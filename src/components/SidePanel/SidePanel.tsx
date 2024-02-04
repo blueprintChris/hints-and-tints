@@ -4,6 +4,7 @@ import styles from './SidePanel.module.css';
 import { Players } from '../../types/Players';
 import LargeCardModal from '../LargeCardModal/LargeCardModal';
 import { SocketContext } from '../../context/SocketContext';
+import { Square } from '../../constants/board';
 
 const SidePanel = ({ players }: Props) => {
   const [isModalShowing, setIsModalShowing] = useState(false);
@@ -12,6 +13,10 @@ const SidePanel = ({ players }: Props) => {
 
   const handleCardClick = () => {
     setIsModalShowing(true);
+  };
+
+  const handleColourSelect = (square: Square) => {
+    setIsModalShowing(false);
   };
 
   return (
@@ -26,7 +31,7 @@ const SidePanel = ({ players }: Props) => {
         <ConnectionState isConnected={isConnected} />
         <ConnectionManager />
       </div>
-      <LargeCardModal isShowing={isModalShowing} />
+      <LargeCardModal isShowing={isModalShowing} onColourSelect={handleColourSelect} />
     </div>
   );
 };

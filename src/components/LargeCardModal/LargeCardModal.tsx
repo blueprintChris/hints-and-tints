@@ -4,12 +4,10 @@ import { GameContext } from '../../context/GameContext';
 import { Square } from '../../constants/board';
 import randomNumberFromRange from '../../utils/randomNumber';
 
-const LargeCardModal = ({ isShowing }: Props) => {
+const LargeCardModal = ({ isShowing, onColourSelect }: Props) => {
   const [fourRandomColours, setFourRandomColours] = useState<Square[]>([]);
 
   const { grid } = useContext(GameContext);
-
-  const handleClick = (colour: Square) => {};
 
   useEffect(() => {
     const colours = [];
@@ -34,7 +32,7 @@ const LargeCardModal = ({ isShowing }: Props) => {
                 <button
                   className={styles.colourSquare}
                   style={{ backgroundColor: colour.hex }}
-                  onClick={() => handleClick(colour)}
+                  onClick={() => onColourSelect(colour)}
                 />
                 <div className={styles.colourText}>{colour.ref}</div>
               </div>
@@ -48,6 +46,7 @@ const LargeCardModal = ({ isShowing }: Props) => {
 
 type Props = {
   isShowing: boolean;
+  onColourSelect: (colour: Square) => void;
 };
 
 export default LargeCardModal;

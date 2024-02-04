@@ -7,14 +7,14 @@ const PlayerList = ({ players }: Props) => {
     <div>
       <h1>Clue Giver</h1>
       {clueGivers.map(giver => (
-        <p>{giver.name}</p>
+        <p key={giver.id}>{giver.name}</p>
       ))}
       <h1>Guessers</h1>
       <ul>
         {players.map(player => {
           return (
             !player.isClueGiver && (
-              <li>
+              <li key={player.id}>
                 {player.name}: {player.score}
               </li>
             )

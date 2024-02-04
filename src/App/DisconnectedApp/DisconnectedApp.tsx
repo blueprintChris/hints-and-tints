@@ -1,34 +1,41 @@
+import { FormEvent, useState } from 'react';
 import classnames from 'classnames';
 import { socket } from '../../socket/Socket';
 import styles from './DisconnectedApp.module.css';
+import { Title } from '../../components';
 
 const DisconnectedApp = () => {
-  const handleOnClick = () => {
-    socket.connect();
+  const [inputValue, setInputValue] = useState('');
+
+  const handleInputChange = (e: FormEvent<HTMLInputElement>) => {
+    setInputValue(e.currentTarget.value);
   };
+
+  const handleOnClick = () => {
+    if (inputValue) {
+      socket.connect();
+    } else {
+      alert('Please enter a name');
+    }
+  };
+
   return (
     <div className={styles.disconnectedContainer}>
       <div className={styles.disconnectedContent}>
-        <div className={styles.disconnectedTitleWrapper}>
-          <h1 className={styles.disconnectedTitle}>
-            <span className={styles.textTypeA}>Ti</span>
-            <span className={styles.textTypeB}>N</span>
-            <span className={styles.textTypeA}>TS</span>
-          </h1>
-          <div className={classnames(styles.textTypeA, styles.separator)}>&</div>
-          <h1 className={styles.disconnectedTitle}>
-            <span className={styles.textTypeC}>H</span>
-            <span className={styles.textTypeB}>i</span>
-            <span className={styles.textTypeA}>N</span>
-            <span className={styles.textTypeB}>T</span>
-            <span className={styles.textTypeC}>S</span>
-          </h1>
+        <div className={styles.titleWrapper}>
+          <Title size={40} />
         </div>
         <div className={styles.nameInputContainer}>
           <label className={styles.nameInputLabel} htmlFor='nameInput'>
-            Enter your name
+            To create a room, enter a nickname
           </label>
-          <input className={styles.nameInput} type='text' />
+          <input
+            className={styles.nameInput}
+            type='text'
+            onChange={handleInputChange}
+            autoFocus
+            placeholder='Enter your nickname'
+          />
           <button className={styles.nameInputButton} onClick={handleOnClick}>
             Create Room
           </button>

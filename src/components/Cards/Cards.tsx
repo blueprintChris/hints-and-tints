@@ -1,13 +1,10 @@
 import * as React from 'react';
 import styles from './Cards.module.css';
+import randomNumberFromRange from '../../utils/randomNumber';
 
 const cards = Array.from({ length: 10 });
 
 const Cards = ({ onClick }: Props) => {
-  const randomNumberFromRange = (min: number, max: number) => {
-    return Math.floor(Math.random() * max - min + 1) + min;
-  };
-
   return (
     <div className={styles.cardStack}>
       {cards.map((_, idx) => {
@@ -16,6 +13,7 @@ const Cards = ({ onClick }: Props) => {
         return (
           <div
             className={styles.card}
+            key={idx}
             style={{
               top: randomNumberFromRange(0, 10),
               left: randomNumberFromRange(0, 10),

@@ -1,0 +1,45 @@
+.titleContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  margin: 0;
+  transition: font-size 1s ease;
+}
+
+.textTypeA {
+  color: #46c0b3;
+}
+
+.textTypeB {
+  color: #e76fac;
+}
+
+.textTypeC {
+  color: #abcf39;
+}
+
+.separator {
+  width: 240px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.separator::before,
+.separator::after {
+  content: '';
+  flex: 1;
+  border-bottom: 2px solid #9fc2bc;
+}
+
+.separator:not(:empty)::before {
+  margin-right: 10px;
+}
+
+.separator:not(:empty)::after {
+  margin-left: 10px;
+}
