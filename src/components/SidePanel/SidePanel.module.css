@@ -1,0 +1,29 @@
+.sidePanel {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 20px 10px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 1px 6px #15171c;
+  height: 100%;
+  color: white;
+}
+
+.cardsContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.playerListContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}

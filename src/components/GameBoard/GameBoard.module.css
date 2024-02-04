@@ -10,7 +10,7 @@
   position: relative;
   display: grid;
   gap: 4px;
-  grid-template-columns: repeat(30, 36px);
+  grid-template-columns: repeat(30, 46px);
 }
 
 .row:before {
@@ -18,7 +18,6 @@
   align-items: center;
   justify-content: flex-end;
   font-size: 12px;
-  height: 36px;
   width: 10px;
   content: attr(data-content);
   display: flex;
@@ -26,15 +25,18 @@
   color: white;
   position: absolute;
   left: -18px;
+  top: 16px;
 }
 
 .row:first-child .square::before {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   content: attr(data-content);
   color: white;
   font-size: 12px;
   position: absolute;
   top: -20px;
-  width: 32px;
 }
 
 .square {
