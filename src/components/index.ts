@@ -5,3 +5,4 @@ export { default as Cards } from './Cards/Cards';
 export { default as ConnectionState } from './ConnectionState/ConnectionState';
 export { default as ConnectionManager } from './ConnectionManager/ConnectionManager';
 export { default as Title } from './Title/Title';
+export { default as Button } from './Button/Button';

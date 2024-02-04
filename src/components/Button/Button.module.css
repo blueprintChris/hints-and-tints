@@ -1,0 +1,25 @@
+.button {
+  height: 100%;
+  width: 100%;
+  background: none;
+  outline: none;
+  border: none;
+  background-color: #e76fac;
+  border-radius: 8px;
+  color: #282c34;
+  cursor: pointer;
+  font-family: 'Comfortaa', 'open-sans';
+  font-weight: bold;
+  font-size: 20px;
+  box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.75);
+
+  &:hover {
+    background-color: #e15199;
+  }
+
+  &:active {
+    position: relative;
+    top: 1px;
+    box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.75);
+  }
+}

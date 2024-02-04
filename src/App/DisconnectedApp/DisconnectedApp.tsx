@@ -1,8 +1,7 @@
 import { FormEvent, useState } from 'react';
-import classnames from 'classnames';
 import { socket } from '../../socket/Socket';
 import styles from './DisconnectedApp.module.css';
-import { Title } from '../../components';
+import { Button, Title } from '../../components';
 
 const DisconnectedApp = () => {
   const [inputValue, setInputValue] = useState('');
@@ -30,15 +29,16 @@ const DisconnectedApp = () => {
             To create a room, enter a nickname
           </label>
           <input
+            name='nameInput'
             className={styles.nameInput}
             type='text'
             onChange={handleInputChange}
             autoFocus
             placeholder='Enter your nickname'
           />
-          <button className={styles.nameInputButton} onClick={handleOnClick}>
-            Create Room
-          </button>
+          <div className={styles.buttonWrapper}>
+            <Button text='Create room' onClick={handleOnClick} />
+          </div>
         </div>
       </div>
     </div>
