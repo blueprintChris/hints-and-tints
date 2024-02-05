@@ -34,4 +34,5 @@ type SocketContextType = {
 type Props = {
   children: JSX.Element;
 };
+
 export default SocketContextProvider;

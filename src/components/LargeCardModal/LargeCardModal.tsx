@@ -28,7 +28,7 @@ const LargeCardModal = ({ isShowing, onColourSelect }: Props) => {
         <div className={styles.largeCard}>
           <div className={styles.coloursContainer}>
             {fourRandomColours.map(colour => (
-              <div>
+              <div key={colour.ref}>
                 <button
                   className={styles.colourSquare}
                   style={{ backgroundColor: colour.hex }}

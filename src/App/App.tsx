@@ -1,13 +1,27 @@
-import { useContext } from 'react';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import DisconnectedApp from './DisconnectedApp/DisconnectedApp';
 import ConnectedApp from './ConnectedApp/ConnectedApp';
-import { SocketContext } from '../context/SocketContext';
+import { ErrorPage } from '../components';
 import styles from './App.module.css';
 
-const App = () => {
-  const { isConnected } = useContext(SocketContext);
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <DisconnectedApp />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: '/room/:id',
+    element: <ConnectedApp />,
+  },
+]);
 
-  return <div className={styles.app}>{!isConnected ? <DisconnectedApp /> : <ConnectedApp />}</div>;
+const App = () => {
+  return (
+    <div className={styles.app}>
+      <RouterProvider router={router} />
+    </div>
+  );
 };
 
 export default App;

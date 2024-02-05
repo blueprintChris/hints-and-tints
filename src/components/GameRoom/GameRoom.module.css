@@ -15,15 +15,6 @@
   color: white;
 }
 
-.text {
-  font-family: 'Honk', 'open-sans';
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-  color: white;
-  font-size: 28px;
-}
-
 .content {
   display: flex;
   height: calc(100vh - 40px);

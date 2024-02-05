@@ -1,15 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import App from './App/App';
 import reportWebVitals from './reportWebVitals';
-import SocketContextProvider from './context/SocketContext';
+import { PlayerContextProvider, GameContextProvider, SocketContextProvider } from './context';
+import './index.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <React.StrictMode>
     <SocketContextProvider>
-      <App />
+      <GameContextProvider>
+        <PlayerContextProvider>
+          <App />
+        </PlayerContextProvider>
+      </GameContextProvider>
     </SocketContextProvider>
   </React.StrictMode>
 );

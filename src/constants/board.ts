@@ -1,6 +1,6 @@
-type Grid = Row[];
+export type Grid = Row[];
 
-type Row = {
+export type Row = {
   row: string;
   squares: Square[];
 };

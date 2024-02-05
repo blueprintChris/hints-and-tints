@@ -1,4 +1,4 @@
-import { Square } from '../../../constants/board';
+import { Square } from '../../../../constants/board';
 import styles from './GameSquare.module.css';
 
 const GameSquare = ({ square, onClick }: Props) => {

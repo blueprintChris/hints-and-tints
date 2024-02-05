@@ -1,14 +1,25 @@
-import { createContext } from 'react';
-import { Players } from '../types/Players';
+import { createContext, useState } from 'react';
+import { Player } from '../types/Players';
 
-const PlayerContext = createContext({});
+const defaultContext = {
+  player: null,
+  setPlayer: () => {},
+};
 
-const PlayerContextProvider = ({ players, children }: PlayerContextProps) => {
-  return <PlayerContext.Provider value={{ players }}>{children}</PlayerContext.Provider>;
+export const PlayerContext = createContext<PlayerContextProps>(defaultContext);
+
+const PlayerContextProvider = ({ children }: Props) => {
+  const [player, setPlayer] = useState<Player | null>(null);
+
+  return <PlayerContext.Provider value={{ player, setPlayer }}>{children}</PlayerContext.Provider>;
 };
 
 type PlayerContextProps = {
-  players: Players;
+  player: Player | null;
+  setPlayer: React.Dispatch<React.SetStateAction<Player | null>>;
+};
+
+type Props = {
   children: JSX.Element;
 };
 
