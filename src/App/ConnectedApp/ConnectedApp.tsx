@@ -1,21 +1,20 @@
 import { FormEvent, useContext, useEffect, useState } from 'react';
-import { v4 as uuid } from 'uuid';
 import { socket } from '../../socket/Socket';
 import { GameContext, PlayerContext, SocketContext } from '../../context/';
 import { NameInputPanel } from '../../components';
 import { useNavigate, useParams } from 'react-router-dom';
 import GameRoom from '../../components/GameRoom/GameRoom';
 import DisconnectedAppContainer from '../DisconnectedApp/DisconnectedAppContainer/DisconnectedAppContainer';
-import { Player } from '../../types/Players';
+import { RoomJoinResult } from '../../types/Socket';
 
 const ConnectedApp = () => {
   const [nickname, setNickname] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
 
   const { id } = useParams();
   const navigate = useNavigate();
+
   const { isConnected } = useContext(SocketContext);
-  const { roomId, setRoomId, players } = useContext(GameContext);
+  const { roomId, setRoomId, players, setPlayers } = useContext(GameContext);
   const { player, setPlayer } = useContext(PlayerContext);
 
   const handleInputChange = (e: FormEvent<HTMLInputElement>) => {
@@ -23,29 +22,21 @@ const ConnectedApp = () => {
   };
 
   const handleHomepageReturn = () => {
+    socket.disconnect();
     navigate('/');
   };
 
   const handleOnClick = () => {
     if (id) {
-      const player = {
-        name: nickname,
-        score: 0,
-        id: uuid(),
-        turn: 1,
-        isTurn: false,
-        isClueGiver: false,
-      };
-
-      setRoomId(id);
-      setPlayer(player);
-
-      const playerList = [...players];
-      console.log(playerList);
-      playerList.push(player);
-
-      socket.emit('room-join', { roomId: id, nickname, playerList });
+      // join the room
+      socket.emit('room-join', { roomId: id, nickname });
     }
+  };
+
+  const handleRoomLeave = ({ players }: RoomJoinResult) => {
+    setPlayers(players);
+    setPlayer(null);
+    setRoomId('');
   };
 
   useEffect(() => {
@@ -55,16 +46,25 @@ const ConnectedApp = () => {
   }, [isConnected]);
 
   useEffect(() => {
-    if (!roomId) {
-      socket.emit('room-search', { roomId: id });
+    socket.emit('room-search', { roomId: id });
 
-      socket.on('room-search', ({ doesRoomExist, roomId: id }) => {
-        if (doesRoomExist) {
-          setRoomId(id);
-        }
-      });
-    }
+    socket.on('room-search', ({ doesRoomExist, roomId: id }) => {
+      if (doesRoomExist) {
+        setRoomId(id);
+      } else {
+        setRoomId('');
+      }
+    });
   }, [id, player, setRoomId, roomId]);
+
+  if (isConnected && !roomId) {
+    return (
+      <div>
+        <h1>Room not found</h1>
+        <button onClick={handleHomepageReturn}>Return to Homepage</button>
+      </div>
+    );
+  }
 
   if (isConnected && roomId && !player) {
     return (
@@ -81,14 +81,7 @@ const ConnectedApp = () => {
     );
   }
 
-  return isConnected && roomId && player ? (
-    <GameRoom players={players} roomId={roomId} />
-  ) : (
-    <div>
-      <h1>Room not found</h1>
-      <button onClick={handleHomepageReturn}>Return to Homepage</button>
-    </div>
-  );
+  return isConnected && roomId && player && <GameRoom players={players} roomId={roomId} />;
 };
 
 export default ConnectedApp;

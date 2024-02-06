@@ -5,12 +5,12 @@ import { socket } from '../../socket/Socket';
 import { NameInputPanel } from '../../components';
 import { GameContext } from '../../context/GameContext';
 import { PlayerContext } from '../../context';
-import { Player } from '../../types/Players';
 import DisconnectedAppContainer from './DisconnectedAppContainer/DisconnectedAppContainer';
+import { RoomJoinResult } from '../../types/Socket';
 
 const DisconnectedApp = () => {
   const [nickname, setNickname] = useState('');
-  const { setRoomId, players } = useContext(GameContext);
+  const { setPlayers } = useContext(GameContext);
   const { setPlayer } = useContext(PlayerContext);
 
   const navigate = useNavigate();
@@ -19,34 +19,23 @@ const DisconnectedApp = () => {
     setNickname(e.currentTarget.value);
   };
 
-  const updatePlayerList = (player: Player) => {
-    const tempPlayers = [...players];
-    tempPlayers.push(player);
-    return tempPlayers;
-  };
-
   const handleOnClick = () => {
     const roomId = uuid();
 
     if (nickname && roomId) {
-      const player = {
-        name: nickname,
-        score: 0,
-        id: uuid(),
-        turn: 0,
-        isTurn: true,
-        isClueGiver: true,
-      };
-
-      setPlayer(player);
-      const playerList = updatePlayerList(player);
-
+      // connect to the websocket
       socket.connect();
-      socket.emit('room-join', { roomId, nickname, playerList });
 
-      socket.on('room-join', ({ roomId }) => {
-        setRoomId(roomId);
+      // create room
+      socket.emit('room-create', { roomId });
 
+      // join room
+      socket.emit('room-join', { roomId, nickname });
+      socket.on('room-join', ({ roomId, player, players }: RoomJoinResult) => {
+        setPlayer(player);
+        setPlayers(players);
+
+        // naviate to game room
         navigate(`/room/${roomId}`);
       });
     } else {
