@@ -8,13 +8,13 @@ import './index.css';
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <React.StrictMode>
-    <SocketContextProvider>
-      <GameContextProvider>
-        <PlayerContextProvider>
+    <GameContextProvider>
+      <PlayerContextProvider>
+        <SocketContextProvider>
           <App />
-        </PlayerContextProvider>
-      </GameContextProvider>
-    </SocketContextProvider>
+        </SocketContextProvider>
+      </PlayerContextProvider>
+    </GameContextProvider>
   </React.StrictMode>
 );
 

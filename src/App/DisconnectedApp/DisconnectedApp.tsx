@@ -10,7 +10,7 @@ import DisconnectedAppContainer from './DisconnectedAppContainer/DisconnectedApp
 
 const DisconnectedApp = () => {
   const [nickname, setNickname] = useState('');
-  const { setRoomId, setPlayers, players } = useContext(GameContext);
+  const { setRoomId, players } = useContext(GameContext);
   const { setPlayer } = useContext(PlayerContext);
 
   const navigate = useNavigate();
@@ -22,22 +22,31 @@ const DisconnectedApp = () => {
   const updatePlayerList = (player: Player) => {
     const tempPlayers = [...players];
     tempPlayers.push(player);
-    setPlayers(tempPlayers);
+    return tempPlayers;
   };
 
   const handleOnClick = () => {
     const roomId = uuid();
 
     if (nickname && roomId) {
-      const player = { name: nickname, score: 0, id: 0, turn: 0, isTurn: true, isClueGiver: true };
+      const player = {
+        name: nickname,
+        score: 0,
+        id: uuid(),
+        turn: 0,
+        isTurn: true,
+        isClueGiver: true,
+      };
 
       setPlayer(player);
-      updatePlayerList(player);
+      const playerList = updatePlayerList(player);
 
       socket.connect();
-      socket.emit('room-create', { roomId, nickname });
-      socket.on('room-created', ({ roomId }) => {
+      socket.emit('room-join', { roomId, nickname, playerList });
+
+      socket.on('room-join', ({ roomId }) => {
         setRoomId(roomId);
+
         navigate(`/room/${roomId}`);
       });
     } else {
