@@ -75,7 +75,11 @@ const ConnectedApp = () => {
     );
   }
 
-  return isConnected && roomId && player && <GameRoom players={players} roomId={roomId} />;
+  return (
+    isConnected &&
+    roomId &&
+    player && <GameRoom players={players} roomId={roomId} player={player} />
+  );
 };
 
 export default ConnectedApp;

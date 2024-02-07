@@ -1,5 +1,5 @@
 import { FormEvent } from 'react';
-import { Button, Title } from '../../components';
+import { Button, Input, Title } from '../../components';
 import styles from './NameInputPanel.module.css';
 
 const NameInputPanel = ({
@@ -16,16 +16,11 @@ const NameInputPanel = ({
         <Title size={40} />
       </div>
       <div className={styles.nameInputContainer}>
-        <label className={styles.nameInputLabel} htmlFor={inputName}>
-          {labelText}
-        </label>
-        <input
+        <Input
+          label={labelText}
           name={inputName}
-          className={styles.nameInput}
-          type='text'
-          onChange={onChange}
-          autoFocus
           placeholder={inputPlaceholder}
+          onChange={onChange}
         />
         <div className={styles.buttonWrapper}>
           <Button text={buttonText} onClick={onClick} />

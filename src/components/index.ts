@@ -6,4 +6,6 @@ export { default as Title } from './Title/Title';
 export { default as Button } from './Button/Button';
 export { default as ErrorPage } from './ErrorPage/ErrorPage';
 export { default as NameInputPanel } from './NameInputPanel/NameInputPanel';
-export { default as LargeCardModal } from './LargeCardModal/LargeCardModal';
+export { default as LargeCard } from './LargeCard/LargeCard';
+export { default as ColourSelector } from './ColourSelector/ColourSelector';
+export { default as Input } from './Input/Input';

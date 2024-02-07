@@ -1,10 +1,14 @@
+import { HINTER, TINTER } from '../../../constants/player';
 import { Player } from '../../../types/Players';
 import Button from '../../Button/Button';
 import PlayerList from '../../PlayerList/PlayerList';
 import styles from './LobbyPanel.module.css';
 
 const LobbyPanel = ({ players, player, onHinterClick, onJoinClick, onStartClick }: Props) => {
-  const hinter = players.find(pl => pl.role === 'hinter');
+  const hinter = players.find(pl => pl.role === HINTER);
+  const tinter = players.find(pl => pl.role === TINTER);
+
+  const canStartGame = () => hinter && tinter;
 
   return (
     <div className={styles.lobbyWrapper}>
@@ -22,13 +26,18 @@ const LobbyPanel = ({ players, player, onHinterClick, onJoinClick, onStartClick 
           {!player?.role && (
             <Button onClick={onJoinClick} text='Join game' disabled={player?.role !== ''} />
           )}
-          {players.map(pl => pl.role === 'tinter' && <>{pl.name}</>)}
+          {players.map(pl => pl.role === TINTER && <>{pl.name}</>)}
         </div>
       </div>
 
       <PlayerList players={players} />
       <div className={styles.buttonWrapper}>
-        <Button onClick={onStartClick} text='Start Game' colour='#48B86E' />
+        <Button
+          onClick={onStartClick}
+          text='Start Game'
+          colour='#48B86E'
+          disabled={!canStartGame()}
+        />
       </div>
     </div>
   );

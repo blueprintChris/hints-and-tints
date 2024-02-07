@@ -21,6 +21,8 @@ const defaultContext = {
   setHinter: () => {},
   gameState: GAME_STATES.LOBBY,
   setGameState: () => {},
+  isLoading: false,
+  setIsLoading: () => {},
 };
 
 export const GameContext = createContext<GameContextProps>(defaultContext);
@@ -28,12 +30,22 @@ export const GameContext = createContext<GameContextProps>(defaultContext);
 const GameContextProvider = ({ children }: Props) => {
   const [roomId, setRoomId] = useState('');
   const [players, setPlayers] = useState<Player[]>([]);
-  const [hinter, setHinter] = useState('');
   const [gameState, setGameState] = useState('LOBBY');
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <GameContext.Provider
-      value={{ grid, roomId, setRoomId, players, setPlayers, gameState, setGameState }}
+      value={{
+        grid,
+        roomId,
+        setRoomId,
+        players,
+        setPlayers,
+        gameState,
+        setGameState,
+        isLoading,
+        setIsLoading,
+      }}
     >
       {children}
     </GameContext.Provider>
@@ -48,6 +60,8 @@ type GameContextProps = {
   setPlayers: React.Dispatch<React.SetStateAction<Player[]>>;
   gameState: string;
   setGameState: React.Dispatch<React.SetStateAction<string>>;
+  isLoading: boolean;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 type Props = {

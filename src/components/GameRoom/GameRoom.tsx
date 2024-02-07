@@ -1,9 +1,41 @@
+import { GridLoader } from 'react-spinners';
 import GameBoard from './GameBoard/GameBoard';
-import { SidePanel, Title } from '../../components';
+import { ColourSelector, LargeCard, SidePanel, Title } from '../../components';
 import { Player } from '../../types/Players';
 import styles from './GameRoom.module.css';
+import { useContext } from 'react';
+import { GameContext } from '../../context';
+import { HINTER } from '../../constants/player';
+import Modal from '../Modal/Modal';
 
-const GameRoom = ({ players, roomId }: Props) => {
+const GameRoom = ({ players, roomId, player }: Props) => {
+  const { gameState, isLoading } = useContext(GameContext);
+
+  const hinter = players.find(pl => pl.role === HINTER);
+  const isHinter = hinter?.role === player.role;
+
+  const modalTitle = () => {
+    if (isLoading) {
+      return 'Hang tight, the game is starting...';
+    } else {
+      if (isHinter) {
+        return 'Select a colour';
+      } else {
+        return 'Please wait...';
+      }
+    }
+  };
+
+  const modalSubtitle = (name?: string) => {
+    if (!isLoading && !isHinter) {
+      return `${name} is choosing a colour`;
+    }
+
+    return '';
+  };
+
+  const handleColourSelect = () => {};
+
   return (
     <>
       <div className={styles.header}>
@@ -18,6 +50,21 @@ const GameRoom = ({ players, roomId }: Props) => {
           <SidePanel players={players} />
         </div>
       </div>
+      {gameState === 'SELECTION' && (
+        <Modal title={modalTitle()} subTitle={modalSubtitle(hinter?.name)}>
+          {isLoading && <GridLoader color='#e76fac' />}
+          {!isLoading && (
+            <>
+              {isHinter && (
+                <LargeCard>
+                  <ColourSelector onColourSelect={handleColourSelect} />
+                </LargeCard>
+              )}
+              {!isHinter && <GridLoader color='#e76fac' />}
+            </>
+          )}
+        </Modal>
+      )}
     </>
   );
 };
@@ -25,6 +72,7 @@ const GameRoom = ({ players, roomId }: Props) => {
 type Props = {
   players: Player[];
   roomId: string;
+  player: Player;
 };
 
 export default GameRoom;

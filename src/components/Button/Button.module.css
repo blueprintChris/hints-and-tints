@@ -24,8 +24,12 @@
   }
 
   &:disabled {
-    background-color: grey;
+    background-color: grey !important;
     box-shadow: none;
     cursor: default;
+
+    &:active {
+      top: 0;
+    }
   }
 }
