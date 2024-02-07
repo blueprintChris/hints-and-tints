@@ -1,7 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Sixtyfour&display=swap');
-
 .gameboard {
-  font-family: 'Sixtyfour', sans-serif;
+  font-family: 'Sixtyfour', 'open-sans';
   display: inline-grid;
   gap: 4px;
 }

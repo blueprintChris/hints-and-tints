@@ -3,16 +3,36 @@ import DisconnectedApp from './DisconnectedApp/DisconnectedApp';
 import ConnectedApp from './ConnectedApp/ConnectedApp';
 import { ErrorPage } from '../components';
 import styles from './App.module.css';
+import { PropsWithChildren, ReactNode } from 'react';
+import { GameContextProvider, PlayerContextProvider, SocketContextProvider } from '../context';
+
+const ProviderWrapper = ({ children }: PropsWithChildren) => {
+  return (
+    <GameContextProvider>
+      <PlayerContextProvider>
+        <SocketContextProvider>{children}</SocketContextProvider>
+      </PlayerContextProvider>
+    </GameContextProvider>
+  );
+};
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <DisconnectedApp />,
+    element: (
+      <ProviderWrapper>
+        <DisconnectedApp />
+      </ProviderWrapper>
+    ),
     errorElement: <ErrorPage />,
   },
   {
     path: '/room/:id',
-    element: <ConnectedApp />,
+    element: (
+      <ProviderWrapper>
+        <ConnectedApp />
+      </ProviderWrapper>
+    ),
   },
 ]);
 

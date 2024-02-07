@@ -4,14 +4,12 @@ import { v4 as uuid } from 'uuid';
 import { socket } from '../../socket/Socket';
 import { NameInputPanel } from '../../components';
 import { GameContext } from '../../context/GameContext';
-import { PlayerContext } from '../../context';
 import DisconnectedAppContainer from './DisconnectedAppContainer/DisconnectedAppContainer';
 import { RoomJoinResult } from '../../types/Socket';
 
 const DisconnectedApp = () => {
   const [nickname, setNickname] = useState('');
   const { setPlayers } = useContext(GameContext);
-  const { setPlayer } = useContext(PlayerContext);
 
   const navigate = useNavigate();
 
@@ -31,8 +29,8 @@ const DisconnectedApp = () => {
 
       // join room
       socket.emit('room-join', { roomId, nickname });
-      socket.on('room-join', ({ roomId, player, players }: RoomJoinResult) => {
-        setPlayer(player);
+
+      socket.on('room-join', ({ roomId, players }: RoomJoinResult) => {
         setPlayers(players);
 
         // naviate to game room

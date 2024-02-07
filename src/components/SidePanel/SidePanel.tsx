@@ -1,10 +1,11 @@
 import { useContext, useState } from 'react';
 import { PlayerList, LargeCardModal, Button } from '../../components';
-import { Players } from '../../types/Players';
+import { Player, Players } from '../../types/Players';
 import { Square } from '../../constants/board';
 import styles from './SidePanel.module.css';
 import { GameContext, PlayerContext } from '../../context';
 import { socket } from '../../socket/Socket';
+import LobbyPanel from './LobbyPanel/LobbyPanel';
 
 const SidePanel = ({ players }: Props) => {
   const [isModalShowing, setIsModalShowing] = useState(false);
@@ -21,11 +22,11 @@ const SidePanel = ({ players }: Props) => {
   };
 
   const handleJoinGameAsHinter = () => {
-    socket.emit('update-role', { roomId, player, role: 'hinter' });
+    socket.emit('update-player-role', { roomId, playerId: player?.id, role: 'hinter' });
   };
 
   const handleJoinGame = () => {
-    socket.emit('update-role', { roomId, player, role: 'guesser' });
+    socket.emit('update-player-role', { roomId, playerId: player?.id, role: 'tinter' });
   };
 
   const handleStartGame = () => {
@@ -35,22 +36,13 @@ const SidePanel = ({ players }: Props) => {
   return (
     <div className={styles.sidePanel}>
       {gameState === 'LOBBY' && (
-        <>
-          <div className={styles.playerListContainer}>
-            <PlayerList players={players} />
-          </div>
-          <div className={styles.buttonContainer}>
-            <div className={styles.buttonWrapper}>
-              <Button onClick={handleJoinGameAsHinter} text='Join game as hinter' />
-            </div>
-            <div className={styles.buttonWrapper}>
-              <Button onClick={handleJoinGame} text='Join game as guesser' />
-            </div>
-            <div className={styles.buttonWrapper}>
-              <Button onClick={handleStartGame} text='Start Game' />
-            </div>
-          </div>
-        </>
+        <LobbyPanel
+          players={players}
+          player={player}
+          onHinterClick={handleJoinGameAsHinter}
+          onJoinClick={handleJoinGame}
+          onStartClick={handleStartGame}
+        />
       )}
 
       <LargeCardModal isShowing={isModalShowing} onColourSelect={handleColourSelect} />

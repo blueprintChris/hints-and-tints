@@ -38,3 +38,7 @@
   max-width: 300px;
   max-height: 796px;
 }
+
+.buttonWrapper {
+  width: 150px;
+}

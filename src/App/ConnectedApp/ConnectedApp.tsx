@@ -33,12 +33,6 @@ const ConnectedApp = () => {
     }
   };
 
-  const handleRoomLeave = ({ players }: RoomJoinResult) => {
-    setPlayers(players);
-    setPlayer(null);
-    setRoomId('');
-  };
-
   useEffect(() => {
     if (!isConnected) {
       socket.connect();

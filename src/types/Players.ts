@@ -4,7 +4,7 @@ export type Player = {
   score: number;
   turn: number;
   isTurn: boolean;
-  isClueGiver: boolean;
+  role: string;
 };
 
 export type Players = Player[];

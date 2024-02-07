@@ -17,6 +17,8 @@ const defaultContext = {
   setRoomId: () => {},
   players: [],
   setPlayers: () => {},
+  hinter: '',
+  setHinter: () => {},
   gameState: GAME_STATES.LOBBY,
   setGameState: () => {},
 };
@@ -26,6 +28,7 @@ export const GameContext = createContext<GameContextProps>(defaultContext);
 const GameContextProvider = ({ children }: Props) => {
   const [roomId, setRoomId] = useState('');
   const [players, setPlayers] = useState<Player[]>([]);
+  const [hinter, setHinter] = useState('');
   const [gameState, setGameState] = useState('LOBBY');
 
   return (
