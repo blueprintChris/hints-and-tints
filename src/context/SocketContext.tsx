@@ -9,8 +9,8 @@ export const SocketContext = createContext<SocketContextType>({ isConnected: fal
 const SocketContextProvider = ({ children }: Props) => {
   const [isConnected, setIsConnected] = useState(socket.connected);
 
-  const { setPlayers, setRoomId, roomId } = useContext(GameContext);
-  const { setPlayer, player } = useContext(PlayerContext);
+  const { setPlayers, setRoomId } = useContext(GameContext);
+  const { setPlayer } = useContext(PlayerContext);
 
   useEffect(() => {
     const onConnect = () => {
