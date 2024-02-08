@@ -21,4 +21,8 @@
   &:focus {
     outline: 2px solid #46c0b3;
   }
+
+  &:disabled {
+    background-color: grey;
+  }
 }

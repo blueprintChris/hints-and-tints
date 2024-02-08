@@ -1,31 +1,69 @@
-import { useContext, useEffect, useState } from 'react';
+import { FormEvent, useCallback, useContext, useEffect, useState } from 'react';
+import classnames from 'classnames';
 import { Square } from '../../constants/board';
 import { GameContext } from '../../context';
 import randomNumberFromRange from '../../utils/randomNumber';
 import styles from './ColourSelector.module.css';
 import Input from '../Input/Input';
 import Button from '../Button/Button';
+import { Colours } from '../../constants/colours';
+import Tooltip from '../Tooltip/Tooltip';
+import { socket } from '../../socket/Socket';
 
-const ColourSelector = ({ onColourSelect }: Props) => {
+const ColourSelector = ({ onColourClick, onChange, onSubmitClick }: Props) => {
   const [fourRandomColours, setFourRandomColours] = useState<Square[]>([]);
+  const [hint, setHint] = useState('');
+  const [selectedColour, setSelectedColour] = useState<Square | null>(null);
+  const [diceRolls, setDiceRolls] = useState(2);
 
-  const { grid } = useContext(GameContext);
+  const { grid, roomId } = useContext(GameContext);
 
-  const handleOnChange = () => {};
+  const handleColourClick = (colour: Square) => {
+    setSelectedColour(colour);
+  };
 
-  const handleOnClick = () => {};
+  const handleOnChange = (e: FormEvent<HTMLInputElement>) => {
+    setHint(e.currentTarget.value);
+  };
 
-  useEffect(() => {
-    const colours = [];
+  const handleOnClick = () => {
+    socket.emit('round-start', {
+      roomId,
+      selectedColour,
+      gameState: 'GUESSING_ONE',
+      firstHint: hint,
+    });
+  };
 
-    for (let i = 0; i < 4; i++) {
+  const handleDiceClick = () => {
+    const remainingRolls = diceRolls - 1;
+    setDiceRolls(remainingRolls);
+
+    generateRandomColours();
+  };
+
+  const generateRandomColours = useCallback(() => {
+    setSelectedColour(null);
+
+    const colours: Square[] = [];
+
+    do {
       const row = grid[randomNumberFromRange(1, grid.length - 1)];
       const square = row.squares[randomNumberFromRange(1, row.squares.length - 1)];
+
+      if (colours.includes(square)) {
+        continue;
+      }
+
       colours.push(square);
-    }
+    } while (colours.length < 4);
 
     setFourRandomColours(colours);
   }, [grid]);
+
+  useEffect(() => {
+    generateRandomColours();
+  }, [generateRandomColours]);
 
   return (
     <div className={styles.colourSelector}>
@@ -33,30 +71,57 @@ const ColourSelector = ({ onColourSelect }: Props) => {
         {fourRandomColours.map(colour => (
           <div key={colour.ref}>
             <button
-              className={styles.colourSquare}
+              className={classnames(styles.colourSquare, {
+                [styles.selected]: selectedColour?.ref === colour.ref,
+              })}
               style={{ backgroundColor: colour.hex }}
-              onClick={() => onColourSelect(colour)}
-            />
+              onClick={() => handleColourClick(colour)}
+            >
+              {selectedColour?.ref === colour.ref && '✔'}
+            </button>
             <div className={styles.colourText}>{colour.ref}</div>
           </div>
         ))}
       </div>
-      <div className={styles.inputContainer}>
-        <Input
-          label='Type a single-worded clue'
-          name='clue'
-          placeholder='Enter your clue'
-          onChange={handleOnChange}
-        />
-      </div>
-      <div className={styles.buttonContainer}>
-        <Button text='Submit' onClick={handleOnClick} />
+      <div className={styles.inputWrapper}>
+        <div className={styles.inputContainer}>
+          <Input
+            name='clue'
+            placeholder='Enter your clue'
+            onChange={handleOnChange}
+            disabled={selectedColour === null}
+          />
+        </div>
+        <div className={styles.buttonWrapper}>
+          <div className={styles.buttonContainer}>
+            <Button
+              text='Submit'
+              onClick={handleOnClick}
+              disabled={selectedColour === null || hint === ''}
+            />
+          </div>
+          <div className={styles.diceContainer}>
+            <Tooltip
+              offset={{ x: 20, y: 20 }}
+              text={diceRolls > 0 ? `You can only roll ${diceRolls} more time(s)` : 'No more rolls'}
+            >
+              <Button
+                text='🎲'
+                onClick={handleDiceClick}
+                colour={Colours.OLIVE}
+                disabled={diceRolls === 0}
+              />
+            </Tooltip>
+          </div>
+        </div>
       </div>
     </div>
   );
 };
 
 type Props = {
-  onColourSelect: (colour: Square) => void;
+  onColourClick?: (colour: Square) => void;
+  onSubmitClick?: () => void;
+  onChange?: (e: FormEvent<HTMLInputElement>) => void;
 };
 export default ColourSelector;

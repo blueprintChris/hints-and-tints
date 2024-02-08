@@ -34,12 +34,11 @@ const GameRoom = ({ players, roomId, player }: Props) => {
     return '';
   };
 
-  const handleColourSelect = () => {};
-
   return (
     <>
       <div className={styles.header}>
         <Title size={10} orientation='row' />
+        <span className={styles.roomId}>{player.name}</span>
         <span className={styles.roomId}>Room ID: {roomId}</span>
       </div>
       <div className={styles.content}>
@@ -57,7 +56,7 @@ const GameRoom = ({ players, roomId, player }: Props) => {
             <>
               {isHinter && (
                 <LargeCard>
-                  <ColourSelector onColourSelect={handleColourSelect} />
+                  <ColourSelector />
                 </LargeCard>
               )}
               {!isHinter && <GridLoader color='#e76fac' />}

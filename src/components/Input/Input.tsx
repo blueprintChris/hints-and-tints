@@ -1,12 +1,14 @@
 import { FormEvent } from 'react';
 import styles from './Input.module.css';
 
-const Input = ({ onChange, placeholder, name, label }: Props) => {
+const Input = ({ onChange, placeholder, name, label, disabled }: Props) => {
   return (
     <>
-      <label className={styles.nameInputLabel} htmlFor={name}>
-        {label}
-      </label>
+      {label && (
+        <label className={styles.nameInputLabel} htmlFor={name}>
+          {label}
+        </label>
+      )}
       <input
         name={name}
         className={styles.nameInput}
@@ -14,16 +16,18 @@ const Input = ({ onChange, placeholder, name, label }: Props) => {
         onChange={onChange}
         autoFocus
         placeholder={placeholder}
+        disabled={disabled}
       />
     </>
   );
 };
 
 type Props = {
-  label: string;
+  label?: string;
   name: string;
   placeholder: string;
   onChange: (e: FormEvent<HTMLInputElement>) => void;
+  disabled?: boolean;
 };
 
 export default Input;

@@ -1,3 +1,4 @@
+import { Square } from '../constants/board';
 import { Player } from './Players';
 
 export type RoomJoinResult = {
@@ -19,4 +20,17 @@ export type PlayerRoleResult = {
 
 export type UpdatePlayerResult = {
   player: Player;
+};
+
+export type GameStartResult = {
+  gameState: string;
+  players: Player[];
+};
+
+export type RoundStartResult = {
+  gameState: string;
+  selectedColour: Square;
+  players: Player[];
+  currentTurn: Player;
+  firstHint: string;
 };

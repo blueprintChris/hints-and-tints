@@ -1,2 +1,99 @@
 .scorePanel {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.scoreWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.scoreContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.playerContainer {
+  width: 100%;
+}
+
+.player {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333842;
+  padding: 10px;
+}
+
+.currentPlayer {
+  font-size: 20px;
+  margin-right: 6px;
+}
+
+.hintWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.hintContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #333842;
+  padding: 10px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.tintContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid #15171c;
+  padding: 0 0 10px 0;
+  box-sizing: border-box;
+  margin-bottom: 30px;
+}
+
+.tintContainer h2 {
+  margin: 0;
+}
+
+.tint {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  text-align: center;
+  margin-left: 30px;
+}
+
+.bottomWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.buttonContainer {
+  width: 100%;
+  height: 40px;
 }

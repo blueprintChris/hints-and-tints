@@ -3,10 +3,12 @@ import { socket } from './../socket/Socket';
 import { GameContext } from './GameContext';
 import { PlayerContext } from './PlayerContext';
 import {
+  GameStartResult,
   GameStateResult,
   PlayerRoleResult,
   RoomJoinResult,
   RoomLeaveResult,
+  RoundStartResult,
   UpdatePlayerResult,
 } from '../types/Socket';
 import { useNavigate } from 'react-router-dom';
@@ -16,7 +18,8 @@ export const SocketContext = createContext<SocketContextType>({ isConnected: fal
 const SocketContextProvider = ({ children }: PropsWithChildren) => {
   const [isConnected, setIsConnected] = useState(socket.connected);
 
-  const { setPlayers, setRoomId, setGameState } = useContext(GameContext);
+  const { setPlayers, setRoomId, setGameState, setSelectedColour, setCurrentTurn, setFirstHint } =
+    useContext(GameContext);
   const { setPlayer } = useContext(PlayerContext);
 
   const navigate = useNavigate();
@@ -43,6 +46,25 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
       setPlayers(players);
     };
 
+    const handleGameStart = ({ gameState, players }: GameStartResult) => {
+      setGameState(gameState);
+      setPlayers(players);
+    };
+
+    const handleRoundStart = ({
+      selectedColour,
+      gameState,
+      players,
+      currentTurn,
+      firstHint,
+    }: RoundStartResult) => {
+      setSelectedColour(selectedColour);
+      setGameState(gameState);
+      setPlayers(players);
+      setCurrentTurn(currentTurn);
+      setFirstHint(firstHint);
+    };
+
     const handleGameState = ({ gameState }: GameStateResult) => {
       setGameState(gameState);
     };
@@ -55,6 +77,8 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
     socket.on('disconnect', onDisconnect);
     socket.on('room-join', handleRoomJoin);
     socket.on('update-player', handleUpdatePlayer);
+    socket.on('game-start', handleGameStart);
+    socket.on('round-start', handleRoundStart);
     socket.on('room-leave', handleRoomLeave);
     socket.on('update-game-state', handleGameState);
     socket.on('update-player-role', handlePlayerRole);

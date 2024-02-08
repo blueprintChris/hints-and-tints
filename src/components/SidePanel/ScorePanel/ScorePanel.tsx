@@ -1,34 +1,61 @@
+import { Square } from '../../../constants/board';
+import { Colours } from '../../../constants/colours';
 import { HINTER, TINTER } from '../../../constants/player';
 import { Player } from '../../../types/Players';
+import Button from '../../Button/Button';
 import styles from './ScorePanel.module.css';
 
-const ScorePanel = ({ players }: Props) => {
+const ScorePanel = ({ players, player, firstHint, selectedColour, currentTurn }: Props) => {
+  const handleEndTurn = () => {};
   return (
     <div className={styles.scorePanel}>
-      <div className={styles.buttonContainer}>
-        <h1>Hinter</h1>
-        <div className={styles.buttonWrapper}>
-          <div>
+      <div className={styles.scoreWrapper}>
+        <div className={styles.scoreContainer}>
+          <h1>Hinter</h1>
+          <div className={styles.playerContainer}>
             {players.map(
               pl =>
                 pl.role === HINTER && (
-                  <span>
-                    {pl.name}: {pl.score}
-                  </span>
+                  <div className={styles.player}>
+                    <span>{pl.name}</span>
+                    <span>{pl.score}</span>
+                  </div>
                 )
             )}
           </div>
         </div>
-        <h1>Tinters</h1>
-        <div className={styles.buttonWrapper}>
-          {players.map(
-            pl =>
-              pl.role === TINTER && (
-                <span>
-                  {pl.name}: {pl.score}
-                </span>
-              )
-          )}
+        <div className={styles.scoreContainer}>
+          <h1>Tinters</h1>
+          <div className={styles.playerContainer}>
+            {players.map(
+              pl =>
+                pl.role === TINTER && (
+                  <div
+                    className={styles.player}
+                    style={{ backgroundColor: currentTurn?.id === pl.id ? Colours.GREEN : '' }}
+                  >
+                    <span>{pl.name}</span>
+                    <span>{pl.score}</span>
+                  </div>
+                )
+            )}
+          </div>
+        </div>
+      </div>
+      <div className={styles.bottomWrapper}>
+        <div className={styles.hintWrapper}>
+          <h1>Your Hint</h1>
+          <div className={styles.hintContainer}>
+            <h2>{firstHint}</h2>
+            {player?.role === HINTER && (
+              <div className={styles.tint} style={{ backgroundColor: selectedColour?.hex }}>
+                <span>{selectedColour?.ref}</span>
+              </div>
+            )}
+          </div>
+        </div>
+        <div className={styles.buttonContainer}>
+          <Button onClick={handleEndTurn} text='End Turn' />
         </div>
       </div>
     </div>
@@ -37,6 +64,10 @@ const ScorePanel = ({ players }: Props) => {
 
 type Props = {
   players: Player[];
+  currentTurn: Player | null;
+  firstHint: string;
+  selectedColour: Square | null;
+  player: Player | null;
 };
 
 export default ScorePanel;

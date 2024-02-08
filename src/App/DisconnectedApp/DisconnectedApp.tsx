@@ -2,14 +2,14 @@ import { FormEvent, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
 import { socket } from '../../socket/Socket';
-import { NameInputPanel } from '../../components';
+import { LoadingSpinner, NameInputPanel } from '../../components';
 import { GameContext } from '../../context/GameContext';
 import DisconnectedAppContainer from './DisconnectedAppContainer/DisconnectedAppContainer';
-import { RoomJoinResult } from '../../types/Socket';
+import { Colours } from '../../constants/colours';
 
 const DisconnectedApp = () => {
   const [nickname, setNickname] = useState('');
-  const { setPlayers } = useContext(GameContext);
+  const { setIsLoading, isLoading } = useContext(GameContext);
 
   const navigate = useNavigate();
 
@@ -18,6 +18,8 @@ const DisconnectedApp = () => {
   };
 
   const handleOnClick = () => {
+    setIsLoading(true);
+
     const roomId = uuid();
 
     if (nickname && roomId) {
@@ -30,12 +32,12 @@ const DisconnectedApp = () => {
       // join room
       socket.emit('room-join', { roomId, nickname });
 
-      socket.on('room-join', ({ roomId, players }: RoomJoinResult) => {
-        setPlayers(players);
-
+      // simulate loading
+      setTimeout(() => {
         // naviate to game room
+        setIsLoading(false);
         navigate(`/room/${roomId}`);
-      });
+      }, 3000);
     } else {
       alert('Please enter a name');
     }
@@ -43,14 +45,17 @@ const DisconnectedApp = () => {
 
   return (
     <DisconnectedAppContainer>
-      <NameInputPanel
-        buttonText='Create room'
-        inputName='nameInput'
-        inputPlaceholder='Enter your nickname'
-        labelText=' To create a room, enter a nickname'
-        onChange={handleInputChange}
-        onClick={handleOnClick}
-      />
+      {isLoading && <LoadingSpinner colour={Colours.PINK} text='Constructing room...' />}
+      {!isLoading && (
+        <NameInputPanel
+          buttonText='Create room'
+          inputName='nameInput'
+          inputPlaceholder='Enter your nickname'
+          labelText=' To create a room, enter a nickname'
+          onChange={handleInputChange}
+          onClick={handleOnClick}
+        />
+      )}
     </DisconnectedAppContainer>
   );
 };

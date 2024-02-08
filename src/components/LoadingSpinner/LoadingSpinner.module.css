@@ -1,0 +1,10 @@
+.loadingSpinner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.loadingSpinner h2 {
+  color: white;
+}

@@ -1,11 +1,12 @@
 import { FormEvent, useContext, useEffect, useState } from 'react';
 import { socket } from '../../socket/Socket';
 import { GameContext, PlayerContext, SocketContext } from '../../context/';
-import { NameInputPanel } from '../../components';
+import { LoadingSpinner, NameInputPanel } from '../../components';
 import { useNavigate, useParams } from 'react-router-dom';
 import GameRoom from '../../components/GameRoom/GameRoom';
 import DisconnectedAppContainer from '../DisconnectedApp/DisconnectedAppContainer/DisconnectedAppContainer';
 import { RoomJoinResult } from '../../types/Socket';
+import { Colours } from '../../constants/colours';
 
 const ConnectedApp = () => {
   const [nickname, setNickname] = useState('');
@@ -14,8 +15,8 @@ const ConnectedApp = () => {
   const navigate = useNavigate();
 
   const { isConnected } = useContext(SocketContext);
-  const { roomId, setRoomId, players, setPlayers } = useContext(GameContext);
-  const { player, setPlayer } = useContext(PlayerContext);
+  const { roomId, setRoomId, players, isLoading, setIsLoading } = useContext(GameContext);
+  const { player } = useContext(PlayerContext);
 
   const handleInputChange = (e: FormEvent<HTMLInputElement>) => {
     setNickname(e.currentTarget.value);
@@ -27,9 +28,14 @@ const ConnectedApp = () => {
   };
 
   const handleOnClick = () => {
+    setIsLoading(true);
     if (id) {
       // join the room
-      socket.emit('room-join', { roomId: id, nickname });
+      setTimeout(() => {
+        setIsLoading(false);
+
+        socket.emit('room-join', { roomId: id, nickname });
+      }, 3000);
     }
   };
 
@@ -63,14 +69,17 @@ const ConnectedApp = () => {
   if (isConnected && roomId && !player) {
     return (
       <DisconnectedAppContainer>
-        <NameInputPanel
-          buttonText='Join room'
-          inputName='nameInputJoin'
-          inputPlaceholder='Enter your nickname'
-          labelText='To join the room, enter your nickname'
-          onChange={handleInputChange}
-          onClick={handleOnClick}
-        />
+        {isLoading && <LoadingSpinner colour={Colours.PINK} text='Joining room...' />}
+        {!isLoading && (
+          <NameInputPanel
+            buttonText='Join room'
+            inputName='nameInputJoin'
+            inputPlaceholder='Enter your nickname'
+            labelText='To join the room, enter your nickname'
+            onChange={handleInputChange}
+            onClick={handleOnClick}
+          />
+        )}
       </DisconnectedAppContainer>
     );
   }

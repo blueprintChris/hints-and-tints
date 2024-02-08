@@ -3,6 +3,8 @@
   justify-content: flex-start;
   align-items: flex-start;
 
+  position: relative;
+
   border: none;
   outline: none;
   background: none;
