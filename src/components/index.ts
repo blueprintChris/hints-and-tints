@@ -10,3 +10,5 @@ export { default as LargeCard } from './LargeCard/LargeCard';
 export { default as ColourSelector } from './ColourSelector/ColourSelector';
 export { default as Input } from './Input/Input';
 export { default as LoadingSpinner } from './LoadingSpinner/LoadingSpinner';
+export { default as HintInput } from './HintInput/HintInput';
+export { default as Modal } from './Modal/Modal';

@@ -26,7 +26,7 @@ const LobbyPanel = ({ players, player, onHinterClick, onJoinClick, onStartClick 
           {!player?.role && (
             <Button onClick={onJoinClick} text='Join game' disabled={player?.role !== ''} />
           )}
-          {players.map(pl => pl.role === TINTER && <>{pl.name}</>)}
+          {players.map(pl => pl.role === TINTER && <span key={pl.id}>{pl.name}</span>)}
         </div>
       </div>
 

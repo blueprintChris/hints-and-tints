@@ -10,7 +10,7 @@ import { HINTER, TINTER } from '../../constants/player';
 const SidePanel = ({ players }: Props) => {
   const { gameState, roomId, currentTurn, firstHint, selectedColour, setIsLoading } =
     useContext(GameContext);
-  const { player } = useContext(PlayerContext);
+  const { player, selectedSquare } = useContext(PlayerContext);
 
   const handleJoinGameAsHinter = () => {
     socket.emit('update-player-role', { roomId, playerId: player?.id, role: HINTER });
@@ -18,6 +18,10 @@ const SidePanel = ({ players }: Props) => {
 
   const handleJoinGame = () => {
     socket.emit('update-player-role', { roomId, playerId: player?.id, role: TINTER });
+  };
+
+  const handleEndTurn = () => {
+    socket.emit('make-turn', { roomId, selectedSquare, playerId: player?.id });
   };
 
   const handleStartGame = () => {
@@ -41,7 +45,7 @@ const SidePanel = ({ players }: Props) => {
           onStartClick={handleStartGame}
         />
       )}
-      {gameState === 'SELECTION' && <div>plz wait</div>}
+      {(gameState === 'SELECTION' || gameState === 'SELECTION_TWO') && <div>plz wait</div>}
       {gameState === 'GUESSING_ONE' && (
         <ScorePanel
           player={player}
@@ -49,6 +53,8 @@ const SidePanel = ({ players }: Props) => {
           currentTurn={currentTurn}
           firstHint={firstHint}
           selectedColour={selectedColour}
+          onEndTurnClick={handleEndTurn}
+          selectedSquare={selectedSquare}
         />
       )}
     </div>

@@ -5,11 +5,12 @@ import { PlayerContext } from './PlayerContext';
 import {
   GameStartResult,
   GameStateResult,
-  PlayerRoleResult,
+  MakeTurnResult,
   RoomJoinResult,
   RoomLeaveResult,
   RoundStartResult,
   UpdatePlayerResult,
+  UpdatePlayersResult,
 } from '../types/Socket';
 import { useNavigate } from 'react-router-dom';
 
@@ -20,7 +21,7 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
 
   const { setPlayers, setRoomId, setGameState, setSelectedColour, setCurrentTurn, setFirstHint } =
     useContext(GameContext);
-  const { setPlayer } = useContext(PlayerContext);
+  const { setPlayer, setSelectedSquare } = useContext(PlayerContext);
 
   const navigate = useNavigate();
 
@@ -33,8 +34,9 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
       setIsConnected(false);
     };
 
-    const handleRoomJoin = ({ roomId, players }: RoomJoinResult) => {
+    const handleRoomJoin = ({ roomId, players, gameState }: RoomJoinResult) => {
       setPlayers(players);
+      setGameState(gameState);
       setRoomId(roomId);
     };
 
@@ -42,13 +44,23 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
       setPlayer(player);
     };
 
-    const handleRoomLeave = ({ players }: RoomLeaveResult) => {
+    const handleUpdatePlayers = ({ players }: UpdatePlayersResult) => {
       setPlayers(players);
     };
 
     const handleGameStart = ({ gameState, players }: GameStartResult) => {
       setGameState(gameState);
       setPlayers(players);
+    };
+
+    const handleGameState = ({ gameState }: GameStateResult) => {
+      setGameState(gameState);
+    };
+
+    const handleMakeTurn = ({ players, currentTurn }: MakeTurnResult) => {
+      setPlayers(players);
+      setSelectedSquare(null);
+      setCurrentTurn(currentTurn);
     };
 
     const handleRoundStart = ({
@@ -65,32 +77,33 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
       setFirstHint(firstHint);
     };
 
-    const handleGameState = ({ gameState }: GameStateResult) => {
-      setGameState(gameState);
-    };
-
-    const handlePlayerRole = ({ players }: PlayerRoleResult) => {
-      setPlayers(players);
-    };
-
     socket.on('connect', onConnect);
     socket.on('disconnect', onDisconnect);
     socket.on('room-join', handleRoomJoin);
     socket.on('update-player', handleUpdatePlayer);
     socket.on('game-start', handleGameStart);
     socket.on('round-start', handleRoundStart);
-    socket.on('room-leave', handleRoomLeave);
+    socket.on('make-turn', handleMakeTurn);
+    socket.on('room-leave', handleUpdatePlayers);
     socket.on('update-game-state', handleGameState);
-    socket.on('update-player-role', handlePlayerRole);
+    socket.on('update-players', handleUpdatePlayers);
 
     return () => {
       socket.off('connect', onConnect);
       socket.off('room-join', handleRoomJoin);
       socket.off('disconnect', onDisconnect);
-      socket.off('room-leave', handleRoomLeave);
-      socket.off('update-game-state', handleGameState);
     };
-  }, [navigate, setGameState, setPlayer, setPlayers, setRoomId]);
+  }, [
+    navigate,
+    setCurrentTurn,
+    setFirstHint,
+    setGameState,
+    setPlayer,
+    setPlayers,
+    setRoomId,
+    setSelectedColour,
+    setSelectedSquare,
+  ]);
 
   return <SocketContext.Provider value={{ isConnected }}>{children}</SocketContext.Provider>;
 };

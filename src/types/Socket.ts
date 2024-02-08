@@ -4,6 +4,7 @@ import { Player } from './Players';
 export type RoomJoinResult = {
   roomId: string;
   players: Player[];
+  gameState: string;
 };
 
 export type RoomLeaveResult = {
@@ -33,4 +34,13 @@ export type RoundStartResult = {
   players: Player[];
   currentTurn: Player;
   firstHint: string;
+};
+
+export type MakeTurnResult = {
+  players: Player[];
+  currentTurn: Player;
+};
+
+export type UpdatePlayersResult = {
+  players: Player[];
 };

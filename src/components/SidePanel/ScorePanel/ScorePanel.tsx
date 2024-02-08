@@ -5,8 +5,15 @@ import { Player } from '../../../types/Players';
 import Button from '../../Button/Button';
 import styles from './ScorePanel.module.css';
 
-const ScorePanel = ({ players, player, firstHint, selectedColour, currentTurn }: Props) => {
-  const handleEndTurn = () => {};
+const ScorePanel = ({
+  players,
+  player,
+  firstHint,
+  selectedColour,
+  currentTurn,
+  onEndTurnClick,
+  selectedSquare,
+}: Props) => {
   return (
     <div className={styles.scorePanel}>
       <div className={styles.scoreWrapper}>
@@ -16,8 +23,11 @@ const ScorePanel = ({ players, player, firstHint, selectedColour, currentTurn }:
             {players.map(
               pl =>
                 pl.role === HINTER && (
-                  <div className={styles.player}>
-                    <span>{pl.name}</span>
+                  <div className={styles.player} key={pl.id}>
+                    <div className={styles.playerColourWrapper}>
+                      <div className={styles.playerColour} style={{ backgroundColor: pl.colour }} />
+                      <span>{pl.name}</span>
+                    </div>
                     <span>{pl.score}</span>
                   </div>
                 )
@@ -33,8 +43,12 @@ const ScorePanel = ({ players, player, firstHint, selectedColour, currentTurn }:
                   <div
                     className={styles.player}
                     style={{ backgroundColor: currentTurn?.id === pl.id ? Colours.GREEN : '' }}
+                    key={pl.id}
                   >
-                    <span>{pl.name}</span>
+                    <div className={styles.playerColourWrapper}>
+                      <div className={styles.playerColour} style={{ backgroundColor: pl.colour }} />
+                      <span>{pl.name}</span>
+                    </div>
                     <span>{pl.score}</span>
                   </div>
                 )
@@ -55,7 +69,11 @@ const ScorePanel = ({ players, player, firstHint, selectedColour, currentTurn }:
           </div>
         </div>
         <div className={styles.buttonContainer}>
-          <Button onClick={handleEndTurn} text='End Turn' />
+          <Button
+            onClick={onEndTurnClick}
+            text='End Turn'
+            disabled={currentTurn?.id !== player?.id || !selectedSquare}
+          />
         </div>
       </div>
     </div>
@@ -68,6 +86,8 @@ type Props = {
   firstHint: string;
   selectedColour: Square | null;
   player: Player | null;
+  onEndTurnClick: () => void;
+  selectedSquare: Square | null;
 };
 
 export default ScorePanel;

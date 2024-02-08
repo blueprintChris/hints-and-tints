@@ -1,18 +1,17 @@
 import { useContext } from 'react';
 import { Square, grid } from '../../../constants/board';
-import { socket } from '../../../socket/Socket';
 import { GameContext, PlayerContext } from '../../../context';
 import GameSquare from './GameSquare/GameSquare';
 import styles from './GameBoard.module.css';
 
 const GameBoard = () => {
-  const { currentTurn, gameState } = useContext(GameContext);
-  const { player } = useContext(PlayerContext);
+  const { currentTurn, gameState, players } = useContext(GameContext);
+  const { player, selectedSquare, setSelectedSquare } = useContext(PlayerContext);
 
   const handleSquareClick = (square: Square) => {
-    if (gameState === 'GUESSING_ONE') {
+    if (gameState === 'GUESSING_ONE' || gameState === 'GUESSING_TWO') {
       if (currentTurn?.id === player?.id) {
-        socket.emit('make-turn', { square, player });
+        setSelectedSquare(square);
       } else {
         alert('aint your turn yet');
       }
@@ -25,9 +24,18 @@ const GameBoard = () => {
     <div className={styles.gameboard}>
       {grid.map((row, idx) => (
         <div className={styles.row} data-content={row.row} key={idx}>
-          {row.squares.map(square => (
-            <GameSquare square={square} onClick={handleSquareClick} key={square.ref} />
-          ))}
+          {row.squares.map(square => {
+            const player = players.find(pl => pl.firstTint?.ref === square.ref);
+            return (
+              <GameSquare
+                square={square}
+                onClick={handleSquareClick}
+                key={square.ref}
+                selectedSquare={selectedSquare}
+                gridOwner={player}
+              />
+            );
+          })}
         </div>
       ))}
     </div>

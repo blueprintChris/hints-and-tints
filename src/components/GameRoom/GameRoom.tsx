@@ -1,15 +1,15 @@
+import { useContext } from 'react';
 import { GridLoader } from 'react-spinners';
 import GameBoard from './GameBoard/GameBoard';
-import { ColourSelector, LargeCard, SidePanel, Title } from '../../components';
-import { Player } from '../../types/Players';
-import styles from './GameRoom.module.css';
-import { useContext } from 'react';
+import { ColourSelector, HintInput, LargeCard, SidePanel, Title, Modal } from '../../components';
 import { GameContext } from '../../context';
 import { HINTER } from '../../constants/player';
-import Modal from '../Modal/Modal';
+import { Colours } from '../../constants/colours';
+import { Player } from '../../types/Players';
+import styles from './GameRoom.module.css';
 
 const GameRoom = ({ players, roomId, player }: Props) => {
-  const { gameState, isLoading } = useContext(GameContext);
+  const { gameState, isLoading, selectedColour } = useContext(GameContext);
 
   const hinter = players.find(pl => pl.role === HINTER);
   const isHinter = hinter?.role === player.role;
@@ -19,7 +19,11 @@ const GameRoom = ({ players, roomId, player }: Props) => {
       return 'Hang tight, the game is starting...';
     } else {
       if (isHinter) {
-        return 'Select a colour';
+        if (gameState === 'SELECTION') {
+          return 'Select a colour';
+        } else {
+          return 'Create a second hint your colour';
+        }
       } else {
         return 'Please wait...';
       }
@@ -30,8 +34,6 @@ const GameRoom = ({ players, roomId, player }: Props) => {
     if (!isLoading && !isHinter) {
       return `${name} is choosing a colour`;
     }
-
-    return '';
   };
 
   return (
@@ -49,17 +51,18 @@ const GameRoom = ({ players, roomId, player }: Props) => {
           <SidePanel players={players} />
         </div>
       </div>
-      {gameState === 'SELECTION' && (
+      {(gameState === 'SELECTION' || gameState === 'SELECTION_TWO') && (
         <Modal title={modalTitle()} subTitle={modalSubtitle(hinter?.name)}>
-          {isLoading && <GridLoader color='#e76fac' />}
+          {isLoading && <GridLoader color={Colours.PINK} />}
           {!isLoading && (
             <>
               {isHinter && (
                 <LargeCard>
-                  <ColourSelector />
+                  {gameState === 'SELECTION' && <ColourSelector />}
+                  {gameState === 'SELECTION_TWO' && <HintInput selectedColour={selectedColour} />}
                 </LargeCard>
               )}
-              {!isHinter && <GridLoader color='#e76fac' />}
+              {!isHinter && <GridLoader color={Colours.PINK} />}
             </>
           )}
         </Modal>
