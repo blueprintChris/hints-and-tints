@@ -3,6 +3,7 @@ import { Square, grid } from '../../../constants/board';
 import { GameContext, PlayerContext } from '../../../context';
 import GameSquare from './GameSquare/GameSquare';
 import styles from './GameBoard.module.css';
+import GameRow from './GameRow/GameRow';
 
 const GameBoard = () => {
   const { currentTurn, gameState, players } = useContext(GameContext);
@@ -23,9 +24,10 @@ const GameBoard = () => {
   return (
     <div className={styles.gameboard}>
       {grid.map((row, idx) => (
-        <div className={styles.row} data-content={row.row} key={idx}>
-          {row.squares.map(square => {
+        <GameRow key={idx} row={row.row}>
+          {row.squares.map((square, index) => {
             const player = players.find(pl => pl.firstTint?.ref === square.ref);
+            const delay = index * idx * 2;
             return (
               <GameSquare
                 square={square}
@@ -33,10 +35,11 @@ const GameBoard = () => {
                 key={square.ref}
                 selectedSquare={selectedSquare}
                 gridOwner={player}
+                delay={delay}
               />
             );
           })}
-        </div>
+        </GameRow>
       ))}
     </div>
   );

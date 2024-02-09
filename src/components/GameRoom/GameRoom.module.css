@@ -20,24 +20,24 @@
   display: flex;
   height: calc(100vh - 40px);
   width: 100%;
+  padding-bottom: 68px;
   box-sizing: border-box;
 }
 
 .boardContainer {
   display: flex;
+  flex: 1;
   justify-content: flex-start;
   align-items: flex-start;
-  padding: 40px 20px 40px 40px;
+  padding: 40px 20px 0 40px;
   box-sizing: border-box;
-  border-right: 1px solid #1a1a1a;
 }
 
 .sidePanelContainer {
   flex: 1;
-  padding: 40px 20px;
-  min-width: 287px;
+  padding: 40px 40px 0 20px;
   max-width: 300px;
-  max-height: 796px;
+  min-width: 287px;
 }
 
 .buttonWrapper {

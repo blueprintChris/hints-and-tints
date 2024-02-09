@@ -4,7 +4,7 @@ import { GameContext, PlayerContext, SocketContext } from '../../context/';
 import { LoadingSpinner, NameInputPanel } from '../../components';
 import { useNavigate, useParams } from 'react-router-dom';
 import GameRoom from '../../components/GameRoom/GameRoom';
-import DisconnectedAppContainer from '../DisconnectedApp/DisconnectedAppContainer/DisconnectedAppContainer';
+import AppContainer from '../AppContainer/AppContainer';
 import { RoomJoinResult } from '../../types/Socket';
 import { Colours } from '../../constants/colours';
 
@@ -28,8 +28,8 @@ const ConnectedApp = () => {
   };
 
   const handleOnClick = () => {
-    setIsLoading(true);
-    if (id) {
+    if (id && nickname) {
+      setIsLoading(true);
       // join the room
       setTimeout(() => {
         setIsLoading(false);
@@ -68,7 +68,7 @@ const ConnectedApp = () => {
 
   if (isConnected && roomId && !player) {
     return (
-      <DisconnectedAppContainer>
+      <AppContainer>
         {isLoading && <LoadingSpinner colour={Colours.PINK} text='Joining room...' />}
         {!isLoading && (
           <NameInputPanel
@@ -80,14 +80,18 @@ const ConnectedApp = () => {
             onClick={handleOnClick}
           />
         )}
-      </DisconnectedAppContainer>
+      </AppContainer>
     );
   }
 
   return (
     isConnected &&
     roomId &&
-    player && <GameRoom players={players} roomId={roomId} player={player} />
+    player && (
+      <AppContainer isConnected>
+        <GameRoom players={players} roomId={roomId} player={player} />
+      </AppContainer>
+    )
   );
 };
 

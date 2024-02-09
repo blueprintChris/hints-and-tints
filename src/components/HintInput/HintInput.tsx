@@ -1,17 +1,23 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useContext, useState } from 'react';
 import styles from './HintInput.module.css';
 import Input from '../Input/Input';
 import Button from '../Button/Button';
 import { Square } from '../../constants/board';
+import { socket } from '../../socket/Socket';
+import { GameContext } from '../../context';
 
 const HintInput = ({ selectedColour }: Props) => {
   const [secondHint, setSecondHint] = useState('');
+
+  const { roomId } = useContext(GameContext);
 
   const handleOnChange = (e: FormEvent<HTMLInputElement>) => {
     setSecondHint(e.currentTarget.value);
   };
 
-  const handleOnClick = () => {};
+  const handleOnClick = () => {
+    socket.emit('round-start-2', { roomId, secondHint, gameState: 'GUESSING_TWO' });
+  };
 
   return (
     <div className={styles.hintInput}>

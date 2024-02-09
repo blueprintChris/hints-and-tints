@@ -1,5 +1,6 @@
 export { default as GameBoard } from './GameRoom/GameBoard/GameBoard';
 export { default as SidePanel } from './SidePanel/SidePanel';
+export { default as LobbyList } from './LobbyList/LobbyList';
 export { default as PlayerList } from './PlayerList/PlayerList';
 export { default as Cards } from './Cards/Cards';
 export { default as Title } from './Title/Title';
@@ -12,3 +13,4 @@ export { default as Input } from './Input/Input';
 export { default as LoadingSpinner } from './LoadingSpinner/LoadingSpinner';
 export { default as HintInput } from './HintInput/HintInput';
 export { default as Modal } from './Modal/Modal';
+export { default as Welcome } from './Welcome/Welcome';

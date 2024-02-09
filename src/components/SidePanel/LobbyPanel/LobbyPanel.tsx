@@ -1,8 +1,9 @@
 import { HINTER, TINTER } from '../../../constants/player';
 import { Player } from '../../../types/Players';
 import Button from '../../Button/Button';
-import PlayerList from '../../PlayerList/PlayerList';
+import { LobbyList, PlayerList } from '../../../components';
 import styles from './LobbyPanel.module.css';
+import { Colours } from '../../../constants/colours';
 
 const LobbyPanel = ({ players, player, onHinterClick, onJoinClick, onStartClick }: Props) => {
   const hinter = players.find(pl => pl.role === HINTER);
@@ -14,30 +15,31 @@ const LobbyPanel = ({ players, player, onHinterClick, onJoinClick, onStartClick 
     <div className={styles.lobbyWrapper}>
       <div className={styles.buttonContainer}>
         <h1>Hinter</h1>
-        <div className={styles.buttonWrapper}>
-          {hinter ? (
-            <div>{hinter?.name}</div>
-          ) : (
+        {hinter ? (
+          <PlayerList players={players} role={HINTER} showScores={false} />
+        ) : (
+          <div className={styles.buttonWrapper}>
             <Button onClick={onHinterClick} text='Join as hinter' disabled={player?.role !== ''} />
-          )}
-        </div>
+          </div>
+        )}
         <h1>Tinters</h1>
-        <div className={styles.buttonWrapper}>
-          {!player?.role && (
+        <PlayerList players={players} role={TINTER} showScores={false} />
+        {!player?.role && (
+          <div className={styles.buttonWrapper}>
             <Button onClick={onJoinClick} text='Join game' disabled={player?.role !== ''} />
-          )}
-          {players.map(pl => pl.role === TINTER && <span key={pl.id}>{pl.name}</span>)}
-        </div>
+          </div>
+        )}
       </div>
-
-      <PlayerList players={players} />
-      <div className={styles.buttonWrapper}>
-        <Button
-          onClick={onStartClick}
-          text='Start Game'
-          colour='#48B86E'
-          disabled={!canStartGame()}
-        />
+      <div className={styles.bottomWrapper}>
+        <LobbyList players={players} />
+        <div className={styles.buttonWrapper}>
+          <Button
+            onClick={onStartClick}
+            text='Start Game'
+            colour={Colours.GREEN}
+            disabled={!canStartGame()}
+          />
+        </div>
       </div>
     </div>
   );

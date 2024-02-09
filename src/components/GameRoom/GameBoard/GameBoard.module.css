@@ -2,37 +2,5 @@
   font-family: 'Sixtyfour', 'open-sans';
   display: inline-grid;
   gap: 4px;
-}
-
-.row {
-  position: relative;
-  display: grid;
-  gap: 4px;
-  grid-template-columns: repeat(30, 46px);
-}
-
-.row:before {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  font-size: 12px;
-  width: 10px;
-  content: attr(data-content);
-  display: flex;
-  justify-content: flex-end;
-  color: white;
-  position: absolute;
-  left: -18px;
-  top: 16px;
-}
-
-.row:first-child button::before {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  content: attr(data-content);
-  color: white;
-  font-size: 12px;
-  position: absolute;
-  top: -20px;
+  width: 100%;
 }

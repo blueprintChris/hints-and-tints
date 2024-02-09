@@ -4,7 +4,7 @@ import { v4 as uuid } from 'uuid';
 import { socket } from '../../socket/Socket';
 import { LoadingSpinner, NameInputPanel } from '../../components';
 import { GameContext } from '../../context/GameContext';
-import DisconnectedAppContainer from './DisconnectedAppContainer/DisconnectedAppContainer';
+import AppContainer from '../AppContainer/AppContainer';
 import { Colours } from '../../constants/colours';
 
 const DisconnectedApp = () => {
@@ -18,11 +18,10 @@ const DisconnectedApp = () => {
   };
 
   const handleOnClick = () => {
-    setIsLoading(true);
-
     const roomId = uuid();
 
     if (nickname && roomId) {
+      setIsLoading(true);
       // connect to the websocket
       socket.connect();
 
@@ -44,7 +43,7 @@ const DisconnectedApp = () => {
   };
 
   return (
-    <DisconnectedAppContainer>
+    <AppContainer>
       {isLoading && <LoadingSpinner colour={Colours.PINK} text='Constructing room...' />}
       {!isLoading && (
         <NameInputPanel
@@ -56,7 +55,7 @@ const DisconnectedApp = () => {
           onClick={handleOnClick}
         />
       )}
-    </DisconnectedAppContainer>
+    </AppContainer>
   );
 };
 

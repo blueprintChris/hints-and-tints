@@ -49,11 +49,6 @@
   margin-right: 10px;
 }
 
-.currentPlayer {
-  font-size: 20px;
-  margin-right: 6px;
-}
-
 .hintWrapper {
   display: flex;
   flex-direction: column;
@@ -64,12 +59,24 @@
 
 .hintContainer {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   background-color: #333842;
   padding: 10px;
   box-sizing: border-box;
   width: 100%;
+}
+
+.textWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.textWrapper h2 {
+  margin: 0 10px;
+  font-size: 20px;
 }
 
 .tintContainer {
@@ -97,7 +104,6 @@
   box-sizing: border-box;
   border-radius: 4px;
   text-align: center;
-  margin-left: 30px;
 }
 
 .bottomWrapper {

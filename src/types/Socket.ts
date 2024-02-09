@@ -36,9 +36,21 @@ export type RoundStartResult = {
   firstHint: string;
 };
 
-export type MakeTurnResult = {
-  players: Player[];
+export type RoundStart2Result = {
+  gameState: string;
   currentTurn: Player;
+  secondHint: string;
+};
+
+export type MakeTurnResult = {
+  currentTurn: Player;
+};
+
+export type RoundEndResult = {
+  players: Player[];
+  gameState: string;
+  firstHint: string;
+  secondHint: string;
 };
 
 export type UpdatePlayersResult = {

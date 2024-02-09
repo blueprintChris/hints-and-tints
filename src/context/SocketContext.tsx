@@ -7,7 +7,8 @@ import {
   GameStateResult,
   MakeTurnResult,
   RoomJoinResult,
-  RoomLeaveResult,
+  RoundEndResult,
+  RoundStart2Result,
   RoundStartResult,
   UpdatePlayerResult,
   UpdatePlayersResult,
@@ -19,8 +20,15 @@ export const SocketContext = createContext<SocketContextType>({ isConnected: fal
 const SocketContextProvider = ({ children }: PropsWithChildren) => {
   const [isConnected, setIsConnected] = useState(socket.connected);
 
-  const { setPlayers, setRoomId, setGameState, setSelectedColour, setCurrentTurn, setFirstHint } =
-    useContext(GameContext);
+  const {
+    setPlayers,
+    setRoomId,
+    setGameState,
+    setSelectedColour,
+    setCurrentTurn,
+    setFirstHint,
+    setSecondHint,
+  } = useContext(GameContext);
   const { setPlayer, setSelectedSquare } = useContext(PlayerContext);
 
   const navigate = useNavigate();
@@ -57,8 +65,7 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
       setGameState(gameState);
     };
 
-    const handleMakeTurn = ({ players, currentTurn }: MakeTurnResult) => {
-      setPlayers(players);
+    const handleMakeTurn = ({ currentTurn }: MakeTurnResult) => {
       setSelectedSquare(null);
       setCurrentTurn(currentTurn);
     };
@@ -77,14 +84,33 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
       setFirstHint(firstHint);
     };
 
+    const handleRoundStart2 = ({ gameState, currentTurn, secondHint }: RoundStart2Result) => {
+      setGameState(gameState);
+      setCurrentTurn(currentTurn);
+      setSecondHint(secondHint);
+    };
+
+    const handleEndRound = ({ players, gameState, firstHint, secondHint }: RoundEndResult) => {
+      setPlayers(players);
+      setGameState(gameState);
+      setFirstHint(firstHint);
+      setSecondHint(secondHint);
+    };
+
     socket.on('connect', onConnect);
     socket.on('disconnect', onDisconnect);
+
     socket.on('room-join', handleRoomJoin);
+    socket.on('room-leave', handleUpdatePlayers);
+
     socket.on('update-player', handleUpdatePlayer);
+
     socket.on('game-start', handleGameStart);
     socket.on('round-start', handleRoundStart);
+    socket.on('round-start-2', handleRoundStart2);
     socket.on('make-turn', handleMakeTurn);
-    socket.on('room-leave', handleUpdatePlayers);
+    socket.on('end-round', handleEndRound);
+
     socket.on('update-game-state', handleGameState);
     socket.on('update-players', handleUpdatePlayers);
 
@@ -101,6 +127,7 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
     setPlayer,
     setPlayers,
     setRoomId,
+    setSecondHint,
     setSelectedColour,
     setSelectedSquare,
   ]);

@@ -1,20 +1,24 @@
-.playerList {
-  border: 1px solid grey;
-  border-radius: 8px;
-  width: 80%;
-  height: 200px;
+.playerContainer {
+  width: 100%;
+}
+
+.player {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333842;
   padding: 10px;
-  box-sizing: border-box;
 }
 
-.playerList ul {
-  text-decoration: none;
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.playerColourWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.playerList h1 {
-  margin: 0 0 10px 0;
-  padding: 0;
+.playerColour {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  margin-right: 10px;
 }

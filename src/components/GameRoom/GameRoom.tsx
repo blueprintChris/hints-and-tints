@@ -1,7 +1,15 @@
 import { useContext } from 'react';
 import { GridLoader } from 'react-spinners';
 import GameBoard from './GameBoard/GameBoard';
-import { ColourSelector, HintInput, LargeCard, SidePanel, Title, Modal } from '../../components';
+import {
+  ColourSelector,
+  HintInput,
+  LargeCard,
+  SidePanel,
+  Title,
+  Modal,
+  Welcome,
+} from '../../components';
 import { GameContext } from '../../context';
 import { HINTER } from '../../constants/player';
 import { Colours } from '../../constants/colours';
@@ -12,7 +20,7 @@ const GameRoom = ({ players, roomId, player }: Props) => {
   const { gameState, isLoading, selectedColour } = useContext(GameContext);
 
   const hinter = players.find(pl => pl.role === HINTER);
-  const isHinter = hinter?.role === player.role;
+  const isHinter = hinter?.id === player.id;
 
   const modalTitle = () => {
     if (isLoading) {
@@ -20,9 +28,9 @@ const GameRoom = ({ players, roomId, player }: Props) => {
     } else {
       if (isHinter) {
         if (gameState === 'SELECTION') {
-          return 'Select a colour';
+          return 'You are now the Hinter! Select a colour...';
         } else {
-          return 'Create a second hint your colour';
+          return 'Enter a second hint for your colour';
         }
       } else {
         return 'Please wait...';
@@ -45,7 +53,8 @@ const GameRoom = ({ players, roomId, player }: Props) => {
       </div>
       <div className={styles.content}>
         <div className={styles.boardContainer}>
-          <GameBoard />
+          {gameState === 'LOBBY' && <Welcome />}
+          {gameState !== 'LOBBY' && gameState !== 'SELECTION' && <GameBoard />}
         </div>
         <div className={styles.sidePanelContainer}>
           <SidePanel players={players} />

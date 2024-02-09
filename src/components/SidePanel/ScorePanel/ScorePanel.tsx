@@ -9,11 +9,15 @@ const ScorePanel = ({
   players,
   player,
   firstHint,
+  secondHint,
   selectedColour,
   currentTurn,
   onEndTurnClick,
   selectedSquare,
 }: Props) => {
+  const hinter = players.find(pl => pl.role === HINTER);
+  const isHinter = hinter?.id === player?.id;
+
   return (
     <div className={styles.scorePanel}>
       <div className={styles.scoreWrapper}>
@@ -58,10 +62,13 @@ const ScorePanel = ({
       </div>
       <div className={styles.bottomWrapper}>
         <div className={styles.hintWrapper}>
-          <h1>Your Hint</h1>
+          <h1>Your Hint(s)</h1>
           <div className={styles.hintContainer}>
-            <h2>{firstHint}</h2>
-            {player?.role === HINTER && (
+            <div className={styles.textWrapper}>
+              {firstHint && <h2>{firstHint}</h2>}
+              {secondHint && <h2>{secondHint}</h2>}
+            </div>
+            {isHinter && (
               <div className={styles.tint} style={{ backgroundColor: selectedColour?.hex }}>
                 <span>{selectedColour?.ref}</span>
               </div>
@@ -84,6 +91,7 @@ type Props = {
   players: Player[];
   currentTurn: Player | null;
   firstHint: string;
+  secondHint: string;
   selectedColour: Square | null;
   player: Player | null;
   onEndTurnClick: () => void;

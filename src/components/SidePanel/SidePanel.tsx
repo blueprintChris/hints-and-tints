@@ -8,7 +8,7 @@ import ScorePanel from './ScorePanel/ScorePanel';
 import { HINTER, TINTER } from '../../constants/player';
 
 const SidePanel = ({ players }: Props) => {
-  const { gameState, roomId, currentTurn, firstHint, selectedColour, setIsLoading } =
+  const { gameState, roomId, currentTurn, firstHint, secondHint, selectedColour, setIsLoading } =
     useContext(GameContext);
   const { player, selectedSquare } = useContext(PlayerContext);
 
@@ -46,12 +46,13 @@ const SidePanel = ({ players }: Props) => {
         />
       )}
       {(gameState === 'SELECTION' || gameState === 'SELECTION_TWO') && <div>plz wait</div>}
-      {gameState === 'GUESSING_ONE' && (
+      {(gameState === 'GUESSING_ONE' || gameState === 'GUESSING_TWO') && (
         <ScorePanel
           player={player}
           players={players}
           currentTurn={currentTurn}
           firstHint={firstHint}
+          secondHint={secondHint}
           selectedColour={selectedColour}
           onEndTurnClick={handleEndTurn}
           selectedSquare={selectedSquare}
