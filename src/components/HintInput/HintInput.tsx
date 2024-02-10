@@ -1,28 +1,53 @@
-import { FormEvent, useContext, useState } from 'react';
+import { FormEvent, useContext, useEffect, useState } from 'react';
 import styles from './HintInput.module.css';
-import Input from '../Input/Input';
-import Button from '../Button/Button';
-import { Square } from '../../constants/board';
+import { Button, Input } from '../../components';
 import { socket } from '../../socket/Socket';
 import { GameContext } from '../../context';
+import { getContrastRatio, hexToRgb } from '../../utils/getContrastRatio';
+import { Colours, GameStates, SocketEvents } from '../../constants';
+import { Square } from '../../constants/board';
 
 const HintInput = ({ selectedColour }: Props) => {
   const [secondHint, setSecondHint] = useState('');
+  const [textColour, setTextColour] = useState(Colours.WHITE);
 
   const { roomId } = useContext(GameContext);
+
+  useEffect(() => {
+    const applyColourRatio = () => {
+      const rgb = hexToRgb(selectedColour?.hex);
+      const rgbText = hexToRgb(Colours.BLACK);
+
+      if (rgb && rgbText) {
+        const contrastRatio = getContrastRatio(rgb, rgbText);
+        setTextColour(contrastRatio < 3 ? Colours.WHITE : Colours.BLACK);
+      }
+    };
+
+    applyColourRatio();
+  }, [selectedColour?.hex]);
 
   const handleOnChange = (e: FormEvent<HTMLInputElement>) => {
     setSecondHint(e.currentTarget.value);
   };
 
   const handleOnClick = () => {
-    socket.emit('round-start-2', { roomId, secondHint, gameState: 'GUESSING_TWO' });
+    socket.emit(SocketEvents.ROUND_START_2, {
+      roomId,
+      secondHint,
+      gameState: GameStates.GUESSING_TWO,
+    });
   };
 
   return (
     <div className={styles.hintInput}>
       <div className={styles.colourContainer}>
-        <div className={styles.colour} style={{ backgroundColor: selectedColour?.hex }} />
+        <div
+          className={styles.colour}
+          style={{ backgroundColor: selectedColour?.hex, color: textColour }}
+        >
+          <h2>{selectedColour?.ref}</h2>
+        </div>
       </div>
       <div className={styles.inputContainer}>
         <Input

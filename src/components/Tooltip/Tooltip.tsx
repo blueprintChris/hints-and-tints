@@ -25,8 +25,10 @@ const Tooltip = ({ children, offset = { x: 0, y: 0 }, square, text }: PropsWithC
               transform: `translate(${clientX + offset.x}px, ${clientY + offset.y}px)`,
             }}
           >
-            <span>{square?.ref}</span>
-            {text && <span>{text}</span>}
+            <div className={styles.textWrapper}>
+              <span>{square?.ref}</span>
+              {text && <span className={styles.text}>{text}</span>}
+            </div>
           </div>
         ),
         document.body

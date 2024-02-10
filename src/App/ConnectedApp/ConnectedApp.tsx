@@ -5,7 +5,6 @@ import { LoadingSpinner, NameInputPanel } from '../../components';
 import { useNavigate, useParams } from 'react-router-dom';
 import GameRoom from '../../components/GameRoom/GameRoom';
 import AppContainer from '../AppContainer/AppContainer';
-import { RoomJoinResult } from '../../types/Socket';
 import { Colours } from '../../constants/colours';
 
 const ConnectedApp = () => {

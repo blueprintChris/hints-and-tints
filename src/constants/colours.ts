@@ -4,4 +4,6 @@ export const Colours = {
   BLUE: '#46C0B3',
   OLIVE: '#ABCF39',
   DARK_GREY: '#282C34',
+  WHITE: '#FFFFFF',
+  BLACK: '#000000',
 };

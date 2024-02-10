@@ -5,7 +5,12 @@
   color: white;
   padding: 2px 7px;
   border-radius: 4px;
-  white-space: nowrap;
   top: 0;
   left: 0;
+}
+
+.textWrapper {
+  max-width: 400px;
+  padding: 10px;
+  word-break: keep-all;
 }

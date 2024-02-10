@@ -39,20 +39,19 @@ const Welcome = () => {
         <p>
           <span>6.</span>
           Once all guesses have been made, scoring will commence. Scores are applied as follows:
-          <ul>
-            <li>3 points to the person who guessed the Hinter's exact colour.</li>
-            <li>
-              2 points to each person (per guess) who guessed 1 square outside the Hinter's colour.
-            </li>
-            <li>
-              1 point to each player (per guess) who guessed 2 squares outside the Hinter's colour.
-            </li>
-            <li>
-              The Hinter gets 1 point for every player that scores 2 points or more on a single
-              guess.
-            </li>
-          </ul>
         </p>
+        <ul>
+          <li>3 points to the person who guessed the Hinter's exact colour.</li>
+          <li>
+            2 points to each person (per guess) who guessed 1 square outside the Hinter's colour.
+          </li>
+          <li>
+            1 point to each player (per guess) who guessed 2 squares outside the Hinter's colour.
+          </li>
+          <li>
+            The Hinter gets 1 point for every player that scores 2 points or more on a single guess.
+          </li>
+        </ul>
         <p>
           <span>7.</span>The game ends when the score limit has been reached.
         </p>

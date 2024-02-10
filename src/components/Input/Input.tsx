@@ -3,7 +3,7 @@ import styles from './Input.module.css';
 
 const Input = ({ onChange, placeholder, name, label, disabled }: Props) => {
   return (
-    <>
+    <div className={styles.inputContainer}>
       {label && (
         <label className={styles.nameInputLabel} htmlFor={name}>
           {label}
@@ -18,7 +18,7 @@ const Input = ({ onChange, placeholder, name, label, disabled }: Props) => {
         placeholder={placeholder}
         disabled={disabled}
       />
-    </>
+    </div>
   );
 };
 

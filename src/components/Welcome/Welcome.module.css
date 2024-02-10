@@ -39,6 +39,7 @@
   font-weight: bold;
   font-size: 20px;
   margin-right: 10px;
+  text-decoration: none;
 }
 
 .rules p {
@@ -46,6 +47,7 @@
   margin: 10px;
 }
 
-.rules ul {
+ul {
   margin: 10px 0;
+  color: white;
 }

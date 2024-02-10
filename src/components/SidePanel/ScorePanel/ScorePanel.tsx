@@ -1,8 +1,8 @@
+import classnames from 'classnames';
 import { Square } from '../../../constants/board';
-import { Colours } from '../../../constants/colours';
 import { HINTER, TINTER } from '../../../constants/player';
 import { Player } from '../../../types/Players';
-import Button from '../../Button/Button';
+import { Button, PlayerList } from '../../../components';
 import styles from './ScorePanel.module.css';
 
 const ScorePanel = ({
@@ -20,51 +20,21 @@ const ScorePanel = ({
 
   return (
     <div className={styles.scorePanel}>
-      <div className={styles.scoreWrapper}>
-        <div className={styles.scoreContainer}>
-          <h1>Hinter</h1>
-          <div className={styles.playerContainer}>
-            {players.map(
-              pl =>
-                pl.role === HINTER && (
-                  <div className={styles.player} key={pl.id}>
-                    <div className={styles.playerColourWrapper}>
-                      <div className={styles.playerColour} style={{ backgroundColor: pl.colour }} />
-                      <span>{pl.name}</span>
-                    </div>
-                    <span>{pl.score}</span>
-                  </div>
-                )
-            )}
-          </div>
-        </div>
-        <div className={styles.scoreContainer}>
-          <h1>Tinters</h1>
-          <div className={styles.playerContainer}>
-            {players.map(
-              pl =>
-                pl.role === TINTER && (
-                  <div
-                    className={styles.player}
-                    style={{ backgroundColor: currentTurn?.id === pl.id ? Colours.GREEN : '' }}
-                    key={pl.id}
-                  >
-                    <div className={styles.playerColourWrapper}>
-                      <div className={styles.playerColour} style={{ backgroundColor: pl.colour }} />
-                      <span>{pl.name}</span>
-                    </div>
-                    <span>{pl.score}</span>
-                  </div>
-                )
-            )}
-          </div>
-        </div>
+      <div className={styles.playersContainer}>
+        <h1>Hinter</h1>
+        <PlayerList players={players} role={HINTER} showScores isHinter />
+        <h1>Tinters</h1>
+        <PlayerList players={players} role={TINTER} showScores currentTurn={currentTurn} />
       </div>
       <div className={styles.bottomWrapper}>
         <div className={styles.hintWrapper}>
           <h1>Your Hint(s)</h1>
-          <div className={styles.hintContainer}>
-            <div className={styles.textWrapper}>
+          <div
+            className={classnames(styles.hintContainer, { [styles.hintContainerHinter]: isHinter })}
+          >
+            <div
+              className={classnames(styles.textWrapper, { [styles.textWrapperHinter]: isHinter })}
+            >
               {firstHint && <h2>{firstHint}</h2>}
               {secondHint && <h2>{secondHint}</h2>}
             </div>

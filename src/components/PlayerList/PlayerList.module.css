@@ -1,5 +1,11 @@
 .playerContainer {
   width: 100%;
+  flex: 1;
+  overflow: auto;
+}
+
+.hinter {
+  max-height: 40px;
 }
 
 .player {
@@ -8,6 +14,10 @@
   align-items: center;
   background-color: #333842;
   padding: 10px;
+}
+
+.current {
+  background-color: #48b86e;
 }
 
 .playerColourWrapper {

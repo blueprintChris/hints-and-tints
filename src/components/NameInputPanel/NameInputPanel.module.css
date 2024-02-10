@@ -3,14 +3,20 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #282c34;
+  position: relative;
   width: 500px;
   height: 500px;
   padding: 20px;
+  background-color: #282c34;
   box-sizing: border-box;
   box-shadow: 0 0 10px 1px black;
   border-radius: 8px;
   font-family: 'Comfortaa', 'open-sans';
+
+  @media screen and (max-width: 768px) {
+    width: 95%;
+    height: 600px;
+  }
 }
 
 .titleWrapper {
@@ -60,4 +66,31 @@
   align-items: center;
   height: 40px;
   width: 200px;
+}
+
+.help {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: 1px solid #46c0b3;
+  color: #46c0b3;
+  border-radius: 50%;
+  background: none;
+}
+
+.mobileWarning {
+  text-align: center;
+  color: white;
+  width: 300px;
+  font-size: 12px;
+}
+
+.mobileWarning span {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+p span {
+  font-weight: bold;
+  text-decoration: underline;
 }

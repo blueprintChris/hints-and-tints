@@ -8,13 +8,17 @@
   box-sizing: border-box;
 }
 
-.buttonContainer {
+.playersContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
   width: 100%;
+  flex: 1;
+  overflow-y: auto;
+
+  margin-bottom: 20px;
 }
 
 .buttonWrapper {
@@ -23,7 +27,7 @@
   margin: 20px 0;
 }
 
-.lobbyWrapper {
+.lobbyContainer {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -37,6 +41,7 @@
   flex-direction: column;
 
   width: 100%;
+
   justify-content: center;
   align-items: center;
 }

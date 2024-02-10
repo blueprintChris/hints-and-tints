@@ -26,16 +26,18 @@ const GameBoard = () => {
       {grid.map((row, idx) => (
         <GameRow key={idx} row={row.row}>
           {row.squares.map((square, index) => {
-            const player = players.find(pl => pl.firstTint?.ref === square.ref);
-            const delay = index * idx * 2;
+            const gridOwner =
+              players.find(pl => pl.firstTint?.ref === square.ref) ||
+              players.find(pl => pl.secondTint?.ref === square.ref);
             return (
               <GameSquare
                 square={square}
                 onClick={handleSquareClick}
                 key={square.ref}
                 selectedSquare={selectedSquare}
-                gridOwner={player}
-                delay={delay}
+                gridOwner={gridOwner}
+                player={player}
+                delay={index * idx * 2}
               />
             );
           })}

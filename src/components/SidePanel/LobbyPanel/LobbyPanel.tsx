@@ -12,11 +12,11 @@ const LobbyPanel = ({ players, player, onHinterClick, onJoinClick, onStartClick 
   const canStartGame = () => hinter && tinter;
 
   return (
-    <div className={styles.lobbyWrapper}>
-      <div className={styles.buttonContainer}>
+    <div className={styles.lobbyContainer}>
+      <div className={styles.playersContainer}>
         <h1>Hinter</h1>
         {hinter ? (
-          <PlayerList players={players} role={HINTER} showScores={false} />
+          <PlayerList players={players} role={HINTER} showScores={false} isHinter />
         ) : (
           <div className={styles.buttonWrapper}>
             <Button onClick={onHinterClick} text='Join as hinter' disabled={player?.role !== ''} />

@@ -40,7 +40,12 @@ const GameRoom = ({ players, roomId, player }: Props) => {
 
   const modalSubtitle = (name?: string) => {
     if (!isLoading && !isHinter) {
-      return `${name} is choosing a colour`;
+      if (gameState === 'SELECTION') {
+        return `${name} is choosing a colour`;
+      }
+      if (gameState === 'SELECTION_TWO') {
+        return `${name} is choosing another hint`;
+      }
     }
   };
 
@@ -48,8 +53,9 @@ const GameRoom = ({ players, roomId, player }: Props) => {
     <>
       <div className={styles.header}>
         <Title size={10} orientation='row' />
-        <span className={styles.roomId}>{player.name}</span>
-        <span className={styles.roomId}>Room ID: {roomId}</span>
+        <div className={styles.playerWrapper}>
+          <span className={styles.roomId}>{player.name}</span>
+        </div>
       </div>
       <div className={styles.content}>
         <div className={styles.boardContainer}>
