@@ -6,7 +6,8 @@ import styles from './GameBoard.module.css';
 import GameRow from './GameRow/GameRow';
 
 const GameBoard = () => {
-  const { currentTurn, gameState, players } = useContext(GameContext);
+  const { currentTurn, gameState, players, surroundingSquares, selectedColour } =
+    useContext(GameContext);
   const { player, selectedSquare, setSelectedSquare } = useContext(PlayerContext);
 
   const handleSquareClick = (square: Square) => {
@@ -31,13 +32,16 @@ const GameBoard = () => {
               players.find(pl => pl.secondTint?.ref === square.ref);
             return (
               <GameSquare
-                square={square}
+                square={{ ...square, x: idx, y: index }}
                 onClick={handleSquareClick}
                 key={square.ref}
                 selectedSquare={selectedSquare}
                 gridOwner={gridOwner}
                 player={player}
                 delay={index * idx * 2}
+                surroundingSquares={surroundingSquares}
+                selectedColour={selectedColour}
+                gameState={gameState}
               />
             );
           })}

@@ -1,6 +1,7 @@
 import { createContext, useState } from 'react';
 import { Grid, Square, grid } from '../constants/board';
 import { Player } from '../types/Players';
+import { SurroundingSquares } from '../types/Game';
 
 export const GAME_STATES = {
   LOBBY: 'LOBBY',
@@ -32,6 +33,8 @@ const defaultContext = {
   setFirstHint: () => {},
   secondHint: '',
   setSecondHint: () => {},
+  surroundingSquares: null,
+  setSurroundingSquares: () => {},
 };
 
 export const GameContext = createContext<GameContextProps>(defaultContext);
@@ -45,6 +48,7 @@ const GameContextProvider = ({ children }: Props) => {
   const [currentTurn, setCurrentTurn] = useState<Player | null>(null);
   const [firstHint, setFirstHint] = useState('');
   const [secondHint, setSecondHint] = useState('');
+  const [surroundingSquares, setSurroundingSquares] = useState<SurroundingSquares | null>(null);
 
   return (
     <GameContext.Provider
@@ -66,6 +70,8 @@ const GameContextProvider = ({ children }: Props) => {
         setFirstHint,
         secondHint,
         setSecondHint,
+        surroundingSquares,
+        setSurroundingSquares,
       }}
     >
       {children}
@@ -91,6 +97,8 @@ type GameContextProps = {
   setFirstHint: React.Dispatch<React.SetStateAction<string>>;
   secondHint: string;
   setSecondHint: React.Dispatch<React.SetStateAction<string>>;
+  surroundingSquares: SurroundingSquares | null;
+  setSurroundingSquares: React.Dispatch<React.SetStateAction<SurroundingSquares | null>>;
 };
 
 type Props = {

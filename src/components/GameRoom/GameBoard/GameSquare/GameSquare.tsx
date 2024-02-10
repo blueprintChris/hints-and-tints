@@ -6,9 +6,19 @@ import Tooltip from '../../../Tooltip/Tooltip';
 import styles from './GameSquare.module.css';
 import { useEffect, useState } from 'react';
 import { getContrastRatio, hexToRgb } from '../../../../utils';
-import { Colours } from '../../../../constants';
+import { Colours, GameStates } from '../../../../constants';
+import { SurroundingSquares } from '../../../../types/Game';
 
-const GameSquare = ({ square, onClick, selectedSquare, gridOwner, player, delay }: Props) => {
+const GameSquare = ({
+  square,
+  onClick,
+  selectedSquare,
+  selectedColour,
+  gridOwner,
+  player,
+  delay,
+  gameState,
+}: Props) => {
   const [textColour, setTextColour] = useState(Colours.WHITE);
 
   const springs = useSpring({
@@ -35,7 +45,11 @@ const GameSquare = ({ square, onClick, selectedSquare, gridOwner, player, delay 
   const hasSecondTint = gridOwner?.secondTint && gridOwner.secondTint.ref === square.ref;
 
   return (
-    <div className={styles.buttonWrapper}>
+    <div
+      className={classnames(styles.buttonWrapper, {
+        [styles.scoring]: gameState === GameStates.SCORING && selectedColour?.ref === square.ref,
+      })}
+    >
       <Tooltip offset={{ x: 20, y: 20 }} square={square}>
         <animated.button
           className={classnames(styles.square)}
@@ -43,7 +57,7 @@ const GameSquare = ({ square, onClick, selectedSquare, gridOwner, player, delay 
           style={{ backgroundColor: square.hex, ...springs }}
           data-content={square.col}
           onClick={() => onClick(square)}
-          disabled={gridOwner?.firstTint ? true : false}
+          disabled={hasSecondTint || hasFirstTint ? true : false}
         >
           {hasFirstTint && (
             <Tooltip offset={{ x: 20, y: 20 }} text={`${gridOwner.name}`}>
@@ -96,6 +110,9 @@ type Props = {
   gridOwner?: Player;
   delay: number;
   player: Player | null;
+  surroundingSquares: SurroundingSquares | null;
+  gameState: string;
+  selectedColour: Square | null;
 };
 
 export default GameSquare;

@@ -10,6 +10,7 @@ import {
   RoundEndResult,
   RoundStart2Result,
   RoundStartResult,
+  ScoringResult,
   UpdatePlayerResult,
   UpdatePlayersResult,
 } from '../types/Socket';
@@ -28,6 +29,8 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
     setCurrentTurn,
     setFirstHint,
     setSecondHint,
+    setSurroundingSquares,
+    setIsLoading,
   } = useContext(GameContext);
   const { setPlayer, setSelectedSquare } = useContext(PlayerContext);
 
@@ -68,6 +71,17 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
     const handleMakeTurn = ({ currentTurn }: MakeTurnResult) => {
       setSelectedSquare(null);
       setCurrentTurn(currentTurn);
+    };
+
+    const handleScoring = ({ gameState, players, surroundingSquares }: ScoringResult) => {
+      setGameState(gameState);
+      setPlayers(players);
+      setSurroundingSquares(surroundingSquares);
+      setIsLoading(true);
+
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 5000);
     };
 
     const handleRoundStart = ({
@@ -111,6 +125,8 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
     socket.on('make-turn', handleMakeTurn);
     socket.on('end-round', handleEndRound);
 
+    socket.on('scoring', handleScoring);
+
     socket.on('update-game-state', handleGameState);
     socket.on('update-players', handleUpdatePlayers);
 
@@ -124,12 +140,14 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
     setCurrentTurn,
     setFirstHint,
     setGameState,
+    setIsLoading,
     setPlayer,
     setPlayers,
     setRoomId,
     setSecondHint,
     setSelectedColour,
     setSelectedSquare,
+    setSurroundingSquares,
   ]);
 
   return <SocketContext.Provider value={{ isConnected }}>{children}</SocketContext.Provider>;

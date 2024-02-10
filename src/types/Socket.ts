@@ -1,4 +1,5 @@
 import { Square } from '../constants/board';
+import { SurroundingSquares } from './Game';
 import { Player } from './Players';
 
 export type RoomJoinResult = {
@@ -55,4 +56,10 @@ export type RoundEndResult = {
 
 export type UpdatePlayersResult = {
   players: Player[];
+};
+
+export type ScoringResult = {
+  players: Player[];
+  gameState: string;
+  surroundingSquares: SurroundingSquares;
 };

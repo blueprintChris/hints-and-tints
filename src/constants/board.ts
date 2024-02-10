@@ -9,6 +9,8 @@ export type Square = {
   col: string;
   ref: string;
   hex: string;
+  x?: number;
+  y?: number;
 };
 
 export const grid: Grid = [

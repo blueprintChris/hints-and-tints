@@ -8,6 +8,20 @@
   }
 }
 
+@keyframes borders {
+  from {
+    opacity: 0.2;
+    height: 100vh;
+    width: 100vh;
+  }
+
+  to {
+    width: 140px;
+    height: 141px;
+    opacity: 1;
+  }
+}
+
 .buttonWrapper {
   display: flex;
   justify-content: center;
@@ -17,8 +31,9 @@
   color: rgba(0, 0, 0, 1);
   border-radius: 1px;
   font-family: 'Comfortaa', sans-serif;
-
+  box-sizing: border-box;
   aspect-ratio: 1;
+  border-spacing: 0;
 }
 
 .square {
@@ -62,4 +77,17 @@
   height: 25px;
   width: 25px;
   font-family: 'Comfortaa', 'open-sans';
+  z-index: 2;
+}
+
+.scoring {
+  &::before {
+    content: '';
+    position: absolute;
+    width: 140px;
+    height: 140px;
+    border: 8px solid black;
+    z-index: 1;
+    animation: borders 5s ease-in;
+  }
 }

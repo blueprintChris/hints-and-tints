@@ -15,8 +15,9 @@ import { HINTER } from '../../constants/player';
 import { Colours } from '../../constants/colours';
 import { Player } from '../../types/Players';
 import styles from './GameRoom.module.css';
+import { GameStates } from '../../constants';
 
-const GameRoom = ({ players, roomId, player }: Props) => {
+const GameRoom = ({ players, player }: Props) => {
   const { gameState, isLoading, selectedColour } = useContext(GameContext);
 
   const hinter = players.find(pl => pl.role === HINTER);
@@ -59,22 +60,26 @@ const GameRoom = ({ players, roomId, player }: Props) => {
       </div>
       <div className={styles.content}>
         <div className={styles.boardContainer}>
-          {gameState === 'LOBBY' && <Welcome />}
-          {gameState !== 'LOBBY' && gameState !== 'SELECTION' && <GameBoard />}
+          {gameState === GameStates.LOBBY && <Welcome />}
+          {gameState !== GameStates.LOBBY && gameState !== GameStates.SELECTION_ONE && (
+            <GameBoard />
+          )}
         </div>
         <div className={styles.sidePanelContainer}>
           <SidePanel players={players} />
         </div>
       </div>
-      {(gameState === 'SELECTION' || gameState === 'SELECTION_TWO') && (
+      {(gameState === GameStates.SELECTION_ONE || gameState === GameStates.SELECTION_TWO) && (
         <Modal title={modalTitle()} subTitle={modalSubtitle(hinter?.name)}>
           {isLoading && <GridLoader color={Colours.PINK} />}
           {!isLoading && (
             <>
               {isHinter && (
                 <LargeCard>
-                  {gameState === 'SELECTION' && <ColourSelector />}
-                  {gameState === 'SELECTION_TWO' && <HintInput selectedColour={selectedColour} />}
+                  {gameState === GameStates.SELECTION_ONE && <ColourSelector />}
+                  {gameState === GameStates.SELECTION_TWO && (
+                    <HintInput selectedColour={selectedColour} />
+                  )}
                 </LargeCard>
               )}
               {!isHinter && <GridLoader color={Colours.PINK} />}
@@ -82,6 +87,13 @@ const GameRoom = ({ players, roomId, player }: Props) => {
           )}
         </Modal>
       )}
+      (
+      {gameState === GameStates.SCORING && isLoading && (
+        <Modal title='Round ended'>
+          <h2>Lets see how you did...</h2>
+        </Modal>
+      )}
+      )
     </>
   );
 };

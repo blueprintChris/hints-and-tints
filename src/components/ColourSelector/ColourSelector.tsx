@@ -48,8 +48,14 @@ const ColourSelector = ({ onColourClick, onChange, onSubmitClick }: Props) => {
     const colours: Square[] = [];
 
     do {
-      const row = grid[randomNumberFromRange(1, grid.length - 1)];
-      const square = row.squares[randomNumberFromRange(1, row.squares.length - 1)];
+      const x = randomNumberFromRange(1, grid.length - 1);
+      const row = grid[x];
+
+      const y = randomNumberFromRange(1, row.squares.length - 1);
+      const square = row.squares[y];
+
+      square.x = x;
+      square.y = y;
 
       if (colours.includes(square)) {
         continue;

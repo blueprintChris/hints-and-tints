@@ -36,7 +36,7 @@ const DisconnectedApp = () => {
         // naviate to game room
         setIsLoading(false);
         navigate(`/room/${roomId}`);
-      }, 3000);
+      }, 2000);
     } else {
       alert('Please enter a name');
     }

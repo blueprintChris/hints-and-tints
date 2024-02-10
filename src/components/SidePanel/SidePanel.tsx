@@ -45,8 +45,11 @@ const SidePanel = ({ players }: Props) => {
           onStartClick={handleStartGame}
         />
       )}
-      {(gameState === 'SELECTION' || gameState === 'SELECTION_TWO') && <div>plz wait</div>}
-      {(gameState === 'GUESSING_ONE' || gameState === 'GUESSING_TWO') && (
+      {(gameState === 'GUESSING_ONE' ||
+        gameState === 'GUESSING_TWO' ||
+        gameState === 'SELECTION' ||
+        gameState === 'SELECTION_TWO' ||
+        gameState === 'SCORING') && (
         <ScorePanel
           player={player}
           players={players}
