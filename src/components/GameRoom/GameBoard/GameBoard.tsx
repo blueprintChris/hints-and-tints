@@ -6,7 +6,7 @@ import styles from './GameBoard.module.css';
 import GameRow from './GameRow/GameRow';
 
 const GameBoard = () => {
-  const { currentTurn, gameState, players, surroundingSquares, selectedColour } =
+  const { currentTurn, gameState, players, surroundingSquares, selectedColour, isLoading } =
     useContext(GameContext);
   const { player, selectedSquare, setSelectedSquare } = useContext(PlayerContext);
 
@@ -42,6 +42,7 @@ const GameBoard = () => {
                 surroundingSquares={surroundingSquares}
                 selectedColour={selectedColour}
                 gameState={gameState}
+                isLoading={isLoading}
               />
             );
           })}

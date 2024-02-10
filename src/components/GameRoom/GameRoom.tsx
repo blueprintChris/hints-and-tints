@@ -28,8 +28,8 @@ const GameRoom = ({ players, player }: Props) => {
       return 'Hang tight, the game is starting...';
     } else {
       if (isHinter) {
-        if (gameState === 'SELECTION') {
-          return 'You are now the Hinter! Select a colour...';
+        if (gameState === GameStates.SELECTION_ONE) {
+          return 'You are the Hinter!';
         } else {
           return 'Enter a second hint for your colour';
         }
@@ -40,11 +40,14 @@ const GameRoom = ({ players, player }: Props) => {
   };
 
   const modalSubtitle = (name?: string) => {
+    if (!isLoading && isHinter) {
+      return 'Select a colour...';
+    }
     if (!isLoading && !isHinter) {
-      if (gameState === 'SELECTION') {
+      if (gameState === GameStates.SELECTION_ONE) {
         return `${name} is choosing a colour`;
       }
-      if (gameState === 'SELECTION_TWO') {
+      if (gameState === GameStates.SELECTION_TWO) {
         return `${name} is choosing another hint`;
       }
     }
@@ -53,7 +56,7 @@ const GameRoom = ({ players, player }: Props) => {
   return (
     <>
       <div className={styles.header}>
-        <Title size={10} orientation='row' />
+        <Title size={8} orientation='row' />
         <div className={styles.playerWrapper}>
           <span className={styles.roomId}>{player.name}</span>
         </div>
@@ -87,13 +90,12 @@ const GameRoom = ({ players, player }: Props) => {
           )}
         </Modal>
       )}
-      (
+
       {gameState === GameStates.SCORING && isLoading && (
-        <Modal title='Round ended'>
-          <h2>Lets see how you did...</h2>
+        <Modal title='Round ended' subTitle='Lets see how you did...'>
+          <GridLoader color={Colours.PINK} />
         </Modal>
       )}
-      )
     </>
   );
 };

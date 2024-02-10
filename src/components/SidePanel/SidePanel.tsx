@@ -24,6 +24,10 @@ const SidePanel = ({ players }: Props) => {
     socket.emit('make-turn', { roomId, selectedSquare, playerId: player?.id });
   };
 
+  const handleNextRound = () => {
+    socket.emit('end-round');
+  };
+
   const handleStartGame = () => {
     setIsLoading(true);
 
@@ -58,7 +62,9 @@ const SidePanel = ({ players }: Props) => {
           secondHint={secondHint}
           selectedColour={selectedColour}
           onEndTurnClick={handleEndTurn}
+          onNextRoundClick={handleNextRound}
           selectedSquare={selectedSquare}
+          gameState={gameState}
         />
       )}
     </div>

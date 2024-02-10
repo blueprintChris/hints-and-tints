@@ -1,0 +1,14 @@
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(1px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.upArrowBounce {
+  height: 100%;
+  animation: bounce 1s ease-out infinite;
+}

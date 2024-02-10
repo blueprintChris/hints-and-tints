@@ -14,3 +14,4 @@ export { default as LoadingSpinner } from './LoadingSpinner/LoadingSpinner';
 export { default as HintInput } from './HintInput/HintInput';
 export { default as Modal } from './Modal/Modal';
 export { default as Welcome } from './Welcome/Welcome';
+export { default as UpArrow } from './UpArrow/UpArrow';

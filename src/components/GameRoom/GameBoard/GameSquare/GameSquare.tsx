@@ -18,6 +18,7 @@ const GameSquare = ({
   player,
   delay,
   gameState,
+  isLoading,
 }: Props) => {
   const [textColour, setTextColour] = useState(Colours.WHITE);
 
@@ -47,7 +48,8 @@ const GameSquare = ({
   return (
     <div
       className={classnames(styles.buttonWrapper, {
-        [styles.scoring]: gameState === GameStates.SCORING && selectedColour?.ref === square.ref,
+        [styles.scoring]:
+          (!isLoading && gameState === GameStates.SCORING && selectedColour?.ref) === square.ref,
       })}
     >
       <Tooltip offset={{ x: 20, y: 20 }} square={square}>
@@ -113,6 +115,7 @@ type Props = {
   surroundingSquares: SurroundingSquares | null;
   gameState: string;
   selectedColour: Square | null;
+  isLoading: boolean;
 };
 
 export default GameSquare;

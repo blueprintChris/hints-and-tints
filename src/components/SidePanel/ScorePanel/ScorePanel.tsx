@@ -4,6 +4,7 @@ import { HINTER, TINTER } from '../../../constants/player';
 import { Player } from '../../../types/Players';
 import { Button, PlayerList } from '../../../components';
 import styles from './ScorePanel.module.css';
+import { Colours, GameStates } from '../../../constants';
 
 const ScorePanel = ({
   players,
@@ -13,7 +14,9 @@ const ScorePanel = ({
   selectedColour,
   currentTurn,
   onEndTurnClick,
+  onNextRoundClick,
   selectedSquare,
+  gameState,
 }: Props) => {
   const hinter = players.find(pl => pl.role === HINTER);
   const isHinter = hinter?.id === player?.id;
@@ -46,11 +49,19 @@ const ScorePanel = ({
           </div>
         </div>
         <div className={styles.buttonContainer}>
-          <Button
-            onClick={onEndTurnClick}
-            text='End Turn'
-            disabled={currentTurn?.id !== player?.id || !selectedSquare}
-          />
+          {gameState === GameStates.SCORING ? (
+            <Button onClick={onNextRoundClick} text='Next Round' colour={Colours.GREEN} />
+          ) : (
+            <Button
+              onClick={onEndTurnClick}
+              text='End Turn'
+              disabled={
+                currentTurn?.id !== player?.id ||
+                !selectedSquare ||
+                gameState === GameStates.SELECTION_TWO
+              }
+            />
+          )}
         </div>
       </div>
     </div>
@@ -65,7 +76,9 @@ type Props = {
   selectedColour: Square | null;
   player: Player | null;
   onEndTurnClick: () => void;
+  onNextRoundClick: () => void;
   selectedSquare: Square | null;
+  gameState: string;
 };
 
 export default ScorePanel;

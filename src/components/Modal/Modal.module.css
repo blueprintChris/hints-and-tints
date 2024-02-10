@@ -20,7 +20,7 @@
   height: 100%;
   color: white;
   background-color: rgba(0, 0, 0, 0.5);
-  animation: fadeIn 0.2s ease-in;
+  animation: fadeIn 0.5s ease-in;
   z-index: 3;
 }
 
@@ -34,7 +34,7 @@
   align-items: center;
   font-size: 40px;
   padding: 0;
-  margin: 0;
+  margin: 0 0 10px 0;
 }
 
 .modalSubTitle {
