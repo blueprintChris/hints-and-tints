@@ -1,13 +1,13 @@
+import { useContext, useEffect, useState } from 'react';
 import { animated, useSpring } from '@react-spring/web';
 import classnames from 'classnames';
 import { Square } from '../../../../constants/board';
 import { Player } from '../../../../types/Players';
-import Tooltip from '../../../Tooltip/Tooltip';
-import styles from './GameSquare.module.css';
-import { useEffect, useState } from 'react';
+import { Tooltip, ScoringSquare } from '../../../../components';
 import { getContrastRatio, hexToRgb } from '../../../../utils';
 import { Colours, GameStates } from '../../../../constants';
-import { SurroundingSquares } from '../../../../types/Game';
+import { GameContext } from '../../../../context';
+import styles from './GameSquare.module.css';
 
 const GameSquare = ({
   square,
@@ -17,10 +17,10 @@ const GameSquare = ({
   gridOwner,
   player,
   delay,
-  gameState,
-  isLoading,
 }: Props) => {
   const [textColour, setTextColour] = useState(Colours.WHITE);
+
+  const { gameState } = useContext(GameContext);
 
   const springs = useSpring({
     from: { opacity: 0 },
@@ -46,12 +46,10 @@ const GameSquare = ({
   const hasSecondTint = gridOwner?.secondTint && gridOwner.secondTint.ref === square.ref;
 
   return (
-    <div
-      className={classnames(styles.buttonWrapper, {
-        [styles.scoring]:
-          (!isLoading && gameState === GameStates.SCORING && selectedColour?.ref) === square.ref,
-      })}
-    >
+    <div className={styles.buttonWrapper}>
+      {gameState === GameStates.SCORING && selectedColour?.ref === square.ref && (
+        <ScoringSquare delay={2000} duration={6000} />
+      )}
       <Tooltip offset={{ x: 20, y: 20 }} square={square}>
         <animated.button
           className={classnames(styles.square)}
@@ -112,8 +110,6 @@ type Props = {
   gridOwner?: Player;
   delay: number;
   player: Player | null;
-  surroundingSquares: SurroundingSquares | null;
-  gameState: string;
   selectedColour: Square | null;
   isLoading: boolean;
 };

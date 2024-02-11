@@ -58,8 +58,14 @@ export type UpdatePlayersResult = {
   players: Player[];
 };
 
-export type ScoringResult = {
+export type PreScoringResult = {
   players: Player[];
   gameState: string;
   surroundingSquares: SurroundingSquares;
+  roomId: string;
+};
+
+export type ScoringResult = {
+  players: Player[];
+  gameState: string;
 };

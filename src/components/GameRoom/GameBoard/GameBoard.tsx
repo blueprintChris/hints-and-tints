@@ -6,8 +6,7 @@ import styles from './GameBoard.module.css';
 import GameRow from './GameRow/GameRow';
 
 const GameBoard = () => {
-  const { currentTurn, gameState, players, surroundingSquares, selectedColour, isLoading } =
-    useContext(GameContext);
+  const { currentTurn, gameState, players, selectedColour, isLoading } = useContext(GameContext);
   const { player, selectedSquare, setSelectedSquare } = useContext(PlayerContext);
 
   const handleSquareClick = (square: Square) => {
@@ -39,9 +38,7 @@ const GameBoard = () => {
                 gridOwner={gridOwner}
                 player={player}
                 delay={index * idx * 2}
-                surroundingSquares={surroundingSquares}
                 selectedColour={selectedColour}
-                gameState={gameState}
                 isLoading={isLoading}
               />
             );

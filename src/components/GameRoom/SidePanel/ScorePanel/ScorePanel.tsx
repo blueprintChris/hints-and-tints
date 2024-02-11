@@ -1,10 +1,14 @@
 import classnames from 'classnames';
-import { Square } from '../../../constants/board';
-import { HINTER, TINTER } from '../../../constants/player';
-import { Player } from '../../../types/Players';
-import { Button, PlayerList } from '../../../components';
+import { Square } from '../../../../constants/board';
+import { HINTER, TINTER } from '../../../../constants/player';
+import { Player } from '../../../../types/Players';
+import { Button } from '../../../../components';
+import PlayerList from '../PlayerList/PlayerList';
+import { Colours, GameStates } from '../../../../constants';
 import styles from './ScorePanel.module.css';
-import { Colours, GameStates } from '../../../constants';
+import { useContext } from 'react';
+import { GameContext } from '../../../../context';
+import Hints from './Hints/Hints';
 
 const ScorePanel = ({
   players,
@@ -21,6 +25,8 @@ const ScorePanel = ({
   const hinter = players.find(pl => pl.role === HINTER);
   const isHinter = hinter?.id === player?.id;
 
+  const { isLoading } = useContext(GameContext);
+
   return (
     <div className={styles.scorePanel}>
       <div className={styles.playersContainer}>
@@ -30,27 +36,22 @@ const ScorePanel = ({
         <PlayerList players={players} role={TINTER} showScores currentTurn={currentTurn} />
       </div>
       <div className={styles.bottomWrapper}>
-        <div className={styles.hintWrapper}>
-          <h1>Your Hint(s)</h1>
-          <div
-            className={classnames(styles.hintContainer, { [styles.hintContainerHinter]: isHinter })}
-          >
-            <div
-              className={classnames(styles.textWrapper, { [styles.textWrapperHinter]: isHinter })}
-            >
-              {firstHint && <h2>{firstHint}</h2>}
-              {secondHint && <h2>{secondHint}</h2>}
-            </div>
-            {isHinter && (
-              <div className={styles.tint} style={{ backgroundColor: selectedColour?.hex }}>
-                <span>{selectedColour?.ref}</span>
-              </div>
-            )}
-          </div>
-        </div>
+        {gameState !== GameStates.SELECTION_ONE && (
+          <Hints
+            isHinter={isHinter}
+            firstHint={firstHint}
+            secondHint={secondHint}
+            selectedColour={selectedColour}
+          />
+        )}
         <div className={styles.buttonContainer}>
           {gameState === GameStates.SCORING ? (
-            <Button onClick={onNextRoundClick} text='Next Round' colour={Colours.GREEN} />
+            <Button
+              onClick={onNextRoundClick}
+              text='Next Round'
+              colour={Colours.GREEN}
+              disabled={isLoading}
+            />
           ) : (
             <Button
               onClick={onEndTurnClick}
@@ -58,6 +59,7 @@ const ScorePanel = ({
               disabled={
                 currentTurn?.id !== player?.id ||
                 !selectedSquare ||
+                gameState === GameStates.SELECTION_ONE ||
                 gameState === GameStates.SELECTION_TWO
               }
             />
@@ -79,6 +81,7 @@ type Props = {
   onNextRoundClick: () => void;
   selectedSquare: Square | null;
   gameState: string;
+  isLoading: boolean;
 };
 
 export default ScorePanel;

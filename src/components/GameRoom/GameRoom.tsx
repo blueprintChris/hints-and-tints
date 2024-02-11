@@ -1,21 +1,14 @@
 import { useContext } from 'react';
 import { GridLoader } from 'react-spinners';
 import GameBoard from './GameBoard/GameBoard';
-import {
-  ColourSelector,
-  HintInput,
-  LargeCard,
-  SidePanel,
-  Title,
-  Modal,
-  Welcome,
-} from '../../components';
+import { ColourSelector, HintInput, LargeCard, Title, Modal, Welcome } from '../../components';
+import SidePanel from './SidePanel/SidePanel';
 import { GameContext } from '../../context';
 import { HINTER } from '../../constants/player';
 import { Colours } from '../../constants/colours';
+import { GameStates } from '../../constants';
 import { Player } from '../../types/Players';
 import styles from './GameRoom.module.css';
-import { GameStates } from '../../constants';
 
 const GameRoom = ({ players, player }: Props) => {
   const { gameState, isLoading, selectedColour } = useContext(GameContext);
@@ -73,7 +66,7 @@ const GameRoom = ({ players, player }: Props) => {
         </div>
       </div>
       {(gameState === GameStates.SELECTION_ONE || gameState === GameStates.SELECTION_TWO) && (
-        <Modal title={modalTitle()} subTitle={modalSubtitle(hinter?.name)}>
+        <Modal title={modalTitle()} subTitle={modalSubtitle(hinter?.name)} isPermanent>
           {isLoading && <GridLoader color={Colours.PINK} />}
           {!isLoading && (
             <>
@@ -90,9 +83,8 @@ const GameRoom = ({ players, player }: Props) => {
           )}
         </Modal>
       )}
-
-      {gameState === GameStates.SCORING && isLoading && (
-        <Modal title='Round ended' subTitle='Lets see how you did...'>
+      {gameState === GameStates.SCORING && (
+        <Modal title='Round ended' subTitle='Lets see how you did...' duration={2000}>
           <GridLoader color={Colours.PINK} />
         </Modal>
       )}

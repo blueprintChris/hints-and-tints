@@ -5,4 +5,5 @@ export const GameStates = {
   GUESSING_ONE: 'GUESSING_ONE',
   GUESSING_TWO: 'GUESSING_TWO',
   SCORING: 'SCORING',
+  PRE_SCORING: 'PRE_SCORING',
 };

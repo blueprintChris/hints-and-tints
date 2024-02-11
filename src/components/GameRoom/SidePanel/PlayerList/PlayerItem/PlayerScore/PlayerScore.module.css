@@ -1,0 +1,12 @@
+.scoreWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.score {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 20px;
+}

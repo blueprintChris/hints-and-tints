@@ -1,0 +1,22 @@
+@keyframes borders {
+  from {
+    opacity: 0.2;
+    height: 100vh;
+    width: 100vh;
+  }
+
+  to {
+    width: 140px;
+    height: 141px;
+    opacity: 1;
+  }
+}
+
+.scoringSquare {
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  border: 8px solid black;
+  z-index: 1;
+  animation: borders 4s ease-out;
+}

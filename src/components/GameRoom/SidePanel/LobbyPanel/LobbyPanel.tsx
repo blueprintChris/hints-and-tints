@@ -1,9 +1,10 @@
-import { HINTER, TINTER } from '../../../constants/player';
-import { Player } from '../../../types/Players';
-import Button from '../../Button/Button';
-import { LobbyList, PlayerList } from '../../../components';
+import { HINTER, TINTER } from '../../../../constants/player';
+import { Player } from '../../../../types/Players';
+import { Button } from '../../../../components';
+import PlayerList from '../PlayerList/PlayerList';
+import LobbyList from './LobbyList/LobbyList';
+import { Colours } from '../../../../constants/colours';
 import styles from './LobbyPanel.module.css';
-import { Colours } from '../../../constants/colours';
 
 const LobbyPanel = ({ players, player, onHinterClick, onJoinClick, onStartClick }: Props) => {
   const hinter = players.find(pl => pl.role === HINTER);

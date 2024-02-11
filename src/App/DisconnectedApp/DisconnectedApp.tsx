@@ -31,12 +31,7 @@ const DisconnectedApp = () => {
       // join room
       socket.emit('room-join', { roomId, nickname });
 
-      // simulate loading
-      setTimeout(() => {
-        // naviate to game room
-        setIsLoading(false);
-        navigate(`/room/${roomId}`);
-      }, 2000);
+      navigate(`/room/${roomId}`);
     } else {
       alert('Please enter a name');
     }

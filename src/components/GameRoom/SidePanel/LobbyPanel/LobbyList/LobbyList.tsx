@@ -1,4 +1,4 @@
-import { Players } from '../../types/Players';
+import { Players } from '../../../../../types/Players';
 import styles from './LobbyList.module.css';
 
 const LobbyList = ({ players }: Props) => {

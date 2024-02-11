@@ -1,15 +1,24 @@
 import { useContext } from 'react';
-import { Players } from '../../types/Players';
+import { Players } from '../../../types/Players';
 import styles from './SidePanel.module.css';
-import { GameContext, PlayerContext } from '../../context';
-import { socket } from '../../socket/Socket';
+import { GameContext, PlayerContext } from '../../../context';
+import { socket } from '../../../socket/Socket';
 import LobbyPanel from './LobbyPanel/LobbyPanel';
 import ScorePanel from './ScorePanel/ScorePanel';
-import { HINTER, TINTER } from '../../constants/player';
+import { HINTER, TINTER } from '../../../constants/player';
+import { GameStates } from '../../../constants';
 
 const SidePanel = ({ players }: Props) => {
-  const { gameState, roomId, currentTurn, firstHint, secondHint, selectedColour, setIsLoading } =
-    useContext(GameContext);
+  const {
+    gameState,
+    roomId,
+    currentTurn,
+    firstHint,
+    secondHint,
+    selectedColour,
+    setIsLoading,
+    isLoading,
+  } = useContext(GameContext);
   const { player, selectedSquare } = useContext(PlayerContext);
 
   const handleJoinGameAsHinter = () => {
@@ -25,22 +34,18 @@ const SidePanel = ({ players }: Props) => {
   };
 
   const handleNextRound = () => {
-    socket.emit('end-round');
+    socket.emit('round-end', { roomId });
   };
 
   const handleStartGame = () => {
     setIsLoading(true);
 
-    socket.emit('game-start', { roomId, gameState: 'SELECTION' });
-
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 3000);
+    socket.emit('game-start', { roomId, gameState: GameStates.SELECTION_ONE });
   };
 
   return (
     <div className={styles.sidePanel}>
-      {gameState === 'LOBBY' && (
+      {gameState === GameStates.LOBBY ? (
         <LobbyPanel
           players={players}
           player={player}
@@ -48,12 +53,7 @@ const SidePanel = ({ players }: Props) => {
           onJoinClick={handleJoinGame}
           onStartClick={handleStartGame}
         />
-      )}
-      {(gameState === 'GUESSING_ONE' ||
-        gameState === 'GUESSING_TWO' ||
-        gameState === 'SELECTION' ||
-        gameState === 'SELECTION_TWO' ||
-        gameState === 'SCORING') && (
+      ) : (
         <ScorePanel
           player={player}
           players={players}
@@ -65,6 +65,7 @@ const SidePanel = ({ players }: Props) => {
           onNextRoundClick={handleNextRound}
           selectedSquare={selectedSquare}
           gameState={gameState}
+          isLoading={isLoading}
         />
       )}
     </div>

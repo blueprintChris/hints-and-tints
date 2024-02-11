@@ -28,7 +28,7 @@ const NameInputPanel = ({
   return (
     <div className={styles.content}>
       <Tooltip
-        offset={{ x: 20, y: 20 }}
+        offset={{ x: -420, y: -90 }}
         text='For the best experience, play with a resolution of at least 1920 x 1080. 
         Lower resolutions are not supported and you may experience some funny behaviour.'
       >

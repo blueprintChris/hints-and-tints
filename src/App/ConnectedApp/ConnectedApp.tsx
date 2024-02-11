@@ -30,11 +30,7 @@ const ConnectedApp = () => {
     if (id && nickname) {
       setIsLoading(true);
       // join the room
-      setTimeout(() => {
-        setIsLoading(false);
-
-        socket.emit('room-join', { roomId: id, nickname });
-      }, 3000);
+      socket.emit('room-join', { roomId: id, nickname });
     }
   };
 
