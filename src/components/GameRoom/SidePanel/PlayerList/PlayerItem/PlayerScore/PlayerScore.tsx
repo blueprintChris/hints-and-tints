@@ -17,7 +17,6 @@ const PlayerScore = ({ score, gameState }: Props) => {
   }, [isLoading, score]);
 
   useEffect(() => {
-    console.log('new score: ', score);
     setShowArrow(true);
   }, [score]);
 
