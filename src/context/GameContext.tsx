@@ -35,6 +35,8 @@ const defaultContext = {
   setSecondHint: () => {},
   surroundingSquares: null,
   setSurroundingSquares: () => {},
+  winner: null,
+  setWinner: () => {},
 };
 
 export const GameContext = createContext<GameContextProps>(defaultContext);
@@ -49,6 +51,7 @@ const GameContextProvider = ({ children }: Props) => {
   const [firstHint, setFirstHint] = useState('');
   const [secondHint, setSecondHint] = useState('');
   const [surroundingSquares, setSurroundingSquares] = useState<SurroundingSquares | null>(null);
+  const [winner, setWinner] = useState<Player | null>(null);
 
   return (
     <GameContext.Provider
@@ -72,6 +75,8 @@ const GameContextProvider = ({ children }: Props) => {
         setSecondHint,
         surroundingSquares,
         setSurroundingSquares,
+        winner,
+        setWinner,
       }}
     >
       {children}
@@ -99,6 +104,8 @@ type GameContextProps = {
   setSecondHint: React.Dispatch<React.SetStateAction<string>>;
   surroundingSquares: SurroundingSquares | null;
   setSurroundingSquares: React.Dispatch<React.SetStateAction<SurroundingSquares | null>>;
+  winner: Player | null;
+  setWinner: React.Dispatch<React.SetStateAction<Player | null>>;
 };
 
 type Props = {

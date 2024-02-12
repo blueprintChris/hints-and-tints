@@ -1,7 +1,19 @@
 import { FormEvent } from 'react';
+import classnames from 'classnames';
 import styles from './Input.module.css';
+import Button from '../Button/Button';
 
-const Input = ({ onChange, placeholder, name, label, disabled }: Props) => {
+const Input = ({
+  onChange,
+  placeholder,
+  name,
+  label,
+  withButton,
+  onButtonClick,
+  value,
+  disabled,
+  autoFocus = true,
+}: Props) => {
   return (
     <div className={styles.inputContainer}>
       {label && (
@@ -9,15 +21,23 @@ const Input = ({ onChange, placeholder, name, label, disabled }: Props) => {
           {label}
         </label>
       )}
-      <input
-        name={name}
-        className={styles.nameInput}
-        type='text'
-        onChange={onChange}
-        autoFocus
-        placeholder={placeholder}
-        disabled={disabled}
-      />
+      <div className={classnames({ [styles.inputButtonWrapper]: withButton })}>
+        <input
+          name={name}
+          className={classnames(styles.nameInput, { [styles.withButton]: withButton })}
+          type='text'
+          onChange={onChange}
+          autoFocus={autoFocus}
+          placeholder={placeholder}
+          disabled={disabled}
+          value={value}
+        />
+        {withButton && (
+          <div className={styles.buttonWrapper}>
+            <Button text='📋' onClick={onButtonClick ? onButtonClick : () => {}} withInput />
+          </div>
+        )}
+      </div>
     </div>
   );
 };
@@ -27,7 +47,11 @@ type Props = {
   name: string;
   placeholder: string;
   onChange: (e: FormEvent<HTMLInputElement>) => void;
+  onButtonClick?: () => void;
   disabled?: boolean;
+  withButton?: boolean;
+  value?: string;
+  autoFocus?: boolean;
 };
 
 export default Input;

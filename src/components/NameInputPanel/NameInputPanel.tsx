@@ -1,7 +1,8 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent } from 'react';
 import { Button, Input, Title } from '../../components';
 import styles from './NameInputPanel.module.css';
 import Tooltip from '../Tooltip/Tooltip';
+import { useDeviceWidth } from '../../hooks';
 
 const NameInputPanel = ({
   onChange,
@@ -11,19 +12,7 @@ const NameInputPanel = ({
   inputName,
   inputPlaceholder,
 }: Props) => {
-  const [width, setWidth] = useState<number>(window.innerWidth);
-
-  const handleWindowSizeChange = () => {
-    setWidth(window.innerWidth);
-  };
-  useEffect(() => {
-    window.addEventListener('resize', handleWindowSizeChange);
-    return () => {
-      window.removeEventListener('resize', handleWindowSizeChange);
-    };
-  }, []);
-
-  const isMobile = width <= 768;
+  const { isMobile } = useDeviceWidth();
 
   return (
     <div className={styles.content}>

@@ -9,6 +9,7 @@ import Button from '../Button/Button';
 import { Colours } from '../../constants/colours';
 import Tooltip from '../Tooltip/Tooltip';
 import { socket } from '../../socket/Socket';
+import { GameStates, SocketEvents } from '../../constants';
 
 const ColourSelector = ({ onColourClick, onChange, onSubmitClick }: Props) => {
   const [fourRandomColours, setFourRandomColours] = useState<Square[]>([]);
@@ -27,10 +28,10 @@ const ColourSelector = ({ onColourClick, onChange, onSubmitClick }: Props) => {
   };
 
   const handleOnClick = () => {
-    socket.emit('round-start', {
+    socket.emit(SocketEvents.GAME_ROUND_START, {
       roomId,
       selectedColour,
-      gameState: 'GUESSING_ONE',
+      gameState: GameStates.GUESSING_ONE,
       firstHint: hint,
     });
   };

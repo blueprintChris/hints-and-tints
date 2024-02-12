@@ -1,11 +1,13 @@
 import { FormEvent, useContext, useEffect, useState } from 'react';
 import { socket } from '../../socket/Socket';
 import { GameContext, PlayerContext, SocketContext } from '../../context/';
-import { LoadingSpinner, NameInputPanel } from '../../components';
+import { Button, LargeCard, LoadingSpinner, NameInputPanel, Title } from '../../components';
 import { useNavigate, useParams } from 'react-router-dom';
 import GameRoom from '../../components/GameRoom/GameRoom';
 import AppContainer from '../AppContainer/AppContainer';
 import { Colours } from '../../constants/colours';
+import { SocketEvents } from '../../constants';
+import styles from './ConnectedApp.module.css';
 
 const ConnectedApp = () => {
   const [nickname, setNickname] = useState('');
@@ -14,7 +16,7 @@ const ConnectedApp = () => {
   const navigate = useNavigate();
 
   const { isConnected } = useContext(SocketContext);
-  const { roomId, setRoomId, players, isLoading, setIsLoading } = useContext(GameContext);
+  const { roomId, players, isLoading, setIsLoading } = useContext(GameContext);
   const { player } = useContext(PlayerContext);
 
   const handleInputChange = (e: FormEvent<HTMLInputElement>) => {
@@ -30,7 +32,7 @@ const ConnectedApp = () => {
     if (id && nickname) {
       setIsLoading(true);
       // join the room
-      socket.emit('room-join', { roomId: id, nickname });
+      socket.emit(SocketEvents.ROOM_JOIN, { roomId: id, nickname });
     }
   };
 
@@ -38,26 +40,27 @@ const ConnectedApp = () => {
     if (!isConnected) {
       socket.connect();
     }
-  }, [isConnected]);
 
-  useEffect(() => {
-    socket.emit('room-search', { roomId: id });
-
-    socket.on('room-search', ({ doesRoomExist, roomId: id }) => {
-      if (doesRoomExist) {
-        setRoomId(id);
-      } else {
-        setRoomId('');
-      }
-    });
-  }, [id, player, setRoomId, roomId]);
+    if (isConnected && !roomId) {
+      socket.emit(SocketEvents.ROOM_SEARCH, { roomId: id });
+    }
+  }, [id, isConnected, roomId]);
 
   if (isConnected && !roomId) {
     return (
-      <div>
-        <h1>Room not found</h1>
-        <button onClick={handleHomepageReturn}>Return to Homepage</button>
-      </div>
+      <AppContainer>
+        <LargeCard>
+          <div className={styles.cardContentWrapper}>
+            <Title size={30} />
+            <div className={styles.cardContent}>
+              <h2>Room not found</h2>
+              <div className={styles.buttonWrapper}>
+                <Button text='Return to homepage' onClick={handleHomepageReturn} />
+              </div>
+            </div>
+          </div>
+        </LargeCard>
+      </AppContainer>
     );
   }
 

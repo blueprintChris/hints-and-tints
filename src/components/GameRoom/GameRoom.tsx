@@ -1,20 +1,37 @@
 import { useContext } from 'react';
 import { GridLoader } from 'react-spinners';
+import ConfettiExplosion from 'react-confetti-explosion';
 import GameBoard from './GameBoard/GameBoard';
-import { ColourSelector, HintInput, LargeCard, Title, Modal, Welcome } from '../../components';
+import {
+  ColourSelector,
+  HintInput,
+  LargeCard,
+  Title,
+  Modal,
+  Welcome,
+  Button,
+} from '../../components';
 import SidePanel from './SidePanel/SidePanel';
 import { GameContext } from '../../context';
 import { HINTER } from '../../constants/player';
 import { Colours } from '../../constants/colours';
-import { GameStates } from '../../constants';
+import { GameStates, SocketEvents } from '../../constants';
 import { Player } from '../../types/Players';
 import styles from './GameRoom.module.css';
+import { socket } from '../../socket/Socket';
 
 const GameRoom = ({ players, player }: Props) => {
-  const { gameState, isLoading, selectedColour } = useContext(GameContext);
+  const { gameState, isLoading, selectedColour, winner, roomId } = useContext(GameContext);
 
   const hinter = players.find(pl => pl.role === HINTER);
   const isHinter = hinter?.id === player.id;
+
+  console.log(winner);
+  console.log(gameState);
+
+  const handleNewGame = () => {
+    socket.emit(SocketEvents.GAME_START, { roomId });
+  };
 
   const modalTitle = () => {
     if (isLoading) {
@@ -86,6 +103,14 @@ const GameRoom = ({ players, player }: Props) => {
       {gameState === GameStates.SCORING && (
         <Modal title='Round ended' subTitle='Lets see how you did...' duration={2000}>
           <GridLoader color={Colours.PINK} />
+        </Modal>
+      )}
+      {gameState === GameStates.GAME_END && (
+        <Modal title={`${winner?.name} wins with ${winner?.score} points!`} isPermanent>
+          <ConfettiExplosion force={0.8} duration={3000} particleCount={250} width={1600} />
+          <div className={styles.buttonWrapper}>
+            <Button text='New Game' onClick={handleNewGame} />
+          </div>
         </Modal>
       )}
     </>

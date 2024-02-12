@@ -2,10 +2,10 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import DisconnectedApp from './DisconnectedApp/DisconnectedApp';
 import ConnectedApp from './ConnectedApp/ConnectedApp';
 import { ErrorPage } from '../components';
-import styles from './App.module.css';
-import { PropsWithChildren, ReactNode } from 'react';
+import { PropsWithChildren } from 'react';
 import { GameContextProvider, PlayerContextProvider, SocketContextProvider } from '../context';
-
+import styles from './App.module.css';
+import AppContainer from './AppContainer/AppContainer';
 const ProviderWrapper = ({ children }: PropsWithChildren) => {
   return (
     <GameContextProvider>
@@ -24,7 +24,11 @@ const router = createBrowserRouter([
         <DisconnectedApp />
       </ProviderWrapper>
     ),
-    errorElement: <ErrorPage />,
+    errorElement: (
+      <AppContainer>
+        <ErrorPage />
+      </AppContainer>
+    ),
   },
   {
     path: '/room/:id',
@@ -32,6 +36,11 @@ const router = createBrowserRouter([
       <ProviderWrapper>
         <ConnectedApp />
       </ProviderWrapper>
+    ),
+    errorElement: (
+      <AppContainer>
+        <ErrorPage />
+      </AppContainer>
     ),
   },
 ]);

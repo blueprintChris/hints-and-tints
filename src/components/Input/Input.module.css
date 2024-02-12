@@ -34,3 +34,17 @@
     background-color: grey;
   }
 }
+
+.inputButtonWrapper {
+  display: flex;
+  height: 100%;
+}
+
+.inputButtonWrapper input {
+  margin: 0;
+  width: 500px;
+}
+
+.withButton {
+  border-radius: 8px 0 0 8px;
+}

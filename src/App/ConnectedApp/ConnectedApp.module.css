@@ -1,49 +1,19 @@
-.header {
+.cardContentWrapper {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  height: 40px;
-  padding: 0 10px;
-  box-sizing: border-box;
-  width: 100%;
-  background-color: #15171c;
-  box-shadow: 0px 1px 6px black;
-  z-index: 1;
+  height: 100%;
 }
 
-.roomId {
-  color: white;
-}
-
-.text {
-  font-family: 'Honk', 'open-sans';
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-  color: white;
-  font-size: 28px;
-}
-
-.content {
+.cardContent {
   display: flex;
-  height: calc(100vh - 40px);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.buttonWrapper {
+  height: 50px;
   width: 100%;
-  box-sizing: border-box;
-}
-
-.boardContainer {
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  padding: 40px 20px 40px 40px;
-  box-sizing: border-box;
-  border-right: 1px solid #1a1a1a;
-}
-
-.sidePanelContainer {
-  flex: 1;
-  padding: 40px 20px;
-  min-width: 287px;
-  max-width: 300px;
-  max-height: 796px;
 }

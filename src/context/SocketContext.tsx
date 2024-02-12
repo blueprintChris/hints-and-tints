@@ -2,18 +2,20 @@ import { createContext, useState, useEffect, useContext, PropsWithChildren } fro
 import { socket } from './../socket/Socket';
 import { GameContext } from './GameContext';
 import { PlayerContext } from './PlayerContext';
+import { SocketEvents } from '../constants';
 import {
   GameStartResult,
   GameStateResult,
   MakeTurnResult,
-  PreScoringResult,
   RoomJoinResult,
   RoundEndResult,
-  RoundStart2Result,
+  RoundContinueResult,
   RoundStartResult,
   ScoringResult,
   UpdatePlayerResult,
   UpdatePlayersResult,
+  RoomSearchResult,
+  WinnerResult,
 } from '../types/Socket';
 
 export const SocketContext = createContext<SocketContextType>({ isConnected: false });
@@ -31,6 +33,7 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
     setSecondHint,
     setSurroundingSquares,
     setIsLoading,
+    setWinner,
   } = useContext(GameContext);
   const { setPlayer, setSelectedSquare } = useContext(PlayerContext);
 
@@ -61,6 +64,9 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
     const handleGameStart = ({ gameState, players }: GameStartResult) => {
       setGameState(gameState);
       setPlayers(players);
+      setFirstHint('');
+      setSecondHint('');
+      setWinner(null);
       setIsLoading(false);
     };
 
@@ -68,7 +74,7 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
       setGameState(gameState);
     };
 
-    const handleMakeTurn = ({ currentTurn }: MakeTurnResult) => {
+    const handleEndTurn = ({ currentTurn }: MakeTurnResult) => {
       setSelectedSquare(null);
       setCurrentTurn(currentTurn);
     };
@@ -93,7 +99,15 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
       setFirstHint(firstHint);
     };
 
-    const handleRoundStart2 = ({ gameState, currentTurn, secondHint }: RoundStart2Result) => {
+    const handleRoomSearch = ({ doesRoomExist, roomId }: RoomSearchResult) => {
+      if (doesRoomExist) {
+        setRoomId(roomId);
+      } else {
+        setRoomId('');
+      }
+    };
+
+    const handleRoundContinue = ({ gameState, currentTurn, secondHint }: RoundContinueResult) => {
       setGameState(gameState);
       setCurrentTurn(currentTurn);
       setSecondHint(secondHint);
@@ -107,24 +121,30 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
       setSecondHint(secondHint);
     };
 
-    socket.on('connect', onConnect);
-    socket.on('disconnect', onDisconnect);
-    socket.on('room-join', handleRoomJoin);
-    socket.on('room-leave', handleUpdatePlayers);
-    socket.on('update-player', handleUpdatePlayer);
-    socket.on('game-start', handleGameStart);
-    socket.on('round-start', handleRoundStart);
-    socket.on('round-start-2', handleRoundStart2);
-    socket.on('make-turn', handleMakeTurn);
-    socket.on('round-end', handleEndRound);
-    socket.on('scoring', handleScoring);
-    socket.on('update-game-state', handleGameState);
-    socket.on('update-players', handleUpdatePlayers);
+    const handleGameEnd = ({ gameState, winner }: WinnerResult) => {
+      console.log('winner: ', winner);
+      setWinner(winner);
+      setGameState(gameState);
+    };
+
+    socket.on(SocketEvents.CONNECT, onConnect);
+    socket.on(SocketEvents.DISCONNECT, onDisconnect);
+    socket.on(SocketEvents.ROOM_JOIN, handleRoomJoin);
+    socket.on(SocketEvents.ROOM_SEARCH, handleRoomSearch);
+    socket.on(SocketEvents.PLAYER_UPDATE, handleUpdatePlayer);
+    socket.on(SocketEvents.GAME_START, handleGameStart);
+    socket.on(SocketEvents.GAME_ROUND_START, handleRoundStart);
+    socket.on(SocketEvents.GAME_ROUND_CONTINUE, handleRoundContinue);
+    socket.on(SocketEvents.GAME_TURN_END, handleEndTurn);
+    socket.on(SocketEvents.GAME_ROUND_END, handleEndRound);
+    socket.on(SocketEvents.GAME_UPDATE_SCORES, handleScoring);
+    socket.on(SocketEvents.GAME_UPDATE_STATE, handleGameState);
+    socket.on(SocketEvents.GAME_END, handleGameEnd);
+    socket.on(SocketEvents.PLAYERS_UPDATE, handleUpdatePlayers);
 
     return () => {
-      socket.off('connect', onConnect);
-      socket.off('room-join', handleRoomJoin);
-      socket.off('disconnect', onDisconnect);
+      socket.off(SocketEvents.CONNECT, onConnect);
+      socket.off(SocketEvents.DISCONNECT, onDisconnect);
     };
   }, [
     setCurrentTurn,
@@ -138,6 +158,7 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
     setSelectedColour,
     setSelectedSquare,
     setSurroundingSquares,
+    setWinner,
   ]);
 
   return <SocketContext.Provider value={{ isConnected }}>{children}</SocketContext.Provider>;

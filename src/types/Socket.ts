@@ -8,6 +8,11 @@ export type RoomJoinResult = {
   gameState: string;
 };
 
+export type RoomSearchResult = {
+  roomId: string;
+  doesRoomExist: boolean;
+};
+
 export type RoomLeaveResult = {
   players: Player[];
 };
@@ -37,7 +42,7 @@ export type RoundStartResult = {
   firstHint: string;
 };
 
-export type RoundStart2Result = {
+export type RoundContinueResult = {
   gameState: string;
   currentTurn: Player;
   secondHint: string;
@@ -67,5 +72,10 @@ export type PreScoringResult = {
 
 export type ScoringResult = {
   players: Player[];
+  gameState: string;
+};
+
+export type WinnerResult = {
+  winner: Player;
   gameState: string;
 };

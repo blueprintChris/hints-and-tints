@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { animated, useSpring } from '@react-spring/web';
 import classnames from 'classnames';
 import { Square } from '../../../../constants/board';
@@ -19,7 +19,9 @@ const GameSquare = ({
   delay,
 }: Props) => {
   const [textColour, setTextColour] = useState(Colours.WHITE);
+  const [size, setSize] = useState(0);
 
+  const ref = useRef<HTMLDivElement>(null);
   const { gameState } = useContext(GameContext);
 
   const springs = useSpring({
@@ -27,6 +29,15 @@ const GameSquare = ({
     to: { opacity: 1 },
     delay: delay,
   });
+
+  useEffect(() => {
+    const observer = new ResizeObserver(entries => {
+      setSize(entries[0].contentRect.width);
+    });
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+  }, []);
 
   useEffect(() => {
     const applyColourRatio = () => {
@@ -46,9 +57,9 @@ const GameSquare = ({
   const hasSecondTint = gridOwner?.secondTint && gridOwner.secondTint.ref === square.ref;
 
   return (
-    <div className={styles.buttonWrapper}>
+    <div className={styles.buttonWrapper} ref={ref}>
       {gameState === GameStates.SCORING && selectedColour?.ref === square.ref && (
-        <ScoringSquare delay={2000} duration={6000} />
+        <ScoringSquare delay={2000} duration={6000} size={size} />
       )}
       <Tooltip offset={{ x: 20, y: 20 }} square={square}>
         <animated.button

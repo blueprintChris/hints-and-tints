@@ -32,7 +32,7 @@ const HintInput = ({ selectedColour }: Props) => {
   };
 
   const handleOnClick = () => {
-    socket.emit(SocketEvents.ROUND_START_2, {
+    socket.emit(SocketEvents.GAME_ROUND_CONTINUE, {
       roomId,
       secondHint,
       gameState: GameStates.GUESSING_TWO,

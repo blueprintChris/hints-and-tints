@@ -22,8 +22,9 @@
   background-color: #282c34;
   border-radius: 4px;
   box-shadow: 0 1px 6px #15171c;
-  padding: 10px 20px;
+  padding: 20px;
   box-sizing: border-box;
+  margin-bottom: 20px;
 }
 
 .rules h2 {
@@ -32,6 +33,7 @@
   align-items: center;
   width: 100%;
   color: #46c0b3;
+  margin: 0 0 10px 0;
 }
 
 .rules span {
@@ -50,4 +52,8 @@
 ul {
   margin: 10px 0;
   color: white;
+}
+
+.linkContainer {
+  width: 100%;
 }

@@ -60,3 +60,7 @@
   background-color: #1a1a1a;
   box-shadow: 0 0 10px 1px white;
 }
+
+.buttonWrapper {
+  height: 40px;
+}

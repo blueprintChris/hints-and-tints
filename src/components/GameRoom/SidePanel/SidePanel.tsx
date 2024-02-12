@@ -6,7 +6,7 @@ import { socket } from '../../../socket/Socket';
 import LobbyPanel from './LobbyPanel/LobbyPanel';
 import ScorePanel from './ScorePanel/ScorePanel';
 import { HINTER, TINTER } from '../../../constants/player';
-import { GameStates } from '../../../constants';
+import { GameStates, SocketEvents } from '../../../constants';
 
 const SidePanel = ({ players }: Props) => {
   const {
@@ -22,25 +22,25 @@ const SidePanel = ({ players }: Props) => {
   const { player, selectedSquare } = useContext(PlayerContext);
 
   const handleJoinGameAsHinter = () => {
-    socket.emit('update-player-role', { roomId, playerId: player?.id, role: HINTER });
+    socket.emit(SocketEvents.PLAYER_UPDATE_ROLE, { roomId, playerId: player?.id, role: HINTER });
   };
 
   const handleJoinGame = () => {
-    socket.emit('update-player-role', { roomId, playerId: player?.id, role: TINTER });
+    socket.emit(SocketEvents.PLAYER_UPDATE_ROLE, { roomId, playerId: player?.id, role: TINTER });
   };
 
   const handleEndTurn = () => {
-    socket.emit('make-turn', { roomId, selectedSquare, playerId: player?.id });
+    socket.emit(SocketEvents.GAME_TURN_END, { roomId, selectedSquare, playerId: player?.id });
   };
 
   const handleNextRound = () => {
-    socket.emit('round-end', { roomId });
+    socket.emit(SocketEvents.GAME_ROUND_END, { roomId });
   };
 
   const handleStartGame = () => {
     setIsLoading(true);
 
-    socket.emit('game-start', { roomId, gameState: GameStates.SELECTION_ONE });
+    socket.emit(SocketEvents.GAME_START, { roomId });
   };
 
   return (

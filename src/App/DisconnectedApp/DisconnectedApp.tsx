@@ -6,6 +6,7 @@ import { LoadingSpinner, NameInputPanel } from '../../components';
 import { GameContext } from '../../context/GameContext';
 import AppContainer from '../AppContainer/AppContainer';
 import { Colours } from '../../constants/colours';
+import { SocketEvents } from '../../constants';
 
 const DisconnectedApp = () => {
   const [nickname, setNickname] = useState('');
@@ -26,10 +27,10 @@ const DisconnectedApp = () => {
       socket.connect();
 
       // create room
-      socket.emit('room-create', { roomId });
+      socket.emit(SocketEvents.ROOM_CREATE, { roomId });
 
       // join room
-      socket.emit('room-join', { roomId, nickname });
+      socket.emit(SocketEvents.ROOM_JOIN, { roomId, nickname });
 
       navigate(`/room/${roomId}`);
     } else {

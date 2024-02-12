@@ -1,5 +1,6 @@
 .largeCard {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: flex-start;
   padding: 40px;
@@ -9,6 +10,7 @@
   box-shadow: 0 0 10px 1px black;
   border-radius: 8px;
   background-color: #1a1a1a;
+  color: white;
 }
 
 .modalTitle {
