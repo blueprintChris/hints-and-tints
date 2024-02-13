@@ -1,9 +1,11 @@
 import { FormEvent, useContext, useEffect, useState } from 'react';
+import { v4 as uuid } from 'uuid';
 import { socket } from '../../socket/Socket';
 import { GameContext, PlayerContext, SocketContext } from '../../context/';
 import { Button, LargeCard, LoadingSpinner, NameInputPanel, Title } from '../../components';
 import { useNavigate, useParams } from 'react-router-dom';
-import GameRoom from '../../components/GameRoom/GameRoom';
+import { useLocalStorage } from '../../hooks';
+import { GameRoom } from '../../components';
 import AppContainer from '../AppContainer/AppContainer';
 import { Colours } from '../../constants/colours';
 import { SocketEvents } from '../../constants';
@@ -14,6 +16,13 @@ const ConnectedApp = () => {
 
   const { id } = useParams();
   const navigate = useNavigate();
+
+  const {
+    getNicknameLocalStorage,
+    setNicknameLocalStorage,
+    getPlayerIdLocalStorage,
+    setPlayerIdLocalStorage,
+  } = useLocalStorage();
 
   const { isConnected } = useContext(SocketContext);
   const { roomId, players, isLoading, setIsLoading } = useContext(GameContext);
@@ -29,14 +38,25 @@ const ConnectedApp = () => {
   };
 
   const handleOnClick = () => {
+    const playerId = uuid();
+
     if (id && nickname) {
       setIsLoading(true);
+
+      setNicknameLocalStorage(nickname);
+      setPlayerIdLocalStorage(playerId);
+
       // join the room
-      socket.emit(SocketEvents.ROOM_JOIN, { roomId: id, nickname });
+      socket.emit(SocketEvents.ROOM_JOIN, {
+        roomId: id,
+        nickname,
+        playerId,
+      });
     }
   };
 
   useEffect(() => {
+    setIsLoading(true);
     if (!isConnected) {
       socket.connect();
     }
@@ -44,31 +64,30 @@ const ConnectedApp = () => {
     if (isConnected && !roomId) {
       socket.emit(SocketEvents.ROOM_SEARCH, { roomId: id });
     }
-  }, [id, isConnected, roomId]);
+  }, [id, isConnected, roomId, setIsLoading]);
 
-  if (isConnected && !roomId) {
+  // checks if the player is already in the game (i.e. the user refreshes their browser / disconnects from the socket)
+  useEffect(() => {
+    const playerId = getPlayerIdLocalStorage();
+    const nickname = getNicknameLocalStorage();
+
+    if (isConnected && roomId && playerId && nickname && !player) {
+      socket.emit(SocketEvents.PLAYER_SEARCH, { roomId, playerId, nickname });
+    } else {
+      setIsLoading(false);
+    }
+  }, [getNicknameLocalStorage, getPlayerIdLocalStorage, isConnected, player, roomId, setIsLoading]);
+
+  if (isLoading) {
     return (
       <AppContainer>
-        <LargeCard>
-          <div className={styles.cardContentWrapper}>
-            <Title size={30} />
-            <div className={styles.cardContent}>
-              <h2>Room not found</h2>
-              <div className={styles.buttonWrapper}>
-                <Button text='Return to homepage' onClick={handleHomepageReturn} />
-              </div>
-            </div>
-          </div>
-        </LargeCard>
+        <LoadingSpinner colour={Colours.PINK} text='Joining room...' />;
       </AppContainer>
     );
-  }
-
-  if (isConnected && roomId && !player) {
-    return (
-      <AppContainer>
-        {isLoading && <LoadingSpinner colour={Colours.PINK} text='Joining room...' />}
-        {!isLoading && (
+  } else {
+    if (isConnected && roomId && !player) {
+      return (
+        <AppContainer>
           <NameInputPanel
             buttonText='Join room'
             inputName='nameInputJoin'
@@ -77,20 +96,38 @@ const ConnectedApp = () => {
             onChange={handleInputChange}
             onClick={handleOnClick}
           />
-        )}
-      </AppContainer>
+        </AppContainer>
+      );
+    }
+
+    if (isConnected && !roomId && !player) {
+      return (
+        <AppContainer>
+          <LargeCard>
+            <div className={styles.cardContentWrapper}>
+              <Title size={30} />
+              <div className={styles.cardContent}>
+                <h2>Room not found</h2>
+                <div className={styles.buttonWrapper}>
+                  <Button text='Return to homepage' onClick={handleHomepageReturn} />
+                </div>
+              </div>
+            </div>
+          </LargeCard>
+        </AppContainer>
+      );
+    }
+
+    return (
+      isConnected &&
+      roomId &&
+      player && (
+        <AppContainer isConnected>
+          <GameRoom players={players} roomId={roomId} player={player} />
+        </AppContainer>
+      )
     );
   }
-
-  return (
-    isConnected &&
-    roomId &&
-    player && (
-      <AppContainer isConnected>
-        <GameRoom players={players} roomId={roomId} player={player} />
-      </AppContainer>
-    )
-  );
 };
 
 export default ConnectedApp;

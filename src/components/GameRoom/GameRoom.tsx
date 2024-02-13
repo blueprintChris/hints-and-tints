@@ -10,6 +10,7 @@ import {
   Modal,
   Welcome,
   Button,
+  Header,
 } from '../../components';
 import SidePanel from './SidePanel/SidePanel';
 import { GameContext } from '../../context';
@@ -21,13 +22,14 @@ import styles from './GameRoom.module.css';
 import { socket } from '../../socket/Socket';
 
 const GameRoom = ({ players, player }: Props) => {
-  const { gameState, isLoading, selectedColour, winner, roomId } = useContext(GameContext);
+  const { gameState, isLoading, selectedColour, winner, roomId, scoreLimit } =
+    useContext(GameContext);
 
   const hinter = players.find(pl => pl.role === HINTER);
   const isHinter = hinter?.id === player.id;
 
-  console.log(winner);
-  console.log(gameState);
+  console.log('is hinter: ', isHinter);
+  console.log('game state: ', gameState);
 
   const handleNewGame = () => {
     socket.emit(SocketEvents.GAME_START, { roomId });
@@ -41,7 +43,7 @@ const GameRoom = ({ players, player }: Props) => {
         if (gameState === GameStates.SELECTION_ONE) {
           return 'You are the Hinter!';
         } else {
-          return 'Enter a second hint for your colour';
+          return 'Enter a second hint';
         }
       } else {
         return 'Please wait...';
@@ -51,7 +53,13 @@ const GameRoom = ({ players, player }: Props) => {
 
   const modalSubtitle = (name?: string) => {
     if (!isLoading && isHinter) {
-      return 'Select a colour...';
+      if (gameState === GameStates.SELECTION_ONE) {
+        return 'Select a colour...';
+      }
+
+      if (gameState === GameStates.SELECTION_TWO) {
+        return `Try to get players closer to your colour!`;
+      }
     }
     if (!isLoading && !isHinter) {
       if (gameState === GameStates.SELECTION_ONE) {
@@ -65,12 +73,7 @@ const GameRoom = ({ players, player }: Props) => {
 
   return (
     <>
-      <div className={styles.header}>
-        <Title size={8} orientation='row' />
-        <div className={styles.playerWrapper}>
-          <span className={styles.roomId}>{player.name}</span>
-        </div>
-      </div>
+      <Header name={player.name} scoreLimit={scoreLimit} />
       <div className={styles.content}>
         <div className={styles.boardContainer}>
           {gameState === GameStates.LOBBY && <Welcome />}
@@ -105,9 +108,9 @@ const GameRoom = ({ players, player }: Props) => {
           <GridLoader color={Colours.PINK} />
         </Modal>
       )}
-      {gameState === GameStates.GAME_END && (
-        <Modal title={`${winner?.name} wins with ${winner?.score} points!`} isPermanent>
-          <ConfettiExplosion force={0.8} duration={3000} particleCount={250} width={1600} />
+      {gameState === GameStates.GAME_END && winner && (
+        <Modal title={`${winner.name} wins with ${winner.score} points!`} isPermanent>
+          <ConfettiExplosion force={0.8} duration={5000} particleCount={250} width={1900} />
           <div className={styles.buttonWrapper}>
             <Button text='New Game' onClick={handleNewGame} />
           </div>

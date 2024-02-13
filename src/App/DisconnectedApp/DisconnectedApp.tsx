@@ -2,6 +2,7 @@ import { FormEvent, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
 import { socket } from '../../socket/Socket';
+import { useLocalStorage } from '../../hooks';
 import { LoadingSpinner, NameInputPanel } from '../../components';
 import { GameContext } from '../../context/GameContext';
 import AppContainer from '../AppContainer/AppContainer';
@@ -14,15 +15,23 @@ const DisconnectedApp = () => {
 
   const navigate = useNavigate();
 
+  const { setNicknameLocalStorage, setPlayerIdLocalStorage } = useLocalStorage();
+
   const handleInputChange = (e: FormEvent<HTMLInputElement>) => {
     setNickname(e.currentTarget.value);
   };
 
   const handleOnClick = () => {
     const roomId = uuid();
+    const playerId = uuid();
 
-    if (nickname && roomId) {
+    if (nickname && roomId && playerId) {
       setIsLoading(true);
+
+      // store player values in local storage
+      setPlayerIdLocalStorage(playerId);
+      setNicknameLocalStorage(nickname);
+
       // connect to the websocket
       socket.connect();
 
@@ -30,7 +39,7 @@ const DisconnectedApp = () => {
       socket.emit(SocketEvents.ROOM_CREATE, { roomId });
 
       // join room
-      socket.emit(SocketEvents.ROOM_JOIN, { roomId, nickname });
+      socket.emit(SocketEvents.ROOM_JOIN, { roomId, nickname, playerId });
 
       navigate(`/room/${roomId}`);
     } else {

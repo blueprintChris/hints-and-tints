@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import styles from './ScoringSquare.module.css';
 import { GameContext } from '../../context';
 
-const ScoringSquare = ({ delay, duration, size }: Props) => {
+const ScoringSquare = ({ delay, duration, size, onComplete }: Props) => {
   const [isShowing, setIsShowing] = useState(false);
 
   const { setIsLoading } = useContext(GameContext);
@@ -18,10 +18,12 @@ const ScoringSquare = ({ delay, duration, size }: Props) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
+
+      onComplete();
     }, duration);
 
     return () => clearTimeout(timer);
-  }, [duration, setIsLoading]);
+  }, [duration, onComplete, setIsLoading]);
 
   return isShowing ? (
     <div
@@ -35,6 +37,7 @@ type Props = {
   size?: number | undefined;
   delay?: number;
   duration?: number;
+  onComplete: () => void;
 };
 
 export default ScoringSquare;

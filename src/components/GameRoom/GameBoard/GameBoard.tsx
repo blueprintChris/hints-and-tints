@@ -4,10 +4,19 @@ import { GameContext, PlayerContext } from '../../../context';
 import GameSquare from './GameSquare/GameSquare';
 import styles from './GameBoard.module.css';
 import GameRow from './GameRow/GameRow';
+import { socket } from '../../../socket/Socket';
+import { SocketEvents } from '../../../constants';
 
 const GameBoard = () => {
-  const { currentTurn, gameState, players, selectedColour, isLoading } = useContext(GameContext);
+  const { currentTurn, gameState, players, selectedColour, isLoading, winner, roomId } =
+    useContext(GameContext);
   const { player, selectedSquare, setSelectedSquare } = useContext(PlayerContext);
+
+  const handleScoringComplete = () => {
+    if (winner) {
+      socket.emit(SocketEvents.GAME_END, { roomId });
+    }
+  };
 
   const handleSquareClick = (square: Square) => {
     if (gameState === 'GUESSING_ONE' || gameState === 'GUESSING_TWO') {
@@ -40,6 +49,7 @@ const GameBoard = () => {
                 delay={index * idx * 2}
                 selectedColour={selectedColour}
                 isLoading={isLoading}
+                handleScoringComplete={handleScoringComplete}
               />
             );
           })}

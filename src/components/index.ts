@@ -13,3 +13,5 @@ export { default as Welcome } from './Welcome/Welcome';
 export { default as UpArrow } from './UpArrow/UpArrow';
 export { default as ScoringSquare } from './ScoringSquare/ScoringSquare';
 export { default as Tooltip } from './Tooltip/Tooltip';
+export { default as Header } from './Header/Header';
+export { default as GameRoom } from './GameRoom/GameRoom';

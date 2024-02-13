@@ -45,12 +45,12 @@ const ScorePanel = ({
           />
         )}
         <div className={styles.buttonContainer}>
-          {gameState === GameStates.SCORING ? (
+          {gameState === GameStates.SCORING || gameState === GameStates.GAME_END ? (
             <Button
               onClick={onNextRoundClick}
               text='Next Round'
               colour={Colours.GREEN}
-              disabled={isLoading}
+              disabled={isLoading || gameState === GameStates.GAME_END}
             />
           ) : (
             <Button

@@ -15,7 +15,7 @@ import {
   UpdatePlayerResult,
   UpdatePlayersResult,
   RoomSearchResult,
-  WinnerResult,
+  PlayerSearchResult,
 } from '../types/Socket';
 
 export const SocketContext = createContext<SocketContextType>({ isConnected: false });
@@ -34,6 +34,7 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
     setSurroundingSquares,
     setIsLoading,
     setWinner,
+    setScoreLimit,
   } = useContext(GameContext);
   const { setPlayer, setSelectedSquare } = useContext(PlayerContext);
 
@@ -46,15 +47,41 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
       setIsConnected(false);
     };
 
-    const handleRoomJoin = ({ roomId, players, gameState }: RoomJoinResult) => {
+    const handleRoomJoin = ({ roomId, players, gameState, scoreLimit }: RoomJoinResult) => {
       setPlayers(players);
       setGameState(gameState);
+      setScoreLimit(scoreLimit);
       setRoomId(roomId);
+
       setIsLoading(false);
     };
 
     const handleUpdatePlayer = ({ player }: UpdatePlayerResult) => {
       setPlayer(player);
+    };
+
+    const handlePlayerSearch = ({
+      player,
+      players,
+      gameState,
+      scoreLimit,
+      currentTurn,
+      selectedColour,
+      firstHint,
+      secondHint,
+      winner,
+    }: PlayerSearchResult) => {
+      setPlayer(player);
+      setPlayers(players);
+      setGameState(gameState);
+      setScoreLimit(scoreLimit);
+      setCurrentTurn(currentTurn);
+      setSelectedColour(selectedColour);
+      setFirstHint(firstHint);
+      setSecondHint(secondHint);
+      setWinner(winner);
+
+      setIsLoading(false);
     };
 
     const handleUpdatePlayers = ({ players }: UpdatePlayersResult) => {
@@ -79,9 +106,10 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
       setCurrentTurn(currentTurn);
     };
 
-    const handleScoring = ({ players, gameState }: ScoringResult) => {
+    const handleScoring = ({ players, gameState, winner }: ScoringResult) => {
       setPlayers(players);
       setGameState(gameState);
+      setWinner(winner);
       setIsLoading(true);
     };
 
@@ -121,12 +149,6 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
       setSecondHint(secondHint);
     };
 
-    const handleGameEnd = ({ gameState, winner }: WinnerResult) => {
-      console.log('winner: ', winner);
-      setWinner(winner);
-      setGameState(gameState);
-    };
-
     socket.on(SocketEvents.CONNECT, onConnect);
     socket.on(SocketEvents.DISCONNECT, onDisconnect);
     socket.on(SocketEvents.ROOM_JOIN, handleRoomJoin);
@@ -139,8 +161,9 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
     socket.on(SocketEvents.GAME_ROUND_END, handleEndRound);
     socket.on(SocketEvents.GAME_UPDATE_SCORES, handleScoring);
     socket.on(SocketEvents.GAME_UPDATE_STATE, handleGameState);
-    socket.on(SocketEvents.GAME_END, handleGameEnd);
+    socket.on(SocketEvents.GAME_END, handleGameState);
     socket.on(SocketEvents.PLAYERS_UPDATE, handleUpdatePlayers);
+    socket.on(SocketEvents.PLAYER_SEARCH, handlePlayerSearch);
 
     return () => {
       socket.off(SocketEvents.CONNECT, onConnect);
@@ -154,6 +177,7 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
     setPlayer,
     setPlayers,
     setRoomId,
+    setScoreLimit,
     setSecondHint,
     setSelectedColour,
     setSelectedSquare,

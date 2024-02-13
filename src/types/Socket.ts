@@ -6,6 +6,7 @@ export type RoomJoinResult = {
   roomId: string;
   players: Player[];
   gameState: string;
+  scoreLimit: number;
 };
 
 export type RoomSearchResult = {
@@ -73,9 +74,17 @@ export type PreScoringResult = {
 export type ScoringResult = {
   players: Player[];
   gameState: string;
+  winner: Player;
 };
 
-export type WinnerResult = {
-  winner: Player;
+export type PlayerSearchResult = {
+  player: Player;
+  players: Player[];
   gameState: string;
+  scoreLimit: number;
+  currentTurn: Player;
+  selectedColour: Square;
+  firstHint: string;
+  secondHint: string;
+  winner: Player;
 };
