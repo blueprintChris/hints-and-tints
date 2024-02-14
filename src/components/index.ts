@@ -15,3 +15,4 @@ export { default as ScoringSquare } from './ScoringSquare/ScoringSquare';
 export { default as Tooltip } from './Tooltip/Tooltip';
 export { default as Header } from './Header/Header';
 export { default as GameRoom } from './GameRoom/GameRoom';
+export { default as Dropdown } from './Dropdown/Dropdown';

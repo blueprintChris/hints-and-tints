@@ -3,6 +3,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
 }
 
 .nameInputLabel {
@@ -17,7 +18,6 @@
   outline: none;
   border: none;
   height: 30px;
-
   line-height: 16px;
   font-size: 20px;
   margin-bottom: 20px;
