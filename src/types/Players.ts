@@ -8,6 +8,7 @@ export type Player = {
   colour: string;
   firstTint: Square;
   secondTint: Square;
+  isHost: boolean;
 };
 
 export type Players = Player[];

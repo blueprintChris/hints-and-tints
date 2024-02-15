@@ -3,6 +3,7 @@ export const SocketEvents = {
   ROOM_CREATE: 'room:create',
   ROOM_JOIN: 'room:join',
   ROOM_SEARCH: 'room:search',
+  ROOM_UPDATE: 'room:update',
   PLAYER_UPDATE: 'player:update',
   PLAYER_SEARCH: 'player:search',
   PLAYER_UPDATE_ROLE: 'player:update:role',
