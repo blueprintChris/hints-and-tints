@@ -1,10 +1,12 @@
 import { io } from 'socket.io-client';
 
-const URI = process.env.REACT_APP_SOCKET_URI;
-const URL = process.env.NODE_ENV === 'production' && URI ? URI : 'http://localhost:4000';
-const KEY = process.env.REACT_APP_SOCKET_KEY || '';
+const env = process.env.NODE_ENV;
 
-export const socket = io(URL, {
+const URL = env === 'production' ? process.env.REACT_APP_SOCKET_URI : 'http://localhost';
+const KEY =
+  env === 'production' ? process.env.REACT_APP_SOCKET_KEY : process.env.REACT_APP_SOCKET_KEY;
+
+export const socket = io(`${URL}:4000`, {
   autoConnect: false,
   auth: { token: KEY },
 });
