@@ -6,7 +6,7 @@ import { GameContext } from '../../context';
 const Welcome = () => {
   const { roomId } = useContext(GameContext);
 
-  const shareUrl = `http://localhost:3000/room/${roomId}`;
+  const shareUrl = `https://tints-and-hints.com/room/${roomId}`;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(shareUrl);
