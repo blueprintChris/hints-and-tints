@@ -88,3 +88,7 @@ export type PlayerSearchResult = {
   secondHint: string;
   winner: Player;
 };
+
+export type RoomUpdateResult = {
+  scoreLimit: number;
+};

@@ -16,6 +16,7 @@ import {
   UpdatePlayersResult,
   RoomSearchResult,
   PlayerSearchResult,
+  RoomUpdateResult,
 } from '../types/Socket';
 
 export const SocketContext = createContext<SocketContextType>({ isConnected: false });
@@ -149,9 +150,14 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
       setSecondHint(secondHint);
     };
 
+    const updateRoom = ({ scoreLimit }: RoomUpdateResult) => {
+      setScoreLimit(scoreLimit);
+    };
+
     socket.on(SocketEvents.CONNECT, onConnect);
     socket.on(SocketEvents.DISCONNECT, onDisconnect);
     socket.on(SocketEvents.ROOM_JOIN, handleRoomJoin);
+    socket.on(SocketEvents.ROOM_UPDATE, updateRoom);
     socket.on(SocketEvents.ROOM_SEARCH, handleRoomSearch);
     socket.on(SocketEvents.PLAYER_UPDATE, handleUpdatePlayer);
     socket.on(SocketEvents.GAME_START, handleGameStart);
@@ -164,6 +170,7 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
     socket.on(SocketEvents.GAME_END, handleGameState);
     socket.on(SocketEvents.PLAYERS_UPDATE, handleUpdatePlayers);
     socket.on(SocketEvents.PLAYER_SEARCH, handlePlayerSearch);
+
     socket.on('connect_error', err => {
       const error = err as Error;
       console.log('error connecting, ', error.message);

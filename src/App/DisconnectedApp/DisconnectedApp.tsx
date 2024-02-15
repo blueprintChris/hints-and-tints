@@ -58,17 +58,14 @@ const DisconnectedApp = () => {
     <AppContainer>
       {isLoading && <LoadingSpinner colour={Colours.PINK} text='Constructing room...' />}
       {!isLoading && (
-        <>
-          <NameInputPanel
-            buttonText='Create room'
-            inputName='nameInput'
-            inputPlaceholder='Enter your nickname'
-            labelText='To create a room, enter a nickname'
-            onChange={handleInputChange}
-            onClick={handleOnClick}
-          />
-          <Dropdown onChange={handleScoreChange} />
-        </>
+        <NameInputPanel
+          buttonText='Create room'
+          inputName='nameInput'
+          inputPlaceholder='Enter your nickname'
+          labelText='To create a room, enter a nickname'
+          onChange={handleInputChange}
+          onClick={handleOnClick}
+        />
       )}
     </AppContainer>
   );
