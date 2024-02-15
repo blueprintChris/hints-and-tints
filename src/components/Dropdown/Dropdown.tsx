@@ -11,7 +11,9 @@ const Dropdown = ({ onChange }: Props) => {
       onChange={onChange}
     >
       {Array.from({ length: 60 }).map((_, idx) => (
-        <option value={idx + 5}>{idx + 5}</option>
+        <option value={idx + 5} key={idx}>
+          {idx + 5}
+        </option>
       ))}
     </select>
   );
