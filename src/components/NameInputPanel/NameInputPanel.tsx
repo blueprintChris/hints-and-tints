@@ -23,7 +23,6 @@ const NameInputPanel = ({
       >
         <button className={styles.help}>?</button>
       </Tooltip>
-
       <div className={styles.titleWrapper}>
         <Title size={40} />
       </div>

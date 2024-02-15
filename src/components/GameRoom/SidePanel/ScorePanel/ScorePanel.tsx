@@ -1,4 +1,3 @@
-import classnames from 'classnames';
 import { Square } from '../../../../constants/board';
 import { HINTER, TINTER } from '../../../../constants/player';
 import { Player } from '../../../../types/Players';

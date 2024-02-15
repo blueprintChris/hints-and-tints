@@ -60,6 +60,16 @@
   }
 }
 
+.inputWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input {
+  width: 100px;
+}
+
 .buttonWrapper {
   display: flex;
   justify-content: center;

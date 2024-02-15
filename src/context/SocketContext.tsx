@@ -164,6 +164,10 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
     socket.on(SocketEvents.GAME_END, handleGameState);
     socket.on(SocketEvents.PLAYERS_UPDATE, handleUpdatePlayers);
     socket.on(SocketEvents.PLAYER_SEARCH, handlePlayerSearch);
+    socket.on('connect_error', err => {
+      const error = err as Error;
+      console.log('error connecting, ', error.message);
+    });
 
     return () => {
       socket.off(SocketEvents.CONNECT, onConnect);

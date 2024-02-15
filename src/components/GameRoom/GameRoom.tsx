@@ -6,7 +6,6 @@ import {
   ColourSelector,
   HintInput,
   LargeCard,
-  Title,
   Modal,
   Welcome,
   Button,
