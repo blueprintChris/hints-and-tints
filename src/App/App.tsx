@@ -43,6 +43,14 @@ const router = createBrowserRouter([
       </AppContainer>
     ),
   },
+  {
+    path: '/error',
+    element: (
+      <AppContainer>
+        <ErrorPage />
+      </AppContainer>
+    ),
+  },
 ]);
 
 const App = () => {

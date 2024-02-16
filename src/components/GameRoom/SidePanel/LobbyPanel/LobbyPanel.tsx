@@ -1,6 +1,6 @@
 import { HINTER, TINTER } from '../../../../constants/player';
 import { Player } from '../../../../types/Players';
-import { Button, Dropdown } from '../../../../components';
+import { Button, Dropdown, Tooltip } from '../../../../components';
 import PlayerList from '../PlayerList/PlayerList';
 import LobbyList from './LobbyList/LobbyList';
 import { Colours } from '../../../../constants/colours';
@@ -48,7 +48,9 @@ const LobbyPanel = ({ players, player, onHinterClick, onJoinClick, onStartClick 
           <div className={styles.buttonWrapper}>
             <div className={styles.floatingHint}>Set your score limit</div>
             <div className={styles.dropdownWrapper}>
-              <Dropdown onChange={handleDropdownChange} />
+              <Tooltip offset={{ x: 20, y: 20 }} text='yes'>
+                <Dropdown onChange={handleDropdownChange} />
+              </Tooltip>
             </div>
             <Button
               onClick={onStartClick}

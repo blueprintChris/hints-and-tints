@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect, useContext, PropsWithChildren } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { socket } from './../socket/Socket';
 import { GameContext } from './GameContext';
 import { PlayerContext } from './PlayerContext';
@@ -23,6 +24,8 @@ export const SocketContext = createContext<SocketContextType>({ isConnected: fal
 
 const SocketContextProvider = ({ children }: PropsWithChildren) => {
   const [isConnected, setIsConnected] = useState(socket.connected);
+
+  const navigate = useNavigate();
 
   const {
     setPlayers,
@@ -187,7 +190,10 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
 
     socket.on('connect_error', err => {
       const error = err as Error;
-      console.log('error connecting, ', error.message);
+
+      setIsLoading(false);
+
+      navigate('/error', { state: { message: error.message } });
     });
 
     return () => {
@@ -195,6 +201,7 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
       socket.off(SocketEvents.DISCONNECT, onDisconnect);
     };
   }, [
+    navigate,
     setCurrentTurn,
     setFirstHint,
     setGameState,
