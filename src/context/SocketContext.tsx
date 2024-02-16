@@ -189,11 +189,12 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
     socket.on(SocketEvents.PLAYER_SEARCH, handlePlayerSearch);
 
     socket.on('connect_error', err => {
-      const error = err as Error;
+      // const error = err as Error;
+      console.log('websocket error');
 
-      setIsLoading(false);
+      // setIsLoading(false);
 
-      navigate('/error', { state: { message: error.message } });
+      // navigate('/error', { state: { message: error.message } });
     });
 
     return () => {
