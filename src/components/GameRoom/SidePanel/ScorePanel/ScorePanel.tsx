@@ -25,7 +25,12 @@ const ScorePanel = ({
   const hinter = players.find(pl => pl.role === HINTER);
   const isHinter = hinter?.id === player?.id;
 
-  const canGoNextRound = () => gameState === GameStates.SCORING;
+  const canGoNextRound = () => gameState === GameStates.SCORING && isHinter;
+
+  const canEndturn = () =>
+    currentTurn?.id === player?.id &&
+    selectedSquare &&
+    (gameState === GameStates.GUESSING_ONE || gameState === GameStates.GUESSING_TWO);
 
   return (
     <div className={classnames(styles.scorePanel, { [styles.scorePanelTablet]: isTablet })}>
@@ -60,7 +65,11 @@ const ScorePanel = ({
             selectedColour={selectedColour}
           />
         )}
-        <div className={styles.buttonContainer}>
+        <div
+          className={classnames(styles.buttonContainer, {
+            [styles.buttonGlow]: canEndturn() || canGoNextRound(),
+          })}
+        >
           {gameState === GameStates.SCORING || gameState === GameStates.GAME_END ? (
             <Button
               onClick={onNextRoundClick}
@@ -69,17 +78,7 @@ const ScorePanel = ({
               disabled={!canGoNextRound()}
             />
           ) : (
-            <Button
-              onClick={onEndTurnClick}
-              text='End Turn'
-              disabled={
-                currentTurn?.id !== player?.id ||
-                !selectedSquare ||
-                gameState === GameStates.SELECTION_ONE ||
-                gameState === GameStates.SELECTION_TWO ||
-                gameState === GameStates.REVEAL
-              }
-            />
+            <Button onClick={onEndTurnClick} text='End Turn' disabled={!canEndturn()} />
           )}
         </div>
       </div>

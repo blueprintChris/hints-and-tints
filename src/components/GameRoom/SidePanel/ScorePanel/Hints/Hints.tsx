@@ -24,15 +24,15 @@ const Hints = ({ isHinter, firstHint, secondHint, selectedColour }: Props) => {
 
   return (
     <div className={styles.hintWrapper}>
-      <h1>Your Hint(s)</h1>
+      <h1>{isHinter ? 'Your Hints' : 'Hints'}</h1>
       <div
         className={classnames(styles.hintContainer, {
           [styles.hintContainerHinter]: isHinter,
         })}
       >
         <div className={classnames(styles.textWrapper, { [styles.textWrapperHinter]: isHinter })}>
-          {firstHint && <h2>{firstHint}</h2>}
-          {secondHint && <h2>{secondHint}</h2>}
+          {firstHint && <h2 className={styles.firstHint}>{firstHint}</h2>}
+          {secondHint && <h2 className={styles.secondHint}>{secondHint}</h2>}
         </div>
         {isHinter && (
           <div
