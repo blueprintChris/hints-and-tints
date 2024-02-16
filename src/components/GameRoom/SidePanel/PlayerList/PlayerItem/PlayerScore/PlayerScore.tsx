@@ -1,20 +1,21 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { UpArrow } from '../../../../..';
 import { GameStates } from '../../../../../../constants';
-import { GameContext } from '../../../../../../context';
 import styles from './PlayerScore.module.css';
 
 const PlayerScore = ({ score, gameState }: Props) => {
-  const [newScore, setNewScore] = useState(0);
+  const [newScore, setNewScore] = useState(score);
   const [showArrow, setShowArrow] = useState(false);
 
-  const { isLoading } = useContext(GameContext);
-
   useEffect(() => {
-    if (!isLoading) {
+    if (
+      gameState === GameStates.SCORING ||
+      gameState === GameStates.GAME_END ||
+      gameState === GameStates.SELECTION_ONE
+    ) {
       setNewScore(score);
     }
-  }, [isLoading, score]);
+  }, [gameState, score]);
 
   useEffect(() => {
     setShowArrow(true);
@@ -26,7 +27,9 @@ const PlayerScore = ({ score, gameState }: Props) => {
 
   return (
     <div className={styles.scoreWrapper}>
-      {gameState === GameStates.SCORING && !isLoading && showArrow && <UpArrow />}
+      {(gameState === GameStates.SCORING || gameState === GameStates.GAME_END) && showArrow && (
+        <UpArrow />
+      )}
       <div className={styles.score}>
         <span>{newScore}</span>
       </div>

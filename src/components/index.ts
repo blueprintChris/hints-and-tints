@@ -16,3 +16,4 @@ export { default as Tooltip } from './Tooltip/Tooltip';
 export { default as Header } from './Header/Header';
 export { default as GameRoom } from './GameRoom/GameRoom';
 export { default as Dropdown } from './Dropdown/Dropdown';
+export { default as PlayerList } from './GameRoom/SidePanel/PlayerList/PlayerList';

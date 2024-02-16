@@ -87,6 +87,8 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
 
     const handleUpdatePlayers = ({ players }: UpdatePlayersResult) => {
       setPlayers(players);
+
+      setIsLoading(false);
     };
 
     const handleGameStart = ({ gameState, players }: GameStartResult) => {
@@ -95,23 +97,27 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
       setFirstHint('');
       setSecondHint('');
       setWinner(null);
+
       setIsLoading(false);
     };
 
     const handleGameState = ({ gameState }: GameStateResult) => {
       setGameState(gameState);
+      setIsLoading(false);
     };
 
     const handleEndTurn = ({ currentTurn }: MakeTurnResult) => {
       setSelectedSquare(null);
       setCurrentTurn(currentTurn);
+      setIsLoading(false);
     };
 
     const handleScoring = ({ players, gameState, winner }: ScoringResult) => {
       setPlayers(players);
       setGameState(gameState);
       setWinner(winner);
-      setIsLoading(true);
+
+      setIsLoading(false);
     };
 
     const handleRoundStart = ({
@@ -126,6 +132,8 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
       setPlayers(players);
       setCurrentTurn(currentTurn);
       setFirstHint(firstHint);
+
+      setIsLoading(false);
     };
 
     const handleRoomSearch = ({ doesRoomExist, roomId }: RoomSearchResult) => {
@@ -141,6 +149,8 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
       setCurrentTurn(currentTurn);
       setSecondHint(secondHint);
       setSelectedSquare(null);
+
+      setIsLoading(false);
     };
 
     const handleEndRound = ({ players, gameState, firstHint, secondHint }: RoundEndResult) => {
@@ -148,10 +158,14 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
       setGameState(gameState);
       setFirstHint(firstHint);
       setSecondHint(secondHint);
+
+      setIsLoading(false);
     };
 
     const updateRoom = ({ scoreLimit }: RoomUpdateResult) => {
       setScoreLimit(scoreLimit);
+
+      setIsLoading(false);
     };
 
     socket.on(SocketEvents.CONNECT, onConnect);
