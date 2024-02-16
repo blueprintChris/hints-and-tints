@@ -12,6 +12,8 @@
   align-items: center;
   background-color: #333842;
   padding: 10px;
+  transition: height 2s linear, width 2s linear, padding 2s linear;
+  min-height: 43px;
   box-sizing: border-box;
   width: 100%;
 }
@@ -21,6 +23,53 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
+}
+
+@keyframes hintz {
+  0% {
+    background-color: rgba(40, 44, 52, 1);
+    border: 2px solid white;
+    font-size: 40px;
+    padding: 20px;
+    border-radius: 8px;
+    bottom: 50%;
+    right: 50%;
+    opacity: 1;
+    position: fixed;
+  }
+
+  80% {
+    background-color: rgba(40, 44, 52, 1);
+    border: 2px solid white;
+    font-size: 40px;
+    padding: 20px;
+    border-radius: 8px;
+    bottom: 50%;
+    right: 50%;
+    position: fixed;
+    opacity: 1;
+  }
+
+  100% {
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    padding: 0;
+    bottom: 140px;
+    right: 140px;
+    position: fixed;
+    opacity: 0;
+  }
+}
+
+.firstHint {
+  z-index: 2;
+  animation: hintz 4s ease-out;
+}
+
+.secondHint {
+  z-index: 2;
+  animation: hintz 4s linear;
 }
 
 .hintContainerHinter {
