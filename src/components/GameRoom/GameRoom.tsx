@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { GridLoader } from 'react-spinners';
 import ConfettiExplosion from 'react-confetti-explosion';
 import GameBoard from './GameBoard/GameBoard';
