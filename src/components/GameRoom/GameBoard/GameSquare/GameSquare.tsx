@@ -12,7 +12,7 @@ import styles from './GameSquare.module.css';
 const GameSquare = ({
   square,
   onClick,
-  handleScoringComplete,
+  handleRevealComplete,
   selectedSquare,
   selectedColour,
   gridOwner,
@@ -59,14 +59,15 @@ const GameSquare = ({
 
   return (
     <div className={styles.buttonWrapper} ref={ref}>
-      {gameState === GameStates.SCORING && selectedColour?.ref === square.ref && (
-        <ScoringSquare
-          delay={2000}
-          duration={6000}
-          size={size}
-          onComplete={handleScoringComplete}
-        />
-      )}
+      {(gameState === GameStates.REVEAL || gameState === GameStates.SCORING) &&
+        selectedColour?.ref === square.ref && (
+          <ScoringSquare
+            delay={2000}
+            duration={6000}
+            size={size}
+            onComplete={handleRevealComplete}
+          />
+        )}
       <Tooltip offset={{ x: 20, y: 20 }} square={square}>
         <animated.button
           className={classnames(styles.square)}
@@ -129,7 +130,7 @@ type Props = {
   player: Player | null;
   selectedColour: Square | null;
   isLoading: boolean;
-  handleScoringComplete: () => void;
+  handleRevealComplete: () => void;
 };
 
 export default GameSquare;

@@ -1,13 +1,10 @@
 import { Square } from '../../../../constants/board';
 import { HINTER, TINTER } from '../../../../constants/player';
 import { Player } from '../../../../types/Players';
-import { Button } from '../../../../components';
-import PlayerList from '../PlayerList/PlayerList';
+import { Button, PlayerList } from '../../../../components';
 import { Colours, GameStates } from '../../../../constants';
-import styles from './ScorePanel.module.css';
-import { useContext } from 'react';
-import { GameContext } from '../../../../context';
 import Hints from './Hints/Hints';
+import styles from './ScorePanel.module.css';
 
 const ScorePanel = ({
   players,
@@ -24,7 +21,7 @@ const ScorePanel = ({
   const hinter = players.find(pl => pl.role === HINTER);
   const isHinter = hinter?.id === player?.id;
 
-  const { isLoading } = useContext(GameContext);
+  const canGoNextRound = () => gameState === GameStates.SCORING;
 
   return (
     <div className={styles.scorePanel}>
@@ -49,7 +46,7 @@ const ScorePanel = ({
               onClick={onNextRoundClick}
               text='Next Round'
               colour={Colours.GREEN}
-              disabled={isLoading || gameState === GameStates.GAME_END}
+              disabled={!canGoNextRound()}
             />
           ) : (
             <Button
@@ -59,7 +56,8 @@ const ScorePanel = ({
                 currentTurn?.id !== player?.id ||
                 !selectedSquare ||
                 gameState === GameStates.SELECTION_ONE ||
-                gameState === GameStates.SELECTION_TWO
+                gameState === GameStates.SELECTION_TWO ||
+                gameState === GameStates.REVEAL
               }
             />
           )}

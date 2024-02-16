@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { GridLoader } from 'react-spinners';
 import ConfettiExplosion from 'react-confetti-explosion';
 import GameBoard from './GameBoard/GameBoard';
@@ -21,14 +21,13 @@ import styles from './GameRoom.module.css';
 import { socket } from '../../socket/Socket';
 
 const GameRoom = ({ players, player }: Props) => {
-  const { gameState, isLoading, selectedColour, winner, roomId, scoreLimit } =
+  const [isModalShowing, setIsModalShowing] = useState(false);
+
+  const { gameState, isLoading, selectedColour, winner, roomId, scoreLimit, currentTurn } =
     useContext(GameContext);
 
   const hinter = players.find(pl => pl.role === HINTER);
   const isHinter = hinter?.id === player.id;
-
-  console.log('is hinter: ', isHinter);
-  console.log('game state: ', gameState);
 
   const handleNewGame = () => {
     socket.emit(SocketEvents.GAME_START, { roomId });
@@ -102,7 +101,16 @@ const GameRoom = ({ players, player }: Props) => {
           )}
         </Modal>
       )}
-      {gameState === GameStates.SCORING && (
+      {(gameState === GameStates.GUESSING_ONE || gameState === GameStates.GUESSING_TWO) &&
+        currentTurn?.id === player.id &&
+        isModalShowing && (
+          <Modal title={player.name} subTitle='Your turn!' isPermanent>
+            <div className={styles.buttonWrapper}>
+              <Button text='Got it' onClick={() => setIsModalShowing(!isModalShowing)} />
+            </div>
+          </Modal>
+        )}
+      {gameState === GameStates.REVEAL && (
         <Modal title='Round ended' subTitle='Lets see how you did...' duration={2000}>
           <GridLoader color={Colours.PINK} />
         </Modal>

@@ -8,14 +8,12 @@ import { socket } from '../../../socket/Socket';
 import { SocketEvents } from '../../../constants';
 
 const GameBoard = () => {
-  const { currentTurn, gameState, players, selectedColour, isLoading, winner, roomId } =
+  const { currentTurn, gameState, players, selectedColour, isLoading, roomId } =
     useContext(GameContext);
   const { player, selectedSquare, setSelectedSquare } = useContext(PlayerContext);
 
-  const handleScoringComplete = () => {
-    if (winner) {
-      socket.emit(SocketEvents.GAME_END, { roomId });
-    }
+  const handleRevealComplete = () => {
+    socket.emit(SocketEvents.GAME_UPDATE_SCORES, { roomId });
   };
 
   const handleSquareClick = (square: Square) => {
@@ -49,7 +47,7 @@ const GameBoard = () => {
                 delay={index * idx * 2}
                 selectedColour={selectedColour}
                 isLoading={isLoading}
-                handleScoringComplete={handleScoringComplete}
+                handleRevealComplete={handleRevealComplete}
               />
             );
           })}
