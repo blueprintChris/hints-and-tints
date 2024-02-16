@@ -1,6 +1,8 @@
 import { useContext, useState } from 'react';
+import classnames from 'classnames';
 import { GridLoader } from 'react-spinners';
 import ConfettiExplosion from 'react-confetti-explosion';
+import { socket } from '../../socket/Socket';
 import GameBoard from './GameBoard/GameBoard';
 import {
   ColourSelector,
@@ -11,20 +13,20 @@ import {
   Button,
   Header,
 } from '../../components';
+import { useDeviceWidth } from '../../hooks';
 import SidePanel from './SidePanel/SidePanel';
 import { GameContext } from '../../context';
-import { HINTER } from '../../constants/player';
-import { Colours } from '../../constants/colours';
-import { GameStates, SocketEvents } from '../../constants';
+import { HINTER, Colours, GameStates, SocketEvents } from '../../constants';
 import { Player } from '../../types/Players';
 import styles from './GameRoom.module.css';
-import { socket } from '../../socket/Socket';
 
 const GameRoom = ({ players, player }: Props) => {
   const [isModalShowing, setIsModalShowing] = useState(false);
 
   const { gameState, isLoading, selectedColour, winner, roomId, scoreLimit, currentTurn } =
     useContext(GameContext);
+
+  const { isTablet } = useDeviceWidth();
 
   const hinter = players.find(pl => pl.role === HINTER);
   const isHinter = hinter?.id === player.id;
@@ -72,14 +74,20 @@ const GameRoom = ({ players, player }: Props) => {
   return (
     <>
       <Header name={player.name} scoreLimit={scoreLimit} />
-      <div className={styles.content}>
-        <div className={styles.boardContainer}>
+      <div className={classnames(styles.content, { [styles.contentTablet]: isTablet })}>
+        <div
+          className={classnames(styles.boardContainer, { [styles.boardContainerTablet]: isTablet })}
+        >
           {gameState === GameStates.LOBBY && <Welcome />}
           {gameState !== GameStates.LOBBY && gameState !== GameStates.SELECTION_ONE && (
             <GameBoard />
           )}
         </div>
-        <div className={styles.sidePanelContainer}>
+        <div
+          className={classnames(styles.sidePanelContainer, {
+            [styles.sidePanelContainerTablet]: isTablet,
+          })}
+        >
           <SidePanel players={players} />
         </div>
       </div>

@@ -29,7 +29,7 @@ const Modal = ({ title, subTitle, children, duration, isPermanent }: PropsWithCh
 };
 
 type Props = {
-  title: string;
+  title?: string;
   subTitle?: string;
   duration?: number;
   isPermanent?: boolean;

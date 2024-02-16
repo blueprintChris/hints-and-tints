@@ -27,6 +27,11 @@
   box-sizing: border-box;
 }
 
+.contentTablet {
+  display: flex;
+  flex-direction: column;
+}
+
 .boardContainer {
   display: flex;
   flex: 1;
@@ -36,11 +41,23 @@
   box-sizing: border-box;
 }
 
+.boardContainerTablet {
+  flex: 0;
+}
+
 .sidePanelContainer {
   flex: 1;
   padding: 40px 40px 40px 20px;
   max-width: 300px;
   min-width: 287px;
+}
+
+.sidePanelContainerTablet {
+  flex: 1;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 20px 20px 20px 40px;
 }
 
 .buttonWrapper {

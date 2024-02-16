@@ -1,12 +1,14 @@
 import { useContext } from 'react';
-import { Players } from '../../../types/Players';
-import styles from './SidePanel.module.css';
-import { GameContext, PlayerContext } from '../../../context';
+import classnames from 'classnames';
 import { socket } from '../../../socket/Socket';
+import { GameContext, PlayerContext } from '../../../context';
+import { useDeviceWidth } from '../../../hooks';
 import LobbyPanel from './LobbyPanel/LobbyPanel';
 import ScorePanel from './ScorePanel/ScorePanel';
 import { HINTER, TINTER } from '../../../constants/player';
 import { GameStates, SocketEvents } from '../../../constants';
+import { Players } from '../../../types/Players';
+import styles from './SidePanel.module.css';
 
 const SidePanel = ({ players }: Props) => {
   const {
@@ -20,6 +22,8 @@ const SidePanel = ({ players }: Props) => {
     isLoading,
   } = useContext(GameContext);
   const { player, selectedSquare } = useContext(PlayerContext);
+
+  const { isTablet } = useDeviceWidth();
 
   const handleJoinGameAsHinter = () => {
     socket.emit(SocketEvents.PLAYER_UPDATE_ROLE, { roomId, playerId: player?.id, role: HINTER });
@@ -44,7 +48,7 @@ const SidePanel = ({ players }: Props) => {
   };
 
   return (
-    <div className={styles.sidePanel}>
+    <div className={classnames(styles.sidePanel, { [styles.tablet]: isTablet })}>
       {gameState === GameStates.LOBBY ? (
         <LobbyPanel
           players={players}

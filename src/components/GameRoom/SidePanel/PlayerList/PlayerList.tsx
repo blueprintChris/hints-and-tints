@@ -1,8 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
 import FlipMove from 'react-flip-move';
 import classnames from 'classnames';
-import PlayerItem from './PlayerItem/PlayerItem';
+import { useDeviceWidth } from '../../../../hooks';
+
 import { GameContext } from '../../../../context';
+import PlayerItem from './PlayerItem/PlayerItem';
 import { Player } from '../../../../types/Players';
 import styles from './PlayerList.module.css';
 
@@ -10,6 +12,7 @@ const PlayerList = ({ players, showScores, role, isHinter, currentTurn }: Props)
   const [sortedPlayers, setSortedPlayers] = useState(players);
 
   const { gameState, isLoading } = useContext(GameContext);
+  const { isTablet } = useDeviceWidth();
 
   useEffect(() => {
     if (!isLoading) {
@@ -21,7 +24,12 @@ const PlayerList = ({ players, showScores, role, isHinter, currentTurn }: Props)
   }, [isLoading, players]);
 
   return (
-    <div className={classnames(styles.playerContainer, { [styles.hinter]: isHinter })}>
+    <div
+      className={classnames(styles.playerContainer, {
+        [styles.hinter]: isHinter,
+        [styles.playerContainerTablet]: isTablet,
+      })}
+    >
       <FlipMove enterAnimation='fade'>
         {sortedPlayers.map(
           pl =>
