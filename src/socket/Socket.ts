@@ -1,4 +1,5 @@
 import { io } from 'socket.io-client';
+import fs from 'fs';
 
 const env = process.env.NODE_ENV;
 const PORT = env === 'production' ? 443 : 4000;
@@ -11,4 +12,5 @@ export const socket = io(`${URL}:${PORT}`, {
   auth: { token: KEY },
   transports: ['websocket'],
   rejectUnauthorized: false,
+  ca: fs.readFileSync('./server.pem').toString(),
 });
