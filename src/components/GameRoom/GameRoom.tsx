@@ -19,9 +19,11 @@ import { GameContext } from '../../context';
 import { HINTER, Colours, GameStates, SocketEvents } from '../../constants';
 import { Player } from '../../types/Players';
 import styles from './GameRoom.module.css';
+import Rules from '../Welcome/Rules/Rules';
 
 const GameRoom = ({ players, player }: Props) => {
   const [isModalShowing, setIsModalShowing] = useState(false);
+  const [showRules, setShowRules] = useState(false);
 
   const { gameState, isLoading, selectedColour, winner, roomId, scoreLimit, currentTurn } =
     useContext(GameContext);
@@ -33,6 +35,10 @@ const GameRoom = ({ players, player }: Props) => {
 
   const handleNewGame = () => {
     socket.emit(SocketEvents.GAME_START, { roomId });
+  };
+
+  const handleShowRules = () => {
+    setShowRules(!showRules);
   };
 
   const modalTitle = () => {
@@ -73,7 +79,7 @@ const GameRoom = ({ players, player }: Props) => {
 
   return (
     <>
-      <Header name={player.name} scoreLimit={scoreLimit} />
+      <Header name={player.name} scoreLimit={scoreLimit} onClick={handleShowRules} />
       <div className={classnames(styles.content, { [styles.contentTablet]: isTablet })}>
         <div
           className={classnames(styles.boardContainer, { [styles.boardContainerTablet]: isTablet })}
@@ -91,6 +97,11 @@ const GameRoom = ({ players, player }: Props) => {
           <SidePanel players={players} />
         </div>
       </div>
+      {showRules && (
+        <Modal isPermanent>
+          <Rules onClose={handleShowRules} canClose />
+        </Modal>
+      )}
       {(gameState === GameStates.SELECTION_ONE || gameState === GameStates.SELECTION_TWO) && (
         <Modal title={modalTitle()} subTitle={modalSubtitle(hinter?.name)} isPermanent>
           {isLoading && <GridLoader color={Colours.PINK} />}

@@ -15,7 +15,25 @@
 
 .playerWrapper {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   height: 100%;
+  width: 100%;
+  margin-right: 20px;
+  font-size: 14px;
+}
+
+.buttonWrapper {
+  height: 100%;
+  padding: 8px 0 8px 0;
+  box-sizing: border-box;
+
+  button {
+    font-size: 14px;
+  }
+}
+
+.scoreLimit {
+  color: #46c0b3;
+  font-size: 16px;
 }
