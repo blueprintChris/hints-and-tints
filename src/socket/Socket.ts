@@ -11,5 +11,4 @@ export const socket = io(`${URL}:${PORT}`, {
   auth: { token: KEY },
   transports: ['websocket'],
   rejectUnauthorized: false,
-  ca: './server.pem',
 });
