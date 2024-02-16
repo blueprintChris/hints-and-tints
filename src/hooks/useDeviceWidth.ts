@@ -14,8 +14,9 @@ const useDeviceWidth = () => {
   }, []);
 
   const isMobile = width <= 768;
+  const isTablet = width <= 1120 && width > 768;
 
-  return { isMobile };
+  return { isMobile, isTablet };
 };
 
 export default useDeviceWidth;

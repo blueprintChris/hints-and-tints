@@ -8,15 +8,44 @@
   box-sizing: border-box;
 }
 
+.scorePanelTablet {
+  display: flex;
+  flex-direction: row;
+}
+
 .playersContainer {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-
   width: 100%;
   flex: 1;
   overflow: auto;
+}
+
+.playersContainerTablet {
+  flex-direction: row;
+  height: 100%;
+}
+
+.playerRoleContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  overflow: auto;
+}
+
+.playerRoleContainerTablet {
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+  margin-right: 20px;
+
+  h1 {
+    margin: 0 0 10px 0;
+    font-size: 20px;
+  }
 }
 
 .scoreContainer {
@@ -59,6 +88,13 @@
   flex-direction: column;
   width: 100%;
   max-height: 214px;
+}
+
+.bottomWrapperTablet {
+  flex-direction: column;
+  height: 100%;
+  width: 200px;
+  max-height: 100%;
 }
 
 .buttonContainer {

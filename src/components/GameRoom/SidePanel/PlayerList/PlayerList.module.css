@@ -4,6 +4,11 @@
   overflow: auto;
 }
 
+.playerContainerTablet {
+  height: 100%;
+  flex: 1;
+}
+
 .hinter {
   max-height: 40px;
 }

@@ -1,9 +1,11 @@
-import { Square } from '../../../../constants/board';
-import { HINTER, TINTER } from '../../../../constants/player';
-import { Player } from '../../../../types/Players';
+import classnames from 'classnames';
+import { useDeviceWidth } from '../../../../hooks';
 import { Button, PlayerList } from '../../../../components';
 import { Colours, GameStates } from '../../../../constants';
 import Hints from './Hints/Hints';
+import { Square } from '../../../../constants/board';
+import { HINTER, TINTER } from '../../../../constants/player';
+import { Player } from '../../../../types/Players';
 import styles from './ScorePanel.module.css';
 
 const ScorePanel = ({
@@ -18,20 +20,38 @@ const ScorePanel = ({
   selectedSquare,
   gameState,
 }: Props) => {
+  const { isTablet } = useDeviceWidth();
+
   const hinter = players.find(pl => pl.role === HINTER);
   const isHinter = hinter?.id === player?.id;
 
   const canGoNextRound = () => gameState === GameStates.SCORING;
 
   return (
-    <div className={styles.scorePanel}>
-      <div className={styles.playersContainer}>
-        <h1>Hinter</h1>
-        <PlayerList players={players} role={HINTER} showScores isHinter />
-        <h1>Tinters</h1>
-        <PlayerList players={players} role={TINTER} showScores currentTurn={currentTurn} />
+    <div className={classnames(styles.scorePanel, { [styles.scorePanelTablet]: isTablet })}>
+      <div
+        className={classnames(styles.playersContainer, {
+          [styles.playersContainerTablet]: isTablet,
+        })}
+      >
+        <div
+          className={classnames(styles.playerRoleContainer, {
+            [styles.playerRoleContainerTablet]: isTablet,
+          })}
+        >
+          <h1>Hinter</h1>
+          <PlayerList players={players} role={HINTER} showScores isHinter />
+        </div>
+        <div
+          className={classnames(styles.playerRoleContainer, {
+            [styles.playerRoleContainerTablet]: isTablet,
+          })}
+        >
+          <h1>Tinters</h1>
+          <PlayerList players={players} role={TINTER} showScores currentTurn={currentTurn} />
+        </div>
       </div>
-      <div className={styles.bottomWrapper}>
+      <div className={classnames(styles.bottomWrapper, { [styles.bottomWrapperTablet]: isTablet })}>
         {gameState !== GameStates.SELECTION_ONE && (
           <Hints
             isHinter={isHinter}
