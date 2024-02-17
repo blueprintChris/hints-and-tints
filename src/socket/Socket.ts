@@ -8,4 +8,5 @@ const KEY =
 export const socket = io('https://api.tints-and-hints.com', {
   autoConnect: false,
   auth: { token: KEY },
+  transports: ['websocket'],
 });
