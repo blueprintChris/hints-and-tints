@@ -10,5 +10,4 @@ export const socket = io(`${URL}:${PORT}`, {
   autoConnect: false,
   auth: { token: KEY },
   transports: ['websocket'],
-  rejectUnauthorized: false,
 });
