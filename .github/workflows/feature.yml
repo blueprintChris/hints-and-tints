@@ -2,7 +2,7 @@ name: Feature Build
 
 on:
   pull_request:
-    branches: [main]
+    branches: [main1]
 
   workflow_dispatch:
 
