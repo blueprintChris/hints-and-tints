@@ -6,8 +6,8 @@ const URL = env === 'production' ? process.env.REACT_APP_SOCKET_URI : 'http://lo
 const KEY =
   env === 'production' ? process.env.REACT_APP_SOCKET_KEY : process.env.REACT_APP_SOCKET_KEY;
 
-export const socket = io(`${URL}:${PORT}`, {
+export const socket = io(`wss://${URL}:${PORT}`, {
   autoConnect: false,
   auth: { token: KEY },
-  transports: ['websocket'],
+  secure: true,
 });
