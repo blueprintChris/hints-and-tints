@@ -9,4 +9,5 @@ export const socket = io('https://api.tints-and-hints.com/', {
   autoConnect: false,
   auth: { token: KEY },
   transports: ['websocket', 'polling', 'webtransport'],
+  extraHeaders: { 'Sec-WebSocket-Protocol': 'chat, superchat' },
 });
