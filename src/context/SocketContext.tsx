@@ -190,13 +190,6 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
 
     socket.on('connect_error', err => {
       console.log('websocket error: ', err.message);
-
-      console.log(err.cause);
-      console.log(err.description);
-
-      // setIsLoading(false);
-
-      // navigate('/error', { state: { message: error.message } });
     });
 
     return () => {
