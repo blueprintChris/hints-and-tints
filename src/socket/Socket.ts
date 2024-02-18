@@ -8,6 +8,4 @@ const KEY =
 export const socket = io('https://api.tints-and-hints.com/socket.io/', {
   autoConnect: false,
   auth: { token: KEY },
-  transports: ['websocket', 'polling', 'webtransport'],
-  extraHeaders: { 'Sec-WebSocket-Protocol': 'chat, superchat' },
 });
