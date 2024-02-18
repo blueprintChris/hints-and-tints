@@ -5,9 +5,8 @@ const env = process.env.NODE_ENV;
 const KEY =
   env === 'production' ? process.env.REACT_APP_SOCKET_KEY : process.env.REACT_APP_SOCKET_KEY;
 
-export const socket = io('api.tints-and-hints.com:4000', {
+export const socket = io('wss://api.tints-and-hints.com', {
   autoConnect: false,
   auth: { token: KEY },
-  transports: ['websocket'],
-  upgrade: false,
+  transports: ['websocket', 'polling', 'webtransport'],
 });
