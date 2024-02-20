@@ -13,15 +13,15 @@ import {
   Button,
   Header,
 } from '../../components';
+import Rules from '../Welcome/Rules/Rules';
 import { useDeviceWidth } from '../../hooks';
 import SidePanel from './SidePanel/SidePanel';
 import { GameContext } from '../../context';
-import { HINTER, Colours, GameStates, SocketEvents } from '../../constants';
+import { PlayerRoles, Colours, GameStates, SocketEvents } from '../../constants';
 import { Player } from '../../types/Players';
 import styles from './GameRoom.module.css';
-import Rules from '../Welcome/Rules/Rules';
 
-const GameRoom = ({ players, player }: Props) => {
+const GameRoom = ({ players, player, spectators }: Props) => {
   const [isModalShowing, setIsModalShowing] = useState(false);
   const [showRules, setShowRules] = useState(false);
 
@@ -30,7 +30,7 @@ const GameRoom = ({ players, player }: Props) => {
 
   const { isTablet } = useDeviceWidth();
 
-  const hinter = players.find(pl => pl.role === HINTER);
+  const hinter = players.find(pl => pl.role === PlayerRoles.HINTER);
   const isHinter = hinter?.id === player.id;
 
   const handleNewGame = () => {
@@ -94,7 +94,7 @@ const GameRoom = ({ players, player }: Props) => {
             [styles.sidePanelContainerTablet]: isTablet,
           })}
         >
-          <SidePanel players={players} />
+          <SidePanel players={players} spectators={spectators} />
         </div>
       </div>
       {showRules && (
@@ -148,6 +148,7 @@ const GameRoom = ({ players, player }: Props) => {
 
 type Props = {
   players: Player[];
+  spectators: Player[];
   roomId: string;
   player: Player;
 };

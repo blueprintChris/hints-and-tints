@@ -11,6 +11,7 @@ const NameInputPanel = ({
   labelText,
   inputName,
   inputPlaceholder,
+  defaultValue,
 }: Props) => {
   const { isMobile } = useDeviceWidth();
 
@@ -32,6 +33,7 @@ const NameInputPanel = ({
           name={inputName}
           placeholder={inputPlaceholder}
           onChange={onChange}
+          defaultValue={defaultValue}
         />
         <div className={styles.buttonWrapper}>
           <Button text={buttonText} onClick={onClick} />
@@ -57,6 +59,7 @@ type Props = {
   inputPlaceholder: string;
   onChange: (e: FormEvent<HTMLInputElement>) => void;
   onClick: () => void;
+  defaultValue?: string;
 };
 
 export default NameInputPanel;

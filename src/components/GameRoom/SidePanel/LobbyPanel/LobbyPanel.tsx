@@ -1,21 +1,27 @@
-import { HINTER, TINTER } from '../../../../constants/player';
-import { Player } from '../../../../types/Players';
+import { ChangeEvent, useContext } from 'react';
+import { socket } from '../../../../socket/Socket';
+import { GameContext } from '../../../../context';
 import { Button, Dropdown, Tooltip } from '../../../../components';
 import PlayerList from '../PlayerList/PlayerList';
 import LobbyList from './LobbyList/LobbyList';
-import { Colours } from '../../../../constants/colours';
-
-import { socket } from '../../../../socket/Socket';
+import { SocketEvents, PlayerRoles, Colours } from '../../../../constants';
+import { Player } from '../../../../types/Players';
 import styles from './LobbyPanel.module.css';
-import { SocketEvents } from '../../../../constants';
-import { ChangeEvent, useContext } from 'react';
-import { GameContext } from '../../../../context';
 
-const LobbyPanel = ({ players, player, onHinterClick, onJoinClick, onStartClick }: Props) => {
+const LobbyPanel = ({
+  players,
+  spectators,
+  player,
+  onHinterClick,
+  onJoinClick,
+  onStartClick,
+}: Props) => {
   const { roomId } = useContext(GameContext);
 
-  const hinter = players.find(pl => pl.role === HINTER);
-  const tinter = players.find(pl => pl.role === TINTER);
+  console.log('players: ', players);
+
+  const hinter = players.find(pl => pl.role === PlayerRoles.HINTER);
+  const tinter = players.find(pl => pl.role === PlayerRoles.TINTER);
 
   const canStartGame = () => hinter && tinter && player?.isHost;
 
@@ -28,22 +34,30 @@ const LobbyPanel = ({ players, player, onHinterClick, onJoinClick, onStartClick 
       <div className={styles.playersContainer}>
         <h1>Hinter</h1>
         {hinter ? (
-          <PlayerList players={players} role={HINTER} showScores={false} isHinter />
+          <PlayerList players={players} role={PlayerRoles.HINTER} showScores={false} isHinter />
         ) : (
           <div className={styles.buttonWrapper}>
-            <Button onClick={onHinterClick} text='Join as hinter' disabled={player?.role !== ''} />
+            <Button
+              onClick={onHinterClick}
+              text='Join as hinter'
+              disabled={player?.role !== PlayerRoles.SPECTATOR}
+            />
           </div>
         )}
         <h1>Tinters</h1>
-        <PlayerList players={players} role={TINTER} showScores={false} />
-        {!player?.role && (
+        <PlayerList players={players} role={PlayerRoles.TINTER} showScores={false} />
+        {player?.role === PlayerRoles.SPECTATOR && (
           <div className={styles.buttonWrapper}>
-            <Button onClick={onJoinClick} text='Join game' disabled={player?.role !== ''} />
+            <Button
+              onClick={onJoinClick}
+              text='Join game'
+              disabled={player?.role !== 'SPECTATOR'}
+            />
           </div>
         )}
       </div>
       <div className={styles.bottomWrapper}>
-        <LobbyList players={players} />
+        <LobbyList spectators={spectators} />
         {player?.isHost && (
           <div className={styles.buttonWrapper}>
             <div className={styles.floatingHint}>Set your score limit</div>
@@ -67,6 +81,7 @@ const LobbyPanel = ({ players, player, onHinterClick, onJoinClick, onStartClick 
 
 type Props = {
   players: Player[];
+  spectators: Player[];
   player: Player | null;
   onHinterClick: () => void;
   onJoinClick: () => void;

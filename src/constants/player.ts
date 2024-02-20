@@ -1,2 +1,5 @@
-export const HINTER = 'HINTER';
-export const TINTER = 'TINTER';
+export const PlayerRoles = {
+  HINTER: 'HINTER',
+  TINTER: 'TINTER',
+  SPECTATOR: 'SPECTATOR',
+};

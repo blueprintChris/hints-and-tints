@@ -12,6 +12,7 @@ const ErrorPage = () => {
 
   const handleClick = () => {
     socket.disconnect();
+
     navigate('/');
   };
 

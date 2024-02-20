@@ -1,26 +1,23 @@
-const useLocalStorage = () => {
-  const setNicknameLocalStorage = (nickname: string) => {
-    localStorage.setItem('nickname', nickname);
-  };
+import { useState, useEffect } from 'react';
 
-  const setPlayerIdLocalStorage = (playerId: string) => {
-    localStorage.setItem('playerId', playerId);
-  };
+const useLocalStorage = (key: string, defaultValue = '') => {
+  const [value, setValue] = useState(() => {
+    let currentValue;
 
-  const getNicknameLocalStorage = () => {
-    return localStorage.getItem('nickname');
-  };
+    try {
+      currentValue = JSON.parse(localStorage.getItem(key) || String(defaultValue));
+    } catch (error) {
+      currentValue = defaultValue;
+    }
 
-  const getPlayerIdLocalStorage = () => {
-    return localStorage.getItem('playerId');
-  };
+    return currentValue;
+  });
 
-  return {
-    setNicknameLocalStorage,
-    setPlayerIdLocalStorage,
-    getNicknameLocalStorage,
-    getPlayerIdLocalStorage,
-  };
+  useEffect(() => {
+    localStorage.setItem(key, JSON.stringify(value));
+  }, [value, key]);
+
+  return [setValue, value];
 };
 
 export default useLocalStorage;

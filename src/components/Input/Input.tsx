@@ -13,6 +13,7 @@ const Input = ({
   value,
   disabled,
   autoFocus = true,
+  defaultValue,
 }: Props) => {
   return (
     <div className={styles.inputContainer}>
@@ -31,6 +32,7 @@ const Input = ({
           placeholder={placeholder}
           disabled={disabled}
           value={value}
+          defaultValue={defaultValue}
         />
         {withButton && (
           <div className={styles.buttonWrapper}>
@@ -52,6 +54,7 @@ type Props = {
   withButton?: boolean;
   value?: string;
   autoFocus?: boolean;
+  defaultValue?: string;
 };
 
 export default Input;
