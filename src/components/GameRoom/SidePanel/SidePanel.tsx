@@ -5,12 +5,12 @@ import { GameContext, PlayerContext } from '../../../context';
 import { useDeviceWidth } from '../../../hooks';
 import LobbyPanel from './LobbyPanel/LobbyPanel';
 import ScorePanel from './ScorePanel/ScorePanel';
-import { HINTER, TINTER } from '../../../constants/player';
-import { GameStates, SocketEvents } from '../../../constants';
-import { Players } from '../../../types/Players';
+import { GameStates, SocketEvents, PlayerRoles } from '../../../constants';
+import { Player } from '../../../types/Players';
 import styles from './SidePanel.module.css';
+import { Action } from '../../../reducer/Action';
 
-const SidePanel = ({ players }: Props) => {
+const SidePanel = ({ players, spectators }: Props) => {
   const {
     gameState,
     roomId,
@@ -18,19 +18,27 @@ const SidePanel = ({ players }: Props) => {
     firstHint,
     secondHint,
     selectedColour,
-    setIsLoading,
     isLoading,
+    dispatch,
   } = useContext(GameContext);
   const { player, selectedSquare } = useContext(PlayerContext);
 
   const { isTablet } = useDeviceWidth();
 
   const handleJoinGameAsHinter = () => {
-    socket.emit(SocketEvents.PLAYER_UPDATE_ROLE, { roomId, playerId: player?.id, role: HINTER });
+    socket.emit(SocketEvents.GAME_JOIN, {
+      roomId,
+      playerId: player?.id,
+      role: PlayerRoles.HINTER,
+    });
   };
 
   const handleJoinGame = () => {
-    socket.emit(SocketEvents.PLAYER_UPDATE_ROLE, { roomId, playerId: player?.id, role: TINTER });
+    socket.emit(SocketEvents.GAME_JOIN, {
+      roomId,
+      playerId: player?.id,
+      role: PlayerRoles.TINTER,
+    });
   };
 
   const handleEndTurn = () => {
@@ -42,7 +50,7 @@ const SidePanel = ({ players }: Props) => {
   };
 
   const handleStartGame = () => {
-    setIsLoading(true);
+    dispatch({ type: Action.LOADING });
 
     socket.emit(SocketEvents.GAME_START, { roomId });
   };
@@ -53,6 +61,7 @@ const SidePanel = ({ players }: Props) => {
         <LobbyPanel
           players={players}
           player={player}
+          spectators={spectators}
           onHinterClick={handleJoinGameAsHinter}
           onJoinClick={handleJoinGame}
           onStartClick={handleStartGame}
@@ -65,6 +74,7 @@ const SidePanel = ({ players }: Props) => {
           firstHint={firstHint}
           secondHint={secondHint}
           selectedColour={selectedColour}
+          onJoinClick={handleJoinGame}
           onEndTurnClick={handleEndTurn}
           onNextRoundClick={handleNextRound}
           selectedSquare={selectedSquare}
@@ -77,7 +87,8 @@ const SidePanel = ({ players }: Props) => {
 };
 
 type Props = {
-  players: Players;
+  players: Player[];
+  spectators: Player[];
 };
 
 export default SidePanel;

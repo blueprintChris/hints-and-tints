@@ -5,6 +5,7 @@ import { Player } from './Players';
 export type RoomJoinResult = {
   roomId: string;
   players: Player[];
+  spectators: Player[];
   gameState: string;
   scoreLimit: number;
 };
@@ -49,7 +50,7 @@ export type RoundContinueResult = {
   secondHint: string;
 };
 
-export type MakeTurnResult = {
+export type EndTurnResult = {
   currentTurn: Player;
 };
 
@@ -62,6 +63,11 @@ export type RoundEndResult = {
 
 export type UpdatePlayersResult = {
   players: Player[];
+};
+
+export type GameJoinResult = {
+  players: Player[];
+  spectators: Player[];
 };
 
 export type PreScoringResult = {
@@ -78,8 +84,13 @@ export type ScoringResult = {
 };
 
 export type PlayerSearchResult = {
+  isInRoom: boolean;
+};
+
+export type RoomGetResult = {
   player: Player;
   players: Player[];
+  spectators: Player[];
   gameState: string;
   scoreLimit: number;
   currentTurn: Player;
@@ -89,6 +100,6 @@ export type PlayerSearchResult = {
   winner: Player;
 };
 
-export type RoomUpdateResult = {
+export type ScoreUpdateResult = {
   scoreLimit: number;
 };

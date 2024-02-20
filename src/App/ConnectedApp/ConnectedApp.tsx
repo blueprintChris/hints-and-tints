@@ -10,23 +10,21 @@ import AppContainer from '../AppContainer/AppContainer';
 import { Colours } from '../../constants/colours';
 import { SocketEvents } from '../../constants';
 import styles from './ConnectedApp.module.css';
+import { Action } from '../../reducer/Action';
+import { RoomJoinResult } from '../../types/Socket';
 
 const ConnectedApp = () => {
-  const [nickname, setNickname] = useState('');
+  const [setNicknameLocalStorage, nicknameLocalStorage] = useLocalStorage('nickname', '');
+  const [setPlayerIdLocalStorage, playerIdLocalStorage] = useLocalStorage('playerId', '');
+
+  const [nickname, setNickname] = useState(nicknameLocalStorage);
 
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const {
-    getNicknameLocalStorage,
-    setNicknameLocalStorage,
-    getPlayerIdLocalStorage,
-    setPlayerIdLocalStorage,
-  } = useLocalStorage();
-
   const { isConnected } = useContext(SocketContext);
-  const { roomId, players, isLoading, setIsLoading } = useContext(GameContext);
-  const { player } = useContext(PlayerContext);
+  const { roomId, players, spectators, isLoading, dispatch } = useContext(GameContext);
+  const { player, isInRoom } = useContext(PlayerContext);
 
   const handleInputChange = (e: FormEvent<HTMLInputElement>) => {
     setNickname(e.currentTarget.value);
@@ -34,6 +32,7 @@ const ConnectedApp = () => {
 
   const handleHomepageReturn = () => {
     socket.disconnect();
+
     navigate('/');
   };
 
@@ -41,7 +40,7 @@ const ConnectedApp = () => {
     const playerId = uuid();
 
     if (id && nickname) {
-      setIsLoading(true);
+      dispatch({ type: Action.LOADING });
 
       setNicknameLocalStorage(nickname);
       setPlayerIdLocalStorage(playerId);
@@ -52,31 +51,46 @@ const ConnectedApp = () => {
         nickname,
         playerId,
       });
+
+      socket.on(SocketEvents.ROOM_JOIN, (payload: RoomJoinResult) => {
+        dispatch({ type: Action.ROOM_JOIN, payload });
+      });
+    } else {
+      alert('Please enter a name');
     }
   };
 
+  // if a player is given a link, we have to connect to the socket first
   useEffect(() => {
-    setIsLoading(true);
     if (!isConnected) {
       socket.connect();
     }
+  }, [isConnected]);
 
+  // a search for the room must be done if the player has been given a link
+  useEffect(() => {
     if (isConnected && !roomId) {
       socket.emit(SocketEvents.ROOM_SEARCH, { roomId: id });
     }
-  }, [id, isConnected, roomId, setIsLoading]);
+  }, [id, isConnected, roomId]);
 
   // checks if the player is already in the game (i.e. the user refreshes their browser / disconnects from the socket)
   useEffect(() => {
-    const playerId = getPlayerIdLocalStorage();
-    const nickname = getNicknameLocalStorage();
-
-    if (isConnected && roomId && playerId && nickname && !player) {
-      socket.emit(SocketEvents.PLAYER_SEARCH, { roomId, playerId, nickname });
-    } else {
-      setIsLoading(false);
+    if (isConnected && roomId && playerIdLocalStorage && nicknameLocalStorage && !isInRoom) {
+      socket.emit(SocketEvents.PLAYER_SEARCH, {
+        roomId,
+        playerId: playerIdLocalStorage,
+        nickname: nicknameLocalStorage,
+      });
     }
-  }, [getNicknameLocalStorage, getPlayerIdLocalStorage, isConnected, player, roomId, setIsLoading]);
+  }, [isConnected, isInRoom, nicknameLocalStorage, playerIdLocalStorage, roomId]);
+
+  // gets the room data if we dont have a player object from joining room
+  useEffect(() => {
+    if (isInRoom && !player) {
+      socket.emit(SocketEvents.ROOM_GET, { roomId, playerId: playerIdLocalStorage });
+    }
+  }, [dispatch, isInRoom, player, playerIdLocalStorage, roomId]);
 
   if (isLoading) {
     return (
@@ -85,7 +99,7 @@ const ConnectedApp = () => {
       </AppContainer>
     );
   } else {
-    if (isConnected && roomId && !player) {
+    if (isConnected && roomId && !isInRoom) {
       return (
         <AppContainer>
           <NameInputPanel
@@ -100,7 +114,7 @@ const ConnectedApp = () => {
       );
     }
 
-    if (isConnected && !roomId && !player) {
+    if (isConnected && !roomId && !isInRoom) {
       return (
         <AppContainer>
           <LargeCard>
@@ -123,7 +137,7 @@ const ConnectedApp = () => {
       roomId &&
       player && (
         <AppContainer isConnected>
-          <GameRoom players={players} roomId={roomId} player={player} />
+          <GameRoom players={players} roomId={roomId} player={player} spectators={spectators} />
         </AppContainer>
       )
     );

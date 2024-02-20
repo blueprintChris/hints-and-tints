@@ -7,6 +7,8 @@ const defaultContext = {
   setPlayer: () => {},
   selectedSquare: null,
   setSelectedSquare: () => {},
+  isInRoom: false,
+  setIsInRoom: () => {},
 };
 
 export const PlayerContext = createContext<PlayerContextProps>(defaultContext);
@@ -14,9 +16,12 @@ export const PlayerContext = createContext<PlayerContextProps>(defaultContext);
 const PlayerContextProvider = ({ children }: Props) => {
   const [player, setPlayer] = useState<Player | null>(null);
   const [selectedSquare, setSelectedSquare] = useState<Square | null>(null);
+  const [isInRoom, setIsInRoom] = useState(false);
 
   return (
-    <PlayerContext.Provider value={{ player, setPlayer, selectedSquare, setSelectedSquare }}>
+    <PlayerContext.Provider
+      value={{ player, setPlayer, selectedSquare, setSelectedSquare, isInRoom, setIsInRoom }}
+    >
       {children}
     </PlayerContext.Provider>
   );
@@ -27,6 +32,8 @@ type PlayerContextProps = {
   setPlayer: React.Dispatch<React.SetStateAction<Player | null>>;
   selectedSquare: Square | null;
   setSelectedSquare: React.Dispatch<React.SetStateAction<Square | null>>;
+  isInRoom: boolean;
+  setIsInRoom: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 type Props = {

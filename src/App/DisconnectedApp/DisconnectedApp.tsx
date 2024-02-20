@@ -8,41 +8,52 @@ import { GameContext } from '../../context/GameContext';
 import AppContainer from '../AppContainer/AppContainer';
 import { Colours } from '../../constants/colours';
 import { SocketEvents } from '../../constants';
+import { Action } from '../../reducer/Action';
+import { RoomJoinResult } from '../../types/Socket';
+import { PlayerContext } from '../../context';
 
 const DisconnectedApp = () => {
-  const [nickname, setNickname] = useState('');
+  const [setNicknameLocalStorage, nicknameLocalStorage] = useLocalStorage('nickname');
+  const [setPlayerIdLocalStorage] = useLocalStorage('playerId');
 
-  const { setIsLoading, isLoading } = useContext(GameContext);
+  const [nickname, setNickname] = useState(nicknameLocalStorage);
+
+  const { dispatch, isLoading } = useContext(GameContext);
+  const { setIsInRoom } = useContext(PlayerContext);
 
   const navigate = useNavigate();
-
-  const { setNicknameLocalStorage, setPlayerIdLocalStorage } = useLocalStorage();
 
   const handleInputChange = (e: FormEvent<HTMLInputElement>) => {
     setNickname(e.currentTarget.value);
   };
 
-  const handleOnClick = () => {
-    const roomId = uuid();
-    const playerId = uuid();
+  const handleOnClick = async () => {
+    if (nickname) {
+      dispatch({ type: Action.LOADING });
 
-    if (nickname && roomId && playerId) {
-      setIsLoading(true);
+      const newRoomId = uuid();
+      const newPlayerId = uuid();
 
       // store player values in local storage
-      setPlayerIdLocalStorage(playerId);
       setNicknameLocalStorage(nickname);
+      setPlayerIdLocalStorage(newPlayerId);
 
       // connect to the websocket
       socket.connect();
 
       // create room
-      socket.emit(SocketEvents.ROOM_CREATE, { roomId });
+      socket.emit(SocketEvents.ROOM_CREATE, { roomId: newRoomId });
 
       // join room
-      socket.emit(SocketEvents.ROOM_JOIN, { roomId, nickname, playerId });
+      socket.emit(SocketEvents.ROOM_JOIN, { roomId: newRoomId, nickname, playerId: newPlayerId });
 
-      navigate(`/room/${roomId}`);
+      // listen to room join event
+      socket.on(SocketEvents.ROOM_JOIN, (payload: RoomJoinResult) => {
+        dispatch({ type: Action.ROOM_JOIN, payload });
+        setIsInRoom(true);
+
+        navigate(`/room/${payload.roomId}`);
+      });
     } else {
       alert('Please enter a name');
     }

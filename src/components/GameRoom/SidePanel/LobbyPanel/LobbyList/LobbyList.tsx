@@ -1,25 +1,25 @@
 import { Players } from '../../../../../types/Players';
 import styles from './LobbyList.module.css';
 
-const LobbyList = ({ players }: Props) => {
+const LobbyList = ({ spectators }: Props) => {
   return (
     <div className={styles.playerList}>
-      <h1>In Lobby</h1>
+      <h1>Spectators</h1>
       <ul>
-        {players.map(player => {
-          return (
-            <li key={player.id}>
-              {player.name} {player.role && '✅'}
-            </li>
-          );
-        })}
+        {spectators.length === 0 ? (
+          <li>No one else here 😔</li>
+        ) : (
+          spectators.map(spectator => {
+            return <li key={spectator.id}>{spectator.name}</li>;
+          })
+        )}
       </ul>
     </div>
   );
 };
 
 type Props = {
-  players: Players;
+  spectators: Players;
 };
 
 export default LobbyList;

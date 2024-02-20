@@ -4,7 +4,7 @@ import { Button, PlayerList } from '../../../../components';
 import { Colours, GameStates } from '../../../../constants';
 import Hints from './Hints/Hints';
 import { Square } from '../../../../constants/board';
-import { HINTER, TINTER } from '../../../../constants/player';
+import { PlayerRoles } from '../../../../constants';
 import { Player } from '../../../../types/Players';
 import styles from './ScorePanel.module.css';
 
@@ -15,6 +15,7 @@ const ScorePanel = ({
   secondHint,
   selectedColour,
   currentTurn,
+  onJoinClick,
   onEndTurnClick,
   onNextRoundClick,
   selectedSquare,
@@ -22,7 +23,7 @@ const ScorePanel = ({
 }: Props) => {
   const { isTablet } = useDeviceWidth();
 
-  const hinter = players.find(pl => pl.role === HINTER);
+  const hinter = players.find(pl => pl.role === PlayerRoles.HINTER);
   const isHinter = hinter?.id === player?.id;
 
   const canGoNextRound = () => gameState === GameStates.SCORING && isHinter;
@@ -45,7 +46,7 @@ const ScorePanel = ({
           })}
         >
           <h1>Hinter</h1>
-          <PlayerList players={players} role={HINTER} showScores isHinter />
+          <PlayerList players={players} role={PlayerRoles.HINTER} showScores isHinter />
         </div>
         <div
           className={classnames(styles.playerRoleContainer, {
@@ -53,8 +54,22 @@ const ScorePanel = ({
           })}
         >
           <h1>Tinters</h1>
-          <PlayerList players={players} role={TINTER} showScores currentTurn={currentTurn} />
+          <PlayerList
+            players={players}
+            role={PlayerRoles.TINTER}
+            showScores
+            currentTurn={currentTurn}
+          />
         </div>
+        {player?.role === PlayerRoles.SPECTATOR && (
+          <div className={styles.buttonWrapper}>
+            <Button
+              onClick={onJoinClick}
+              text='Join game'
+              disabled={player?.role !== 'SPECTATOR'}
+            />
+          </div>
+        )}
       </div>
       <div className={classnames(styles.bottomWrapper, { [styles.bottomWrapperTablet]: isTablet })}>
         {gameState !== GameStates.SELECTION_ONE && (
@@ -93,6 +108,7 @@ type Props = {
   secondHint: string;
   selectedColour: Square | null;
   player: Player | null;
+  onJoinClick: () => void;
   onEndTurnClick: () => void;
   onNextRoundClick: () => void;
   selectedSquare: Square | null;

@@ -7,8 +7,6 @@ import { SocketEvents } from '../constants';
 import {
   GameStartResult,
   GameStateResult,
-  MakeTurnResult,
-  RoomJoinResult,
   RoundEndResult,
   RoundContinueResult,
   RoundStartResult,
@@ -17,8 +15,12 @@ import {
   UpdatePlayersResult,
   RoomSearchResult,
   PlayerSearchResult,
-  RoomUpdateResult,
+  GameJoinResult,
+  RoomGetResult,
+  EndTurnResult,
+  ScoreUpdateResult,
 } from '../types/Socket';
+import { Action } from '../reducer/Action';
 
 export const SocketContext = createContext<SocketContextType>({ isConnected: false });
 
@@ -27,20 +29,8 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
 
   const navigate = useNavigate();
 
-  const {
-    setPlayers,
-    setRoomId,
-    setGameState,
-    setSelectedColour,
-    setCurrentTurn,
-    setFirstHint,
-    setSecondHint,
-    setSurroundingSquares,
-    setIsLoading,
-    setWinner,
-    setScoreLimit,
-  } = useContext(GameContext);
-  const { setPlayer, setSelectedSquare } = useContext(PlayerContext);
+  const { dispatch } = useContext(GameContext);
+  const { setPlayer, setSelectedSquare, setIsInRoom } = useContext(PlayerContext);
 
   useEffect(() => {
     const onConnect = () => {
@@ -51,131 +41,76 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
       setIsConnected(false);
     };
 
-    const handleRoomJoin = ({ roomId, players, gameState, scoreLimit }: RoomJoinResult) => {
-      setPlayers(players);
-      setGameState(gameState);
-      setScoreLimit(scoreLimit);
-      setRoomId(roomId);
-
-      setIsLoading(false);
-    };
-
     const handleUpdatePlayer = ({ player }: UpdatePlayerResult) => {
       setPlayer(player);
     };
 
-    const handlePlayerSearch = ({
-      player,
-      players,
-      gameState,
-      scoreLimit,
-      currentTurn,
-      selectedColour,
-      firstHint,
-      secondHint,
-      winner,
-    }: PlayerSearchResult) => {
-      setPlayer(player);
-      setPlayers(players);
-      setGameState(gameState);
-      setScoreLimit(scoreLimit);
-      setCurrentTurn(currentTurn);
-      setSelectedColour(selectedColour);
-      setFirstHint(firstHint);
-      setSecondHint(secondHint);
-      setWinner(winner);
-
-      setIsLoading(false);
+    const handlePlayerSearch = ({ isInRoom }: PlayerSearchResult) => {
+      setIsInRoom(isInRoom);
     };
 
-    const handleUpdatePlayers = ({ players }: UpdatePlayersResult) => {
-      setPlayers(players);
+    const handleRoomGet = (payload: RoomGetResult) => {
+      setPlayer(payload.player);
 
-      setIsLoading(false);
+      dispatch({ type: Action.ROOM_GET, payload });
     };
 
-    const handleGameStart = ({ gameState, players }: GameStartResult) => {
-      setGameState(gameState);
-      setPlayers(players);
-      setFirstHint('');
-      setSecondHint('');
-      setWinner(null);
-
-      setIsLoading(false);
+    const handleUpdatePlayers = (payload: UpdatePlayersResult) => {
+      dispatch({ type: Action.PLAYERS_UPDATE, payload });
     };
 
-    const handleGameState = ({ gameState }: GameStateResult) => {
-      setGameState(gameState);
-      setIsLoading(false);
+    const handleGameJoin = (payload: GameJoinResult) => {
+      dispatch({ type: Action.GAME_JOIN, payload });
     };
 
-    const handleEndTurn = ({ currentTurn }: MakeTurnResult) => {
+    const handleGameStart = (payload: GameStartResult) => {
+      dispatch({ type: Action.GAME_START, payload });
+    };
+
+    const handleGameState = (payload: GameStateResult) => {
+      dispatch({ type: Action.GAME_UPDATE_STATE, payload });
+    };
+
+    const handleEndTurn = (payload: EndTurnResult) => {
       setSelectedSquare(null);
-      setCurrentTurn(currentTurn);
-      setIsLoading(false);
+      dispatch({ type: Action.END_TURN, payload });
     };
 
-    const handleScoring = ({ players, gameState, winner }: ScoringResult) => {
-      setPlayers(players);
-      setGameState(gameState);
-      setWinner(winner);
-
-      setIsLoading(false);
+    const handleScoring = (payload: ScoringResult) => {
+      dispatch({ type: Action.SCORING, payload });
     };
 
-    const handleRoundStart = ({
-      selectedColour,
-      gameState,
-      players,
-      currentTurn,
-      firstHint,
-    }: RoundStartResult) => {
-      setSelectedColour(selectedColour);
-      setGameState(gameState);
-      setPlayers(players);
-      setCurrentTurn(currentTurn);
-      setFirstHint(firstHint);
-
-      setIsLoading(false);
+    const handleRoundStart = (payload: RoundStartResult) => {
+      dispatch({ type: Action.ROUND_START, payload });
     };
 
-    const handleRoomSearch = ({ doesRoomExist, roomId }: RoomSearchResult) => {
-      if (doesRoomExist) {
-        setRoomId(roomId);
+    const handleRoomSearch = (payload: RoomSearchResult) => {
+      if (payload.doesRoomExist) {
+        dispatch({ type: Action.ROOM_SEARCH, payload });
       } else {
-        setRoomId('');
+        dispatch({ type: Action.ROOM_SEARCH, payload: { ...payload, roomId: '' } });
       }
     };
 
-    const handleRoundContinue = ({ gameState, currentTurn, secondHint }: RoundContinueResult) => {
-      setGameState(gameState);
-      setCurrentTurn(currentTurn);
-      setSecondHint(secondHint);
+    const handleRoundContinue = (payload: RoundContinueResult) => {
       setSelectedSquare(null);
-
-      setIsLoading(false);
+      dispatch({ type: Action.ROUND_CONTINUE, payload });
     };
 
-    const handleEndRound = ({ players, gameState, firstHint, secondHint }: RoundEndResult) => {
-      setPlayers(players);
-      setGameState(gameState);
-      setFirstHint(firstHint);
-      setSecondHint(secondHint);
-
-      setIsLoading(false);
+    const handleEndRound = (payload: RoundEndResult) => {
+      dispatch({ type: Action.ROUND_END, payload });
     };
 
-    const updateRoom = ({ scoreLimit }: RoomUpdateResult) => {
-      setScoreLimit(scoreLimit);
-
-      setIsLoading(false);
+    const updateRoom = (payload: ScoreUpdateResult) => {
+      dispatch({ type: Action.SCORE_UPDATE, payload });
     };
 
     socket.on(SocketEvents.CONNECT, onConnect);
     socket.on(SocketEvents.DISCONNECT, onDisconnect);
-    socket.on(SocketEvents.ROOM_JOIN, handleRoomJoin);
+    // socket.on(SocketEvents.ROOM_JOIN, handleRoomJoin);
     socket.on(SocketEvents.ROOM_UPDATE, updateRoom);
     socket.on(SocketEvents.ROOM_SEARCH, handleRoomSearch);
+    socket.on(SocketEvents.ROOM_GET, handleRoomGet);
     socket.on(SocketEvents.PLAYER_UPDATE, handleUpdatePlayer);
     socket.on(SocketEvents.GAME_START, handleGameStart);
     socket.on(SocketEvents.GAME_ROUND_START, handleRoundStart);
@@ -184,34 +119,22 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
     socket.on(SocketEvents.GAME_ROUND_END, handleEndRound);
     socket.on(SocketEvents.GAME_UPDATE_SCORES, handleScoring);
     socket.on(SocketEvents.GAME_UPDATE_STATE, handleGameState);
+    socket.on(SocketEvents.GAME_JOIN, handleGameJoin);
     socket.on(SocketEvents.GAME_END, handleGameState);
     socket.on(SocketEvents.PLAYERS_UPDATE, handleUpdatePlayers);
     socket.on(SocketEvents.PLAYER_SEARCH, handlePlayerSearch);
 
     socket.on('connect_error', err => {
       console.log('websocket error: ', err.message);
+
+      navigate('/error', { state: { message: err.message } });
     });
 
     return () => {
       socket.off(SocketEvents.CONNECT, onConnect);
       socket.off(SocketEvents.DISCONNECT, onDisconnect);
     };
-  }, [
-    navigate,
-    setCurrentTurn,
-    setFirstHint,
-    setGameState,
-    setIsLoading,
-    setPlayer,
-    setPlayers,
-    setRoomId,
-    setScoreLimit,
-    setSecondHint,
-    setSelectedColour,
-    setSelectedSquare,
-    setSurroundingSquares,
-    setWinner,
-  ]);
+  }, [dispatch, navigate, setIsInRoom, setPlayer, setSelectedSquare]);
 
   return <SocketContext.Provider value={{ isConnected }}>{children}</SocketContext.Provider>;
 };
