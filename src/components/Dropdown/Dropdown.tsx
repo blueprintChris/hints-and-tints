@@ -1,13 +1,13 @@
 import { ChangeEvent } from 'react';
 import styles from './Dropdown.module.css';
 
-const Dropdown = ({ onChange }: Props) => {
+const Dropdown = ({ onChange, defaultValue }: Props) => {
   return (
     <select
       className={styles.dropdown}
       id='scoreLimit'
       name='scoreLimit'
-      defaultValue={50}
+      defaultValue={defaultValue}
       onChange={onChange}
     >
       {Array.from({ length: 60 }).map((_, idx) => (
@@ -21,6 +21,7 @@ const Dropdown = ({ onChange }: Props) => {
 
 type Props = {
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+  defaultValue?: number;
 };
 
 export default Dropdown;

@@ -1,4 +1,4 @@
-import { grid } from '../constants/board';
+import { grid } from '../../constants/board';
 
 export const initialState = {
   grid,

@@ -1,8 +1,8 @@
-import { Square } from '../constants/board';
-import { Player } from '../types/Players';
-import { Action, GameAction } from './Action';
+import { Square } from '../../constants/board';
+import { Player } from '../../types/Players';
+import { GameAction, GameActions } from './Action';
 
-interface State {
+type State = {
   roomId: string;
   players: Player[];
   spectators: Player[];
@@ -14,11 +14,11 @@ interface State {
   secondHint: string;
   winner: Player | null;
   scoreLimit: number;
-}
+};
 
-const gameReducer = (state: State, action: GameAction) => {
+const gameReducer = (state: State, action: GameActions) => {
   switch (action.type) {
-    case Action.ROOM_GET: {
+    case GameAction.ROOM_GET: {
       const { payload } = action;
 
       return {
@@ -36,7 +36,7 @@ const gameReducer = (state: State, action: GameAction) => {
       };
     }
 
-    case Action.ROOM_JOIN: {
+    case GameAction.ROOM_JOIN: {
       const { payload } = action;
 
       return {
@@ -50,7 +50,7 @@ const gameReducer = (state: State, action: GameAction) => {
       };
     }
 
-    case Action.PLAYERS_UPDATE: {
+    case GameAction.PLAYERS_UPDATE: {
       const { payload } = action;
 
       return {
@@ -60,7 +60,7 @@ const gameReducer = (state: State, action: GameAction) => {
       };
     }
 
-    case Action.GAME_JOIN: {
+    case GameAction.GAME_JOIN: {
       const { payload } = action;
 
       return {
@@ -71,7 +71,7 @@ const gameReducer = (state: State, action: GameAction) => {
       };
     }
 
-    case Action.GAME_START: {
+    case GameAction.GAME_START: {
       const { payload } = action;
 
       return {
@@ -85,7 +85,7 @@ const gameReducer = (state: State, action: GameAction) => {
       };
     }
 
-    case Action.GAME_UPDATE_STATE: {
+    case GameAction.GAME_UPDATE_STATE: {
       const { payload } = action;
 
       return {
@@ -95,7 +95,7 @@ const gameReducer = (state: State, action: GameAction) => {
       };
     }
 
-    case Action.END_TURN: {
+    case GameAction.END_TURN: {
       const { payload } = action;
 
       return {
@@ -105,7 +105,7 @@ const gameReducer = (state: State, action: GameAction) => {
       };
     }
 
-    case Action.SCORING: {
+    case GameAction.SCORING: {
       const { payload } = action;
 
       return {
@@ -117,7 +117,7 @@ const gameReducer = (state: State, action: GameAction) => {
       };
     }
 
-    case Action.ROUND_START: {
+    case GameAction.ROUND_START: {
       const { payload } = action;
 
       return {
@@ -131,7 +131,7 @@ const gameReducer = (state: State, action: GameAction) => {
       };
     }
 
-    case Action.ROUND_CONTINUE: {
+    case GameAction.ROUND_CONTINUE: {
       const { payload } = action;
 
       return {
@@ -143,7 +143,7 @@ const gameReducer = (state: State, action: GameAction) => {
       };
     }
 
-    case Action.ROUND_END: {
+    case GameAction.ROUND_END: {
       const { payload } = action;
 
       return {
@@ -156,7 +156,7 @@ const gameReducer = (state: State, action: GameAction) => {
       };
     }
 
-    case Action.SCORE_UPDATE: {
+    case GameAction.SCORE_UPDATE: {
       const { payload } = action;
 
       return {
@@ -166,7 +166,7 @@ const gameReducer = (state: State, action: GameAction) => {
       };
     }
 
-    case Action.ROOM_SEARCH: {
+    case GameAction.ROOM_SEARCH: {
       const { payload } = action;
 
       return {
@@ -176,7 +176,7 @@ const gameReducer = (state: State, action: GameAction) => {
       };
     }
 
-    case Action.LOADING: {
+    case GameAction.LOADING: {
       console.log('is loading');
       return {
         ...state,
@@ -184,8 +184,7 @@ const gameReducer = (state: State, action: GameAction) => {
       };
     }
 
-    case Action.LOADING_STOP: {
-      console.log('loading stopped');
+    case GameAction.LOADING_STOP: {
       return {
         ...state,
         isLoading: false,

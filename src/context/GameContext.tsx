@@ -1,9 +1,9 @@
 import { createContext, useReducer } from 'react';
 import { Grid, Square, grid } from '../constants/board';
 import { Player } from '../types/Players';
-import gameReducer from '../reducer/gameReducer';
-import { initialState } from '../reducer/initialState';
-import { GameAction } from '../reducer/Action';
+import gameReducer from '../reducers/game/gameReducer';
+import { initialState } from '../reducers/game/initialState';
+import { GameActions } from '../reducers/game/Action';
 
 const defaultContext = {
   grid,
@@ -77,7 +77,7 @@ type GameContextProps = {
   secondHint: string;
   winner: Player | null;
   scoreLimit: number;
-  dispatch: React.Dispatch<GameAction>;
+  dispatch: React.Dispatch<GameActions>;
 };
 
 type Props = {

@@ -6,6 +6,7 @@ import { PropsWithChildren } from 'react';
 import { GameContextProvider, PlayerContextProvider, SocketContextProvider } from '../context';
 import styles from './App.module.css';
 import AppContainer from './AppContainer/AppContainer';
+
 const ProviderWrapper = ({ children }: PropsWithChildren) => {
   return (
     <GameContextProvider>

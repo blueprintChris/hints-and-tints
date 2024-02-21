@@ -1,17 +1,19 @@
 import { FormEvent, useContext, useEffect, useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import { socket } from '../../socket/Socket';
+import { ToastContainer, toast } from 'react-toastify';
 import { GameContext, PlayerContext, SocketContext } from '../../context/';
 import { Button, LargeCard, LoadingSpinner, NameInputPanel, Title } from '../../components';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useLocalStorage } from '../../hooks';
 import { GameRoom } from '../../components';
 import AppContainer from '../AppContainer/AppContainer';
-import { Colours } from '../../constants/colours';
 import { SocketEvents } from '../../constants';
-import styles from './ConnectedApp.module.css';
-import { Action } from '../../reducer/Action';
+import { Colours } from '../../constants/colours';
+import { GameAction } from '../../reducers/game/Action';
 import { RoomJoinResult } from '../../types/Socket';
+
+import styles from './ConnectedApp.module.css';
 
 const ConnectedApp = () => {
   const [setNicknameLocalStorage, nicknameLocalStorage] = useLocalStorage('nickname', '');
@@ -40,7 +42,7 @@ const ConnectedApp = () => {
     const playerId = uuid();
 
     if (id && nickname) {
-      dispatch({ type: Action.LOADING });
+      dispatch({ type: GameAction.LOADING });
 
       setNicknameLocalStorage(nickname);
       setPlayerIdLocalStorage(playerId);
@@ -53,10 +55,18 @@ const ConnectedApp = () => {
       });
 
       socket.on(SocketEvents.ROOM_JOIN, (payload: RoomJoinResult) => {
-        dispatch({ type: Action.ROOM_JOIN, payload });
+        dispatch({ type: GameAction.ROOM_JOIN, payload });
       });
     } else {
-      alert('Please enter a name');
+      toast('😒 Please enter a name', {
+        position: 'bottom-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: 'dark',
+      });
     }
   };
 
@@ -109,7 +119,9 @@ const ConnectedApp = () => {
             labelText='To join the room, enter your nickname'
             onChange={handleInputChange}
             onClick={handleOnClick}
+            defaultValue={nickname}
           />
+          <ToastContainer limit={1} />
         </AppContainer>
       );
     }

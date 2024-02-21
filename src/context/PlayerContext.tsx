@@ -1,27 +1,24 @@
-import { createContext, useState } from 'react';
+import { createContext, useReducer } from 'react';
 import { Player } from '../types/Players';
 import { Square } from '../constants/board';
+import playerReducer from '../reducers/player/playerReducer';
+import { initialState } from '../reducers/player/initialState';
+import { PlayerActions } from '../reducers/player/Action';
 
 const defaultContext = {
   player: null,
-  setPlayer: () => {},
   selectedSquare: null,
-  setSelectedSquare: () => {},
   isInRoom: false,
-  setIsInRoom: () => {},
+  dispatch: () => {},
 };
 
 export const PlayerContext = createContext<PlayerContextProps>(defaultContext);
 
 const PlayerContextProvider = ({ children }: Props) => {
-  const [player, setPlayer] = useState<Player | null>(null);
-  const [selectedSquare, setSelectedSquare] = useState<Square | null>(null);
-  const [isInRoom, setIsInRoom] = useState(false);
+  const [{ player, isInRoom, selectedSquare }, dispatch] = useReducer(playerReducer, initialState);
 
   return (
-    <PlayerContext.Provider
-      value={{ player, setPlayer, selectedSquare, setSelectedSquare, isInRoom, setIsInRoom }}
-    >
+    <PlayerContext.Provider value={{ player, selectedSquare, isInRoom, dispatch }}>
       {children}
     </PlayerContext.Provider>
   );
@@ -29,11 +26,9 @@ const PlayerContextProvider = ({ children }: Props) => {
 
 type PlayerContextProps = {
   player: Player | null;
-  setPlayer: React.Dispatch<React.SetStateAction<Player | null>>;
   selectedSquare: Square | null;
-  setSelectedSquare: React.Dispatch<React.SetStateAction<Square | null>>;
   isInRoom: boolean;
-  setIsInRoom: React.Dispatch<React.SetStateAction<boolean>>;
+  dispatch: React.Dispatch<PlayerActions>;
 };
 
 type Props = {
