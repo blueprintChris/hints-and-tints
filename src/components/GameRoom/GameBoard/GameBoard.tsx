@@ -6,11 +6,13 @@ import styles from './GameBoard.module.css';
 import GameRow from './GameRow/GameRow';
 import { socket } from '../../../socket/Socket';
 import { SocketEvents } from '../../../constants';
+import { PlayerAction } from '../../../reducers/player/Action';
+import { ToastContainer, toast } from 'react-toastify';
 
 const GameBoard = () => {
   const { currentTurn, gameState, players, selectedColour, isLoading, roomId } =
     useContext(GameContext);
-  const { player, selectedSquare, setSelectedSquare } = useContext(PlayerContext);
+  const { player, selectedSquare, dispatch } = useContext(PlayerContext);
 
   const handleRevealComplete = () => {
     socket.emit(SocketEvents.GAME_UPDATE_SCORES, { roomId });
@@ -19,12 +21,31 @@ const GameBoard = () => {
   const handleSquareClick = (square: Square) => {
     if (gameState === 'GUESSING_ONE' || gameState === 'GUESSING_TWO') {
       if (currentTurn?.id === player?.id) {
-        setSelectedSquare(square);
+        dispatch({
+          type: PlayerAction.PLAYER_SELECTED_SQUARE,
+          payload: { selectedSquare: square },
+        });
       } else {
-        alert('aint your turn yet');
+        toast('💩 No, no. Not your turn yet.', {
+          position: 'bottom-center',
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: 'dark',
+        });
       }
     } else {
-      alert('not tinting time');
+      toast("🤡 It's not tinting time yet!", {
+        position: 'bottom-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: 'dark',
+      });
     }
   };
 
@@ -53,6 +74,7 @@ const GameBoard = () => {
           })}
         </GameRow>
       ))}
+      <ToastContainer limit={1} />
     </div>
   );
 };

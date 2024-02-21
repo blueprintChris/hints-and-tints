@@ -8,7 +8,7 @@ import ScorePanel from './ScorePanel/ScorePanel';
 import { GameStates, SocketEvents, PlayerRoles } from '../../../constants';
 import { Player } from '../../../types/Players';
 import styles from './SidePanel.module.css';
-import { Action } from '../../../reducer/Action';
+import { GameAction } from '../../../reducers/game/Action';
 
 const SidePanel = ({ players, spectators }: Props) => {
   const {
@@ -19,6 +19,7 @@ const SidePanel = ({ players, spectators }: Props) => {
     secondHint,
     selectedColour,
     isLoading,
+    scoreLimit,
     dispatch,
   } = useContext(GameContext);
   const { player, selectedSquare } = useContext(PlayerContext);
@@ -50,7 +51,7 @@ const SidePanel = ({ players, spectators }: Props) => {
   };
 
   const handleStartGame = () => {
-    dispatch({ type: Action.LOADING });
+    dispatch({ type: GameAction.LOADING });
 
     socket.emit(SocketEvents.GAME_START, { roomId });
   };
@@ -65,6 +66,7 @@ const SidePanel = ({ players, spectators }: Props) => {
           onHinterClick={handleJoinGameAsHinter}
           onJoinClick={handleJoinGame}
           onStartClick={handleStartGame}
+          scoreLimit={scoreLimit}
         />
       ) : (
         <ScorePanel

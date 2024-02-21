@@ -15,10 +15,9 @@ const LobbyPanel = ({
   onHinterClick,
   onJoinClick,
   onStartClick,
+  scoreLimit,
 }: Props) => {
   const { roomId } = useContext(GameContext);
-
-  console.log('players: ', players);
 
   const hinter = players.find(pl => pl.role === PlayerRoles.HINTER);
   const tinter = players.find(pl => pl.role === PlayerRoles.TINTER);
@@ -63,7 +62,7 @@ const LobbyPanel = ({
             <div className={styles.floatingHint}>Set your score limit</div>
             <div className={styles.dropdownWrapper}>
               <Tooltip offset={{ x: 20, y: 20 }} text='yes'>
-                <Dropdown onChange={handleDropdownChange} />
+                <Dropdown onChange={handleDropdownChange} defaultValue={scoreLimit} />
               </Tooltip>
             </div>
             <Button
@@ -86,6 +85,7 @@ type Props = {
   onHinterClick: () => void;
   onJoinClick: () => void;
   onStartClick: () => void;
+  scoreLimit: number;
 };
 
 export default LobbyPanel;

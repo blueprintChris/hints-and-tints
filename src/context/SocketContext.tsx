@@ -20,7 +20,8 @@ import {
   EndTurnResult,
   ScoreUpdateResult,
 } from '../types/Socket';
-import { Action } from '../reducer/Action';
+import { GameAction } from '../reducers/game/Action';
+import { PlayerAction } from '../reducers/player/Action';
 
 export const SocketContext = createContext<SocketContextType>({ isConnected: false });
 
@@ -29,8 +30,8 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
 
   const navigate = useNavigate();
 
-  const { dispatch } = useContext(GameContext);
-  const { setPlayer, setSelectedSquare, setIsInRoom } = useContext(PlayerContext);
+  const { dispatch: gameDispatch } = useContext(GameContext);
+  const { dispatch: playerDispatch } = useContext(PlayerContext);
 
   useEffect(() => {
     const onConnect = () => {
@@ -41,73 +42,74 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
       setIsConnected(false);
     };
 
-    const handleUpdatePlayer = ({ player }: UpdatePlayerResult) => {
-      setPlayer(player);
+    const handleUpdatePlayer = (payload: UpdatePlayerResult) => {
+      playerDispatch({ type: PlayerAction.PLAYER_UPDATE, payload });
     };
 
-    const handlePlayerSearch = ({ isInRoom }: PlayerSearchResult) => {
-      setIsInRoom(isInRoom);
+    const handlePlayerSearch = (payload: PlayerSearchResult) => {
+      playerDispatch({ type: PlayerAction.PLAYER_SEARCH, payload });
     };
 
     const handleRoomGet = (payload: RoomGetResult) => {
-      setPlayer(payload.player);
+      playerDispatch({ type: PlayerAction.PLAYER_UPDATE, payload });
 
-      dispatch({ type: Action.ROOM_GET, payload });
+      gameDispatch({ type: GameAction.ROOM_GET, payload });
     };
 
     const handleUpdatePlayers = (payload: UpdatePlayersResult) => {
-      dispatch({ type: Action.PLAYERS_UPDATE, payload });
+      gameDispatch({ type: GameAction.PLAYERS_UPDATE, payload });
     };
 
     const handleGameJoin = (payload: GameJoinResult) => {
-      dispatch({ type: Action.GAME_JOIN, payload });
+      gameDispatch({ type: GameAction.GAME_JOIN, payload });
     };
 
     const handleGameStart = (payload: GameStartResult) => {
-      dispatch({ type: Action.GAME_START, payload });
+      gameDispatch({ type: GameAction.GAME_START, payload });
     };
 
     const handleGameState = (payload: GameStateResult) => {
-      dispatch({ type: Action.GAME_UPDATE_STATE, payload });
+      gameDispatch({ type: GameAction.GAME_UPDATE_STATE, payload });
     };
 
     const handleEndTurn = (payload: EndTurnResult) => {
-      setSelectedSquare(null);
-      dispatch({ type: Action.END_TURN, payload });
+      playerDispatch({ type: PlayerAction.PLAYER_SELECTED_SQUARE_CLEAR });
+
+      gameDispatch({ type: GameAction.END_TURN, payload });
     };
 
     const handleScoring = (payload: ScoringResult) => {
-      dispatch({ type: Action.SCORING, payload });
+      gameDispatch({ type: GameAction.SCORING, payload });
     };
 
     const handleRoundStart = (payload: RoundStartResult) => {
-      dispatch({ type: Action.ROUND_START, payload });
+      gameDispatch({ type: GameAction.ROUND_START, payload });
     };
 
     const handleRoomSearch = (payload: RoomSearchResult) => {
       if (payload.doesRoomExist) {
-        dispatch({ type: Action.ROOM_SEARCH, payload });
+        gameDispatch({ type: GameAction.ROOM_SEARCH, payload });
       } else {
-        dispatch({ type: Action.ROOM_SEARCH, payload: { ...payload, roomId: '' } });
+        gameDispatch({ type: GameAction.ROOM_SEARCH, payload: { ...payload, roomId: '' } });
       }
     };
 
     const handleRoundContinue = (payload: RoundContinueResult) => {
-      setSelectedSquare(null);
-      dispatch({ type: Action.ROUND_CONTINUE, payload });
+      playerDispatch({ type: PlayerAction.PLAYER_SELECTED_SQUARE_CLEAR });
+
+      gameDispatch({ type: GameAction.ROUND_CONTINUE, payload });
     };
 
     const handleEndRound = (payload: RoundEndResult) => {
-      dispatch({ type: Action.ROUND_END, payload });
+      gameDispatch({ type: GameAction.ROUND_END, payload });
     };
 
     const updateRoom = (payload: ScoreUpdateResult) => {
-      dispatch({ type: Action.SCORE_UPDATE, payload });
+      gameDispatch({ type: GameAction.SCORE_UPDATE, payload });
     };
 
     socket.on(SocketEvents.CONNECT, onConnect);
     socket.on(SocketEvents.DISCONNECT, onDisconnect);
-    // socket.on(SocketEvents.ROOM_JOIN, handleRoomJoin);
     socket.on(SocketEvents.ROOM_UPDATE, updateRoom);
     socket.on(SocketEvents.ROOM_SEARCH, handleRoomSearch);
     socket.on(SocketEvents.ROOM_GET, handleRoomGet);
@@ -134,7 +136,7 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
       socket.off(SocketEvents.CONNECT, onConnect);
       socket.off(SocketEvents.DISCONNECT, onDisconnect);
     };
-  }, [dispatch, navigate, setIsInRoom, setPlayer, setSelectedSquare]);
+  }, [gameDispatch, navigate, playerDispatch]);
 
   return <SocketContext.Provider value={{ isConnected }}>{children}</SocketContext.Provider>;
 };
