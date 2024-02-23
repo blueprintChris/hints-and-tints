@@ -31,6 +31,10 @@ export type UpdatePlayerResult = {
   player: Player;
 };
 
+export type UpdatePlayerRoleResult = {
+  role: string;
+};
+
 export type GameStartResult = {
   gameState: string;
   players: Player[];
@@ -102,4 +106,15 @@ export type RoomGetResult = {
 
 export type ScoreUpdateResult = {
   scoreLimit: number;
+};
+
+export type GameResetResult = {
+  players: Player[];
+  spectators: Player[];
+  gameState: string;
+  firstHint: string;
+  secondHint: string;
+  winner: Player | null;
+  selectedColour: Square | null;
+  currentTurn: Player | null;
 };

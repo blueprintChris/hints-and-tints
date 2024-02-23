@@ -1,6 +1,7 @@
 import {
   EndTurnResult,
   GameJoinResult,
+  GameResetResult,
   GameStartResult,
   GameStateResult,
   PlayerSearchResult,
@@ -24,6 +25,7 @@ export enum GameAction {
   GAME_JOIN = 'GAME_JOIN',
   GAME_START = 'GAME_START',
   GAME_UPDATE_STATE = 'GAME_UPDATE_STATE',
+  GAME_RESET = 'GAME_RESET',
   END_TURN = 'END_TURN',
   ROUND_START = 'ROUND_START',
   ROUND_CONTINUE = 'ROUND_CONTINUE',
@@ -49,6 +51,7 @@ type RoundStart = { type: GameAction.ROUND_START; payload: RoundStartResult };
 type RoundContinue = { type: GameAction.ROUND_CONTINUE; payload: RoundContinueResult };
 type RoundEnd = { type: GameAction.ROUND_END; payload: RoundEndResult };
 type ScoreUpdate = { type: GameAction.SCORE_UPDATE; payload: ScoreUpdateResult };
+type GameReset = { type: GameAction.GAME_RESET; payload: GameResetResult };
 
 export type GameActions =
   | RoomJoin
@@ -65,4 +68,5 @@ export type GameActions =
   | RoomSearch
   | RoundContinue
   | RoundEnd
-  | ScoreUpdate;
+  | ScoreUpdate
+  | GameReset;

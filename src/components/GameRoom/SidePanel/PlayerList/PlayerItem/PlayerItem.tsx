@@ -19,7 +19,9 @@ const PlayerItem = forwardRef(
           <div className={styles.playerColour} style={{ backgroundColor: player.colour }} />
           <span>{player.name}</span>
         </div>
-        {showScores && <PlayerScore gameState={gameState} score={player.score} />}
+        {showScores && (
+          <PlayerScore gameState={gameState} score={player.score} prevScore={player.prevScore} />
+        )}
       </div>
     );
   }

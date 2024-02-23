@@ -66,7 +66,7 @@ const ScorePanel = ({
             <Button
               onClick={onJoinClick}
               text='Join game'
-              disabled={player?.role !== 'SPECTATOR'}
+              disabled={player?.role !== PlayerRoles.SPECTATOR}
             />
           </div>
         )}

@@ -37,6 +37,10 @@ const GameRoom = ({ players, player, spectators }: Props) => {
     socket.emit(SocketEvents.GAME_START, { roomId });
   };
 
+  const handleReturnToLobby = () => {
+    socket.emit(SocketEvents.GAME_RESET, { roomId });
+  };
+
   const handleShowRules = () => {
     setShowRules(!showRules);
   };
@@ -138,7 +142,8 @@ const GameRoom = ({ players, player, spectators }: Props) => {
         <Modal title={`${winner.name} wins with ${winner.score} points!`} isPermanent>
           <ConfettiExplosion force={0.8} duration={5000} particleCount={250} width={1900} />
           <div className={styles.buttonWrapper}>
-            <Button text='New Game' onClick={handleNewGame} />
+            <Button text='Play again with same players' onClick={handleNewGame} />
+            <Button text='Return to lobby' onClick={handleReturnToLobby} />
           </div>
         </Modal>
       )}
