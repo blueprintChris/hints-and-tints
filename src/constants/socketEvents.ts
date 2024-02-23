@@ -18,5 +18,6 @@ export const SocketEvents = {
   GAME_UPDATE_SCORES: 'game:update:scores',
   GAME_JOIN: 'game:join',
   GAME_END: 'game:end',
+  GAME_RESET: 'game:reset',
   DISCONNECT: 'disconnect',
 };

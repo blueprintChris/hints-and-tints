@@ -19,6 +19,20 @@ const playerReducer = (state: State, action: PlayerActions) => {
       };
     }
 
+    case PlayerAction.PLAYER_UPDATE_ROLE: {
+      const { payload } = action;
+
+      return {
+        ...state,
+        player: state.player
+          ? {
+              ...state.player,
+              role: payload.role,
+            }
+          : null,
+      };
+    }
+
     case PlayerAction.PLAYER_SEARCH: {
       const { payload } = action;
 

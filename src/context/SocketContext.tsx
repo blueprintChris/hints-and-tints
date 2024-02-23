@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { socket } from './../socket/Socket';
 import { GameContext } from './GameContext';
 import { PlayerContext } from './PlayerContext';
-import { SocketEvents } from '../constants';
+import { PlayerRoles, SocketEvents } from '../constants';
 import {
   GameStartResult,
   GameStateResult,
@@ -19,6 +19,7 @@ import {
   RoomGetResult,
   EndTurnResult,
   ScoreUpdateResult,
+  GameResetResult,
 } from '../types/Socket';
 import { GameAction } from '../reducers/game/Action';
 import { PlayerAction } from '../reducers/player/Action';
@@ -108,6 +109,15 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
       gameDispatch({ type: GameAction.SCORE_UPDATE, payload });
     };
 
+    const handleGameReset = (payload: GameResetResult) => {
+      gameDispatch({ type: GameAction.GAME_RESET, payload });
+
+      playerDispatch({
+        type: PlayerAction.PLAYER_UPDATE_ROLE,
+        payload: { role: PlayerRoles.SPECTATOR },
+      });
+    };
+
     socket.on(SocketEvents.CONNECT, onConnect);
     socket.on(SocketEvents.DISCONNECT, onDisconnect);
     socket.on(SocketEvents.ROOM_UPDATE, updateRoom);
@@ -123,6 +133,7 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
     socket.on(SocketEvents.GAME_UPDATE_STATE, handleGameState);
     socket.on(SocketEvents.GAME_JOIN, handleGameJoin);
     socket.on(SocketEvents.GAME_END, handleGameState);
+    socket.on(SocketEvents.GAME_RESET, handleGameReset);
     socket.on(SocketEvents.PLAYERS_UPDATE, handleUpdatePlayers);
     socket.on(SocketEvents.PLAYER_SEARCH, handlePlayerSearch);
 

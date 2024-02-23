@@ -7,21 +7,20 @@ import { GameContext } from '../../../../context';
 import PlayerItem from './PlayerItem/PlayerItem';
 import { Player } from '../../../../types/Players';
 import styles from './PlayerList.module.css';
+import { GameStates } from '../../../../constants';
 
 const PlayerList = ({ players, showScores, role, isHinter, currentTurn }: Props) => {
-  const [sortedPlayers, setSortedPlayers] = useState(players);
+  const [sortedPlayers, setSortedPlayers] = useState<Player[]>(players);
 
   const { gameState, isLoading } = useContext(GameContext);
   const { isTablet } = useDeviceWidth();
 
   useEffect(() => {
-    if (!isLoading) {
-      const updatedPlayers = [...players];
-      updatedPlayers.sort((a, b) => b.score - a.score);
-
+    if (gameState !== GameStates.REVEAL) {
+      const updatedPlayers = [...players].sort((a, b) => b.score - a.score);
       setSortedPlayers(updatedPlayers);
     }
-  }, [isLoading, players]);
+  }, [gameState, isLoading, players]);
 
   return (
     <div
@@ -30,7 +29,7 @@ const PlayerList = ({ players, showScores, role, isHinter, currentTurn }: Props)
         [styles.playerContainerTablet]: isTablet,
       })}
     >
-      <FlipMove enterAnimation='fade'>
+      <FlipMove>
         {sortedPlayers.map(
           pl =>
             pl.role === role && (

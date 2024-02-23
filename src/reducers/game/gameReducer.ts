@@ -85,6 +85,23 @@ const gameReducer = (state: State, action: GameActions) => {
       };
     }
 
+    case GameAction.GAME_RESET: {
+      const { payload } = action;
+
+      return {
+        ...state,
+        players: payload.players,
+        spectators: payload.spectators,
+        gameState: payload.gameState,
+        firstHint: payload.firstHint,
+        secondHint: payload.secondHint,
+        winner: payload.winner,
+        selectedColour: payload.selectedColour,
+        currentTurn: payload.currentTurn,
+        isLoading: false,
+      };
+    }
+
     case GameAction.GAME_UPDATE_STATE: {
       const { payload } = action;
 
