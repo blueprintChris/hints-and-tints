@@ -128,7 +128,7 @@ const GameRoom = ({ players, player, spectators }: Props) => {
       </div>
       {showRules && (
         <Modal isPermanent>
-          <Rules onClose={handleShowRules} canClose />
+          <Rules onClose={handleShowRules} />
         </Modal>
       )}
       {(gameState === GameStates.SELECTION_ONE || gameState === GameStates.SELECTION_TWO) && (

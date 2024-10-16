@@ -12,11 +12,19 @@ const Header = ({ name, scoreLimit, onRulesClick, players, spectators }: Props) 
   const [showPlayer, setShowPlayer] = useState(false);
 
   const handlePlayersClick = () => {
-    setShowPlayers(!showPlayers);
+    setShowPlayers(true);
+  };
+
+  const handlePlayersClose = () => {
+    setShowPlayers(false);
   };
 
   const handlePlayerClick = () => {
-    setShowPlayer(!showPlayer);
+    setShowPlayer(true);
+  };
+
+  const handlePlayerClose = () => {
+    setShowPlayer(false);
   };
 
   return (
@@ -27,11 +35,10 @@ const Header = ({ name, scoreLimit, onRulesClick, players, spectators }: Props) 
             text={`Players 👥 ${players.length + spectators.length}`}
             onClick={handlePlayersClick}
           />
-          <DropdownModal side='left' isShowing={showPlayers}>
+          <DropdownModal side='left' isShowing={showPlayers} onClose={handlePlayersClose}>
             <PlayersContent players={players} spectators={spectators} />
           </DropdownModal>
         </div>
-        {/* <Title size={8} orientation='row' /> */}
       </div>
       <div className={styles.playerWrapper}>
         <span>Hey {name},&nbsp;</span>
@@ -45,7 +52,7 @@ const Header = ({ name, scoreLimit, onRulesClick, players, spectators }: Props) 
         </div>
         <div className={styles.buttonWrapper}>
           <Button text={`${name} 😀`} onClick={handlePlayerClick} />
-          <DropdownModal side='right' isShowing={showPlayer}>
+          <DropdownModal side='right' isShowing={showPlayer} onClose={handlePlayerClose}>
             <PlayerContent />
           </DropdownModal>
         </div>

@@ -35,6 +35,14 @@
   font-weight: normal;
 }
 
+.rulesHinter {
+  color: #46c0b3;
+}
+
+.rulesTinter {
+  color: #e76fac;
+}
+
 ul li {
   margin-bottom: 0 !important;
 }
@@ -49,4 +57,8 @@ ol {
 
 .buttonWrapper {
   display: flex;
+
+  button {
+    padding: 10px;
+  }
 }

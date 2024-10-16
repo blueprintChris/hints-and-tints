@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { GameContext } from '../../context';
 import { Input, Title } from '../../components';
-import Rules from './Rules/Rules';
+import Setup from './Setup/Setup';
 import styles from './Welcome.module.css';
 
 const Welcome = () => {
@@ -15,11 +15,9 @@ const Welcome = () => {
 
   return (
     <div className={styles.welcome}>
-      <div className={styles.titleWrapper}>
-        <Title size={20} orientation='column' />
-        <h1 className={styles.welcomeHeader}>Play with your friends</h1>
-      </div>
-      <Rules />
+      <Title size={20} orientation='column' />
+      <h1 className={styles.welcomeHeader}>Play with your friends</h1>
+      <Setup />
       <div className={styles.linkContainer}>
         <Input
           name='link'

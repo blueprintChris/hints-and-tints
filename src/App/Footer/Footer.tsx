@@ -28,7 +28,7 @@ const Footer = ({ scrollRef }: Props) => {
         <h2>FAQ</h2>
         <p>
           The FAQ section is a work in progress. If you encounter any issues during your games, then
-          please email us support@tints-and-hints.com
+          please email me at me@blueprintchris.co.uk
         </p>
       </div>
       <footer className={classnames(styles.contentRow, styles.footer)}>

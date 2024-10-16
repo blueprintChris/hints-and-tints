@@ -35,7 +35,7 @@ const Input = ({
           defaultValue={defaultValue}
         />
         {withButton && (
-          <div className={styles.buttonWrapper}>
+          <div>
             <Button text='📋' onClick={onButtonClick ? onButtonClick : () => {}} withInput />
           </div>
         )}

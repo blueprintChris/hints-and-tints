@@ -90,7 +90,7 @@ const ColourSelector = ({ onColourClick, onChange, onSubmitClick }: Props) => {
           </div>
         ))}
       </div>
-      <div className={styles.inputWrapper}>
+      <div>
         <div className={styles.inputContainer}>
           <Input
             name='clue'

@@ -28,7 +28,7 @@ const Tooltip = ({ children, offset = { x: 0, y: 0 }, square, text }: PropsWithC
             <span>{square?.ref}</span>
             {text && (
               <div className={styles.textWrapper}>
-                <span className={styles.text}>{text}</span>
+                <span>{text}</span>
               </div>
             )}
           </div>

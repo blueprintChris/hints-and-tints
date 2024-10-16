@@ -27,7 +27,7 @@ const PlayersContent = ({ players, spectators }: Props) => {
               <div className={styles.player}>No roles assigned</div>
             ) : (
               players.map(player => (
-                <div className={styles.player}>
+                <div className={styles.player} key={player.id}>
                   <div className={styles.playerColour} style={{ backgroundColor: player.colour }} />
                   <span>{player.name}</span>
                 </div>
@@ -42,7 +42,7 @@ const PlayersContent = ({ players, spectators }: Props) => {
               <div className={styles.player}>No players spectating</div>
             ) : (
               spectators.map(player => (
-                <div className={styles.player}>
+                <div className={styles.player} key={player.id}>
                   <div className={styles.playerColour} style={{ backgroundColor: player.colour }} />
                   <span>{player.name}</span>
                 </div>

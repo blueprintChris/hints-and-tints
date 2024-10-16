@@ -1,67 +1,52 @@
-import { PropsWithChildren, RefObject, useEffect, useRef, useState } from 'react';
+import { PropsWithChildren, useEffect, useRef } from 'react';
 import classnames from 'classnames';
 
 import styles from './DropdownModal.module.css';
 
-const useOutsideAlerterRef = (initialIsVisible: boolean) => {
-  const [isVisible, setIsVisible] = useState(initialIsVisible);
-  const ref = useRef<HTMLDivElement>(null);
+const DropdownModal = ({ children, isShowing, side, onClose }: PropsWithChildren<Props>) => {
+  const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    /**
-     * Alert if clicked on outside of element
-     */
-    const handleClickOutside = (event: MouseEvent) => {
+    const handleOutsideClick = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
-      if (ref.current && !ref.current.contains(target)) {
-        setIsVisible(false);
+      if (modalRef.current && !modalRef.current.contains(target)) {
+        onClose();
       }
     };
-    // Bind the event listener
-    document.addEventListener('click', handleClickOutside);
-    return () => {
-      // Unbind the event listener on clean up
-      document.removeEventListener('click', handleClickOutside);
-    };
-  }, [ref]);
-
-  return { ref, isVisible, setIsVisible };
-};
-
-const DropdownModal = ({ children, isShowing, side }: PropsWithChildren<Props>) => {
-  const { ref, isVisible, setIsVisible } = useOutsideAlerterRef(false);
-
-  useEffect(() => {
     if (isShowing) {
-      setIsVisible(true);
-    }
-  }, [isShowing, setIsVisible]);
+      // Use setTimeout to delay adding the event listener
+      const timeoutId = setTimeout(() => {
+        window.addEventListener('click', handleOutsideClick);
+      }, 0);
 
-  const onAnimationEnd = () => {
-    if (!isShowing) setIsVisible(false);
-  };
+      return () => {
+        clearTimeout(timeoutId); // Clean up the timeout
+        window.removeEventListener('click', handleOutsideClick);
+      };
+    }
+  }, [isShowing, onClose]);
+
+  if (!isShowing) return null;
 
   return (
-    isVisible && (
-      <div
-        className={classnames(styles.dropdownModal, {
-          [styles.left]: side === 'left',
-          [styles.right]: side === 'right',
-          [styles.enter]: isShowing,
-          [styles.exit]: !isShowing,
-        })}
-        onAnimationEnd={onAnimationEnd}
-        ref={ref}
-      >
-        {children}
-      </div>
-    )
+    <div
+      className={classnames(styles.dropdownModal, {
+        [styles.left]: side === 'left',
+        [styles.right]: side === 'right',
+        [styles.enter]: isShowing,
+        [styles.exit]: !isShowing,
+      })}
+      ref={modalRef}
+    >
+      {children}
+    </div>
   );
 };
 
 type Props = {
   isShowing?: boolean;
   side: 'left' | 'right';
+  onClose: () => void;
 };
 
 export default DropdownModal;
