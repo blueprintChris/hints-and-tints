@@ -1,0 +1,51 @@
+.dropdownContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.share {
+  padding: 20px;
+  background-color: #686b70;
+  border-radius: 4px 4px 0 0;
+}
+
+.playersWrapper {
+  &:first-child {
+    padding-bottom: 20px;
+  }
+}
+
+.playersContainer {
+  padding: 20px;
+}
+
+.playersList {
+  display: flex;
+}
+
+.player {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6px;
+  box-sizing: border-box;
+  background-color: #686b70;
+  border-radius: 4px;
+  margin-right: 6px;
+}
+
+.playerColour {
+  border-radius: 50%;
+  width: 10px;
+  aspect-ratio: 1;
+  margin-right: 6px;
+}
+
+.inputWrapper {
+  display: flex;
+  width: 100%;
+}
+.buttonWrapper {
+  width: 200px;
+  height: 40px;
+}

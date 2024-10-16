@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect, useContext, PropsWithChildren } from 'react';
+import useSound from 'use-sound';
 import { useNavigate } from 'react-router-dom';
 import { socket } from './../socket/Socket';
 import { GameContext } from './GameContext';
@@ -23,11 +24,13 @@ import {
 } from '../types/Socket';
 import { GameAction } from '../reducers/game/Action';
 import { PlayerAction } from '../reducers/player/Action';
+import pop from '../sounds/pop.mp3';
 
 export const SocketContext = createContext<SocketContextType>({ isConnected: false });
 
 const SocketContextProvider = ({ children }: PropsWithChildren) => {
   const [isConnected, setIsConnected] = useState(socket.connected);
+  const [play] = useSound(pop);
 
   const navigate = useNavigate();
 
@@ -77,6 +80,8 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
       playerDispatch({ type: PlayerAction.PLAYER_SELECTED_SQUARE_CLEAR });
 
       gameDispatch({ type: GameAction.END_TURN, payload });
+
+      play();
     };
 
     const handleScoring = (payload: ScoringResult) => {

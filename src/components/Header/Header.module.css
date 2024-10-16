@@ -2,8 +2,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 40px;
-  padding: 0 10px;
+  height: 50px;
+  padding: 0 40px;
   box-sizing: border-box;
   width: 100%;
   background-color: #15171c;
@@ -13,20 +13,44 @@
   z-index: 1;
 }
 
+.leftWrapper {
+  display: flex;
+  height: 100%;
+  padding: 10px 0 10px 0;
+  box-sizing: border-box;
+}
+
+.rightWrapper {
+  display: flex;
+  height: 100%;
+  padding: 10px 0 10px 0;
+  box-sizing: border-box;
+}
+
 .playerWrapper {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
-  height: 100%;
-  width: 100%;
-  margin-right: 20px;
   font-size: 14px;
 }
 
 .buttonWrapper {
   height: 100%;
-  padding: 8px 0 8px 0;
-  box-sizing: border-box;
+  position: relative;
+
+  button {
+    font-size: 14px;
+  }
+}
+
+.rules {
+  margin-right: 10px;
+}
+
+.buttonWrapperPlayers {
+  display: flex;
+  height: 100%;
+  position: relative;
 
   button {
     font-size: 14px;

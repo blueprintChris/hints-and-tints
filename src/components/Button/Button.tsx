@@ -8,11 +8,16 @@ const Button = ({
   colour,
   disabled,
   withInput,
+  type = 'button',
   ...rest
 }: PropsWithChildren<Props>) => {
   return (
     <button
-      className={classnames(styles.button, { [styles.withInput]: withInput })}
+      className={classnames({
+        [styles.button]: type === 'button',
+        [styles.link]: type === 'link',
+        [styles.withInput]: withInput,
+      })}
       onClick={onClick}
       style={{ backgroundColor: colour }}
       disabled={disabled}
@@ -29,6 +34,7 @@ type Props = {
   colour?: string;
   disabled?: boolean;
   rest?: HTMLAttributes<HTMLButtonElement>;
+  type?: string;
   withInput?: boolean;
 };
 

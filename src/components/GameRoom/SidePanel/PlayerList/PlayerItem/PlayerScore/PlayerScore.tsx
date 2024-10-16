@@ -24,15 +24,20 @@ const PlayerScore = ({ gameState, prevScore, score }: Props) => {
   const [newPrevScore, setNewPrevScore] = useState(prevScore);
 
   useEffect(() => {
+    console.log('game state: ', gameState);
+    console.log('prev score: ', prevScore);
+
+    setNewPrevScore(prevScore);
+  }, [prevScore, gameState]);
+
+  useEffect(() => {
     if (gameState === GameStates.SELECTION_ONE) {
       if (score === 0) {
         setNewScore(0);
-        setNewPrevScore(0);
       }
     }
     if (gameState === GameStates.SCORING || gameState === GameStates.GAME_END) {
       if (score !== prevScore) {
-        setNewPrevScore(prevScore);
         setNewScore(score);
       }
     }

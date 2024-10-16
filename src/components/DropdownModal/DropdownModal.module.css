@@ -1,0 +1,56 @@
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOutUp {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+.dropdownModal {
+  position: absolute;
+  top: 36px;
+  width: 360px;
+  border-radius: 4px;
+  background-color: #282c34;
+  box-shadow: 0 0 10px 1px black;
+  font-family: 'Comfortaa', 'open-sans';
+  font-size: 12px;
+
+  animation-duration: 200ms;
+  animation-fill-mode: both;
+}
+
+.enter {
+  animation-name: fadeInDown;
+}
+
+.exit {
+  animation-name: fadeOutUp;
+}
+
+.dropdownModal h2 {
+  margin: 0 0 10px 0;
+  font-size: 14px;
+}
+
+.left {
+  left: 0;
+}
+
+.right {
+  right: 0;
+}

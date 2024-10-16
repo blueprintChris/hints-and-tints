@@ -1,4 +1,5 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import useSound from 'use-sound';
 import classnames from 'classnames';
 import { GridLoader } from 'react-spinners';
 import ConfettiExplosion from 'react-confetti-explosion';
@@ -19,11 +20,15 @@ import SidePanel from './SidePanel/SidePanel';
 import { GameContext } from '../../context';
 import { PlayerRoles, Colours, GameStates, SocketEvents } from '../../constants';
 import { Player } from '../../types/Players';
+import chime from '../../sounds/turn.mp3';
 import styles from './GameRoom.module.css';
 
 const GameRoom = ({ players, player, spectators }: Props) => {
   const [isModalShowing, setIsModalShowing] = useState(false);
   const [showRules, setShowRules] = useState(false);
+  const [showPlayers, setShowPlayers] = useState(false);
+
+  const [play] = useSound(chime);
 
   const { gameState, isLoading, selectedColour, winner, roomId, scoreLimit, currentTurn } =
     useContext(GameContext);
@@ -43,6 +48,10 @@ const GameRoom = ({ players, player, spectators }: Props) => {
 
   const handleShowRules = () => {
     setShowRules(!showRules);
+  };
+
+  const handleShowPlayers = () => {
+    setShowPlayers(!showPlayers);
   };
 
   const modalTitle = () => {
@@ -81,9 +90,25 @@ const GameRoom = ({ players, player, spectators }: Props) => {
     }
   };
 
+  useEffect(() => {
+    if (
+      currentTurn?.id === player?.id &&
+      (gameState === GameStates.GUESSING_ONE || gameState === GameStates.GUESSING_TWO)
+    ) {
+      play();
+    }
+  }, [currentTurn?.id, gameState, play, player?.id]);
+
   return (
     <>
-      <Header name={player.name} scoreLimit={scoreLimit} onClick={handleShowRules} />
+      <Header
+        name={player.name}
+        scoreLimit={scoreLimit}
+        onRulesClick={handleShowRules}
+        onPlayersClick={handleShowPlayers}
+        players={players}
+        spectators={spectators}
+      />
       <div className={classnames(styles.content, { [styles.contentTablet]: isTablet })}>
         <div
           className={classnames(styles.boardContainer, { [styles.boardContainerTablet]: isTablet })}

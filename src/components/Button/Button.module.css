@@ -34,6 +34,17 @@
   }
 }
 
+.link {
+  height: 100%;
+  width: 100%;
+  background: none;
+  outline: none;
+  border: none;
+  text-decoration: underline;
+  color: white;
+  cursor: pointer;
+}
+
 .withInput {
   border-radius: 0 8px 8px 0;
 }

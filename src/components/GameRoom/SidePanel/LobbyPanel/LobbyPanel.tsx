@@ -56,7 +56,6 @@ const LobbyPanel = ({
         )}
       </div>
       <div className={styles.bottomWrapper}>
-        <LobbyList spectators={spectators} />
         {player?.isHost && (
           <div className={styles.buttonWrapper}>
             <div className={styles.floatingHint}>Set your score limit</div>

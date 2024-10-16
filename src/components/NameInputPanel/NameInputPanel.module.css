@@ -78,6 +78,12 @@
   width: 200px;
 }
 
+.buttonWrapperLink {
+  height: 20px;
+  color: white;
+  margin-top: 10px;
+}
+
 .help {
   position: absolute;
   top: 10px;
@@ -103,4 +109,11 @@
 p span {
   font-weight: bold;
   text-decoration: underline;
+}
+
+.welcomeHeader {
+  font-size: 16px;
+  font-family: 'Sixtyfour', 'open-sans';
+  color: white;
+  margin: 0;
 }

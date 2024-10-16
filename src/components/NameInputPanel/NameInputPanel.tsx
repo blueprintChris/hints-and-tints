@@ -7,11 +7,13 @@ import { useDeviceWidth } from '../../hooks';
 const NameInputPanel = ({
   onChange,
   onClick,
+  handleScroll,
   buttonText,
   labelText,
   inputName,
   inputPlaceholder,
   defaultValue,
+  isHome,
 }: Props) => {
   const { isMobile } = useDeviceWidth();
 
@@ -26,6 +28,7 @@ const NameInputPanel = ({
       </Tooltip>
       <div className={styles.titleWrapper}>
         <Title size={40} />
+        <h1 className={styles.welcomeHeader}>Play with your friends</h1>
       </div>
       <div className={styles.nameInputContainer}>
         <Input
@@ -38,13 +41,21 @@ const NameInputPanel = ({
         <div className={styles.buttonWrapper}>
           <Button text={buttonText} onClick={onClick} />
         </div>
+        {isHome && (
+          <div className={styles.buttonWrapperLink}>
+            <Button
+              text='How to play'
+              onClick={handleScroll ? handleScroll : () => {}}
+              type='link'
+            />
+          </div>
+        )}
         {isMobile && (
           <div className={styles.mobileWarning}>
             <p>
-              This game is <span>NOT</span> suitable for mobile and will <span>NOT WORK</span>.
-              Please switch to desktop.
+              This game is <span>not yet configured</span> for mobile devices. It is
+              <span>strongly recommended</span> that you use a desktop device to play this game.
             </p>
-            <span>You have been warned.</span>
           </div>
         )}
       </div>
@@ -59,7 +70,9 @@ type Props = {
   inputPlaceholder: string;
   onChange: (e: FormEvent<HTMLInputElement>) => void;
   onClick: () => void;
+  handleScroll?: () => void;
   defaultValue?: string;
+  isHome?: boolean;
 };
 
 export default NameInputPanel;

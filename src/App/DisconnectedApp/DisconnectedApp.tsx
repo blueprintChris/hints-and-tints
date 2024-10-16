@@ -1,4 +1,4 @@
-import { FormEvent, useContext, useState } from 'react';
+import { FormEvent, useContext, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
 import { ToastContainer, toast } from 'react-toastify';
@@ -13,6 +13,7 @@ import { GameAction } from '../../reducers/game/Action';
 import { RoomJoinResult } from '../../types/Socket';
 import { PlayerContext } from '../../context';
 import { PlayerAction } from '../../reducers/player/Action';
+import Footer from '../Footer/Footer';
 
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -26,9 +27,14 @@ const DisconnectedApp = () => {
   const { dispatch: playerDispatch } = useContext(PlayerContext);
 
   const navigate = useNavigate();
+  const ref = useRef<HTMLDivElement>(null);
 
   const handleInputChange = (e: FormEvent<HTMLInputElement>) => {
     setNickname(e.currentTarget.value);
+  };
+
+  const handleScroll = () => {
+    ref.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const handleOnClick = async () => {
@@ -62,7 +68,7 @@ const DisconnectedApp = () => {
     } else {
       toast('😒 Please enter a name', {
         position: 'bottom-center',
-        autoClose: 3000,
+        autoClose: 2000,
         hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,
@@ -73,21 +79,26 @@ const DisconnectedApp = () => {
   };
 
   return (
-    <AppContainer>
-      {isLoading && <LoadingSpinner colour={Colours.PINK} text='Constructing room...' />}
-      {!isLoading && (
-        <NameInputPanel
-          buttonText='Create room'
-          inputName='nameInput'
-          inputPlaceholder='Enter your nickname'
-          labelText='To create a room, enter a nickname'
-          onChange={handleInputChange}
-          onClick={handleOnClick}
-          defaultValue={nickname}
-        />
-      )}
-      <ToastContainer limit={1} />
-    </AppContainer>
+    <>
+      <AppContainer>
+        {isLoading && <LoadingSpinner colour={Colours.PINK} text='Constructing room...' />}
+        {!isLoading && (
+          <NameInputPanel
+            buttonText='Create room'
+            inputName='nameInput'
+            inputPlaceholder='Enter your nickname'
+            labelText='To create a room, enter a nickname'
+            onChange={handleInputChange}
+            onClick={handleOnClick}
+            handleScroll={handleScroll}
+            defaultValue={nickname}
+            isHome
+          />
+        )}
+        <ToastContainer limit={1} />
+      </AppContainer>
+      <Footer scrollRef={ref} />
+    </>
   );
 };
 
